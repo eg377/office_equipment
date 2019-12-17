@@ -48,12 +48,16 @@ grant_type: password
  */
 
 const authServiceUrl = `https://sunshine-auth-service.cfapps.io/oauth/token`;
-const content = `grant_type=password&username=admin&password=admin`;
+const content = {
+    grant_type: 'password',
+    username: 'admin',
+    password:'admin'
+};
 
 const headerOptions = {  
     'Content-Type': 'application/x-www-form-urlencoded',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers' :'*',
+    'Access-Control-Allow-Headers' : "x-requested-with, authorization",    
     'Authorization': 'Basic ' + btoa('admin : ClientSecret')
 };
 

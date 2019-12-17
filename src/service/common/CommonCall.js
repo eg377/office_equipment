@@ -25,26 +25,27 @@ const authService = {
             })
         },
     
-    postCall: async (url, parameters, header) => {
+    postCall: async (url, parameters, header) => {        
         console.log('postCall');
         console.log(url, parameters, header);
-        axios.post(url,{
+        axios({
+            method: 'POST',
+            url: url,
             params: parameters,
             header: header,            
-            },
-            ).then((response) => {
-                if(response != error) {
-                    if(response.status >= 400) {                        
-                        console.log("RESPONSE STATUS: ", response.status)
-                        console.log("RESPONSE: ", response)
-                        return;
-                    }
-                    if(response.status == 200) {
-                    return response.data
-                    }                  
-                } else {
-                    return error;
-                }        
+        }).then((response) => {
+            if(response != error) {
+                if(response.status >= 400) {                        
+                    console.log("RESPONSE STATUS: ", response.status)
+                    console.log("RESPONSE: ", response)
+                    return;
+                }
+                if(response.status == 200) {
+                return response.data
+                }                  
+            } else {
+                return error;
+            }        
         })
         
     },
