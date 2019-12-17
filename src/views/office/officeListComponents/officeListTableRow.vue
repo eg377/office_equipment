@@ -6,8 +6,8 @@
     <td>{{office.city}}</td>
     <td>{{office.state}}</td>
     <td>{{office.zip}}</td>
-    <td>
-      <i class="fas fa-pencil-alt"></i>
+    <td @click="editOffice">
+      <i class="fas fa-pencil-alt" ></i>
     </td>
   </tr>
 </template>
@@ -19,6 +19,12 @@ export default {
             type: Object,
             default: {}
         },
+    },
+    methods: {
+        editOffice() {
+            console.log("Functionality to be added later!" + this.office.id)
+            // Route to editOfficeRoute/office.id, whatever editOfficeRoute might end up being 
+        }
     },
 }
 </script>
