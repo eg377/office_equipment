@@ -1,16 +1,28 @@
 <template>
-    <ContentWrapper>
-        <div class="content-heading">
-            <div>office list view
-            </div>            
-        </div>
-        <div class="row">
-            office list view 
-        </div>
-    </ContentWrapper>
+  <ContentWrapper>
+      <div class="container">
+          <office-table/>
+
+    <button class="btn btn-primary text-center" @click="addOffice">Add Office</button>
+    </div>
+  </ContentWrapper>
 </template>
 
 <script>
-    export default {        
-    }
+import ContentWrapper from '../../components/Layout/ContentWrapper'
+import officeListTableVue from './officeListComponents/officeListTable.vue';
+
+export default {
+ 
+  components: {
+      "office-table": officeListTableVue,
+      ContentWrapper: ContentWrapper
+  },
+  methods: {
+      addOffice() {
+          console.log("Add functionality to be added later!")
+          // Should route to add office page
+      }
+  },
+};
 </script>
