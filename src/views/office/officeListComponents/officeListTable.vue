@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <table-row v-for="office in offices" :key="office.id" :office="office"/>
+        <table-row v-for="office in offices" :key="office.officeId" :office="office"/>
       </tbody>
     </table>
 </template>
@@ -34,20 +34,22 @@
       // eventually, this will make a call to the backend to get offices
       this.offices = [
         {
-          id: 0,
-          name: "office",
-          address: "123 officelandia",
+          officeId: 0,
+          officeName: "office",
+          streetAddress: "123 officelandia",
           city: "officeland",
           state: "OF",
-          zip: "12345"
+          zip: "12345",
+          active: true
         },
         {
-          id: 1,
-          name: "heck",
-          address: "filler data",
+          officeId: 1,
+          officeName: "heck",
+          streetAddress: "filler data",
           city: "filler",
           state: "FI",
-          zip: "00000"
+          zip: "00000",
+          active: true
         }
       ];
     }

@@ -1,8 +1,8 @@
 <template>
   <tr>
-    <th scope="row">{{office.id}}</th>
-    <td>{{office.name}}</td>
-    <td>{{office.address}}</td>
+    <th scope="row">{{office.officeId}}</th>
+    <td>{{office.officeName}}</td>
+    <td>{{office.streetAddress}}</td>
     <td>{{office.city}}</td>
     <td>{{office.state}}</td>
     <td>{{office.zip}}</td>
