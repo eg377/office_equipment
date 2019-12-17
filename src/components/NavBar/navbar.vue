@@ -3,8 +3,8 @@
     <mdb-navbar-brand href="#">Cognizant</mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
-        <mdb-nav-item href="#officeList" active id="drop">To Office</mdb-nav-item>
-        <mdb-nav-item href="#" id="drop">Logout</mdb-nav-item>
+        <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item>
+        <mdb-nav-item href="/login" id="drop">Logout</mdb-nav-item>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>
