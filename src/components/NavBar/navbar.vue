@@ -1,6 +1,6 @@
 <template>
   <mdb-navbar expand="large" dark id="nBar">
-    <mdb-navbar-brand href="#">Cognizant</mdb-navbar-brand>
+    <a href="/main" class="navbar-brand">Cognizant</a>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
         <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item>
