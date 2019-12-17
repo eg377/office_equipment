@@ -1,11 +1,5 @@
 <template>
   <ContentWrapper>
-<<<<<<< HEAD
-    <div class="content-heading">
-      <div>office edit View</div>
-    </div>
-    <div class="row">office edit view</div>
-=======
     <div class="container">
       <div class="content-heading text-center">
         <h1>Add New Office</h1>
@@ -57,17 +51,77 @@
         </div>
       </form>
     </div>
->>>>>>> d28e1dc70b19c7e005b41804eb49710d5d95996a
   </ContentWrapper>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {};
-=======
+import OfficeDataService from "../../service/OfficeDataService"
 export default {
     
+   name: "Office",
+   data() {
+     return {
+       officeName: "",
+       address: "",
+       address2:"",
+       city: "",
+       state:"",
+       country: "",
+       zip:"",
+       errors: []
+     };
+   },
+   computed: {
+    id() {
+      return this.$route.params.id;
+    }
+  },
+  methods: {
+   //this code checks the validity of the fields
+
+   validateAndSubmit(e) {
+        e.preventDefault();
+        this.errors = [];
+        if(!this.officeName) {
+            this.errors.push("Enter valid values");
+        } if(!this.address) {
+            this.errors.push("Enter valid values");
+        }   if(!this.city) {
+            this.errors.push("Enter valid values");
+        } if(!this.state) {
+            this.errors.push("Enter valid values");
+        }  if(!this.country) {
+            this.errors.push("Enter valid values");
+        } if(!this.zip) {
+            this.errors.push("Enter valid values");
+        } 
+
+        //When the user input is valid, if there is no id in the path
+        //then the office is saved to the database and the app is routed to officeList 
+        if(this.errors.length === 0) {
+            if (this.id === -1) {
+                OfficeDataService.createOffice({
+                    office: this.office
+                })
+                .then(() => {
+                    this.$router.push('/officeList');
+                });
+            } else {
+
+        //When the user input is valid, if there is id in the path
+        //then the office is updated in the database and the app is routed to officeList
+        
+                OfficeDataService.updateOffice(this.id, {
+                    id: this.id,
+                    office:this.office
+                })
+                .then(() => {
+                    this.$router.push('/officeList');
+                });
+            }
+        }
+    }
    
+   }
 };
->>>>>>> d28e1dc70b19c7e005b41804eb49710d5d95996a
 </script>
