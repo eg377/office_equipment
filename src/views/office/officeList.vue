@@ -24,8 +24,7 @@ export default {
   },
   methods: {
     addOffice() {
-      console.log("Add functionality to be added later!");
-      // Should route to add office page
+      this.$router.push({path: "officeEdit"})
     }
   }
 };

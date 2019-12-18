@@ -4,9 +4,8 @@
     <td>{{office.officeName}}</td>
     <td>{{office.streetAddress}}</td>
     <td>{{office.city}}</td>
-    <td>{{office.state}}</td>
     <td>{{office.zip}}</td>
-    <td @click="editOffice">
+    <td @click="editOffice" class="edit-office text-center">
       <i class="fas fa-pencil-alt" ></i>
     </td>
   </tr>
@@ -22,9 +21,18 @@ export default {
     },
     methods: {
         editOffice() {
-            console.log("Functionality to be added later!" + this.office.id)
-            // Route to editOfficeRoute/office.id, whatever editOfficeRoute might end up being 
+            this.$router.push({
+              path: "officeEdit",
+              query: {
+                id: this.office.officeId
+              }})
         }
     },
 }
 </script>
+
+<style scoped>
+  .edit-office:hover {
+    cursor: pointer
+  }
+</style>
