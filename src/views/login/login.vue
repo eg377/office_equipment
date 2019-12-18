@@ -1,5 +1,5 @@
-<template>
-    <ContentWrapper>
+<template >
+    <ContentWrapper >
         <div class="content-heading">
             <div>login View                
             </div>            
