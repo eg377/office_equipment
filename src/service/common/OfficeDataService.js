@@ -27,6 +27,16 @@ class OfficeDataService {
         // return axios.put(`${OFFICE_API_URL}/offices/office/${id}`)
     }
 
+    deleteOffice(officeId) {
+        return axios.delete(`${OFFICE_API_URL}/api/offices/${officeId}`, {headers: { Authorization: AuthStr }})
+            .then(res => {
+                console.log("office deleted")
+            })
+            .catch(err => {
+                console.log(`Error: ${err}`)
+            })
+    }
+
    
 }
 
