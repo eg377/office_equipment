@@ -1,4 +1,5 @@
 {
+
     "name": "office-equipment",
     "version": "0.0.0",
     "description": "Office-Equipment Management",
@@ -99,4 +100,5 @@
         "sass-loader": "7.1.0",
         "vue-template-compiler": "2.5.17"
     }
+
 }
