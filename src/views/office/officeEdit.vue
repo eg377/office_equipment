@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import OfficeDataService from "../../service/OfficeDataService";
+import OfficeDataService from "../../service/common/OfficeDataService";
 export default {
   name: "Office",
   data() {
