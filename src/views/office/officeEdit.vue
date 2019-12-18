@@ -4,7 +4,7 @@
       <div class="content-heading text-center">
         <h1>Add New Office</h1>
       </div>
-      <form class="jumbotron jumbotron-fluid">
+      <form @submit = "validateAndSubmit" class="jumbotron jumbotron-fluid">
         <div class="form-group">
           <button type="button" class="close text-danger" aria-label="Close">
             <span aria-hidden="true">
@@ -18,23 +18,13 @@
         </div>
 
         <div class="form-group">
-          <label for="inputAddress">Address</label>
+          <label for="inputAddress">Street Address</label>
           <input
             type="text"
             class="form-control"
             id="inputAddress"
             v-model="address"
             placeholder="1234 Main St"
-          />
-        </div>
-        <div class="form-group">
-          <label for="inputAddress2">Address 2</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAddress2"
-            v-model="address2"
-            placeholder="Apartment, studio, or floor"
           />
         </div>
         <div class="form-row">
@@ -53,7 +43,7 @@
         </div>
         <div class="form-group text-center">
           <button type="submit" class="btn btn-lg btn-primary">Save</button>
-          <button type="submit" class="btn btn-lg btn-danger ml-2">Cancel</button>
+          <button type="reset" class="btn btn-lg btn-danger ml-2">Cancel</button>
         </div>
       </form>
     </div>
@@ -68,7 +58,6 @@ export default {
     return {
       officeName: "Cognizant",
       address: "500 Frank Burr Blvd",
-      address2: "",
       city: "Teaneck",
       state: "NJ",
       country: "USA",
