@@ -47,27 +47,27 @@ grant_type: password
   
  */
 
-const authServiceUrl = `https://sunshine-auth-service.cfapps.io/oauth/token`;
-const content = {
-    grant_type: 'password',
-    username: 'admin',
-    password:'admin'
+const VUE_APP_TEST = process.env.VUE_APP_TEST;
+
+console.log(VUE_APP_TEST);
+
+const authServiceUrl = "https://sunshine-auth-service.cfapps.io/oauth/token";
+const content = 'grant_type=password&username=admin&password=admin';
+const headerOptions = {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic ' + btoa( 'ClientId:ClientSecret')
+    }     
 };
 
-const headerOptions = {  
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers' : "x-requested-with, authorization",    
-    'Authorization': 'Basic ' + btoa('admin : ClientSecret')
-};
+var token;
+authService.postCall(authServiceUrl, content, headerOptions).then(response => {
+    token = response;
+    console.log('response',response);
+});
 
-const token = authService.postCall(authServiceUrl, content, headerOptions);
-// var url = "./test.js"        
-// const token = Vue.axios.get(url).then((response) => {
-//     console.log(response.data)
-//     return response.data
-// });
-console.log('TOKEN',token);
+//const token = await authService.postCall(authServiceUrl, content, headerOptions);
+//console.log('TOKEN',token);
 
 new Vue({
   i18n,
