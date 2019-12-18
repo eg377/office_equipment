@@ -1,5 +1,5 @@
 <template>  
-    <div class="card" >
+    <div class="card">
       <header class="card-header">
         <!--<img  id="cogLogo" alt="Cognizant logo" src="../assets/CognizantLogo.png" style="max-width:220px; width:100%; padding: 0px 50px 20px;  display: block; margin-left: auto; margin-right: auto">-->
        <!-- <p class="card-header-title">Login</p> -->
@@ -61,6 +61,8 @@ authService.postCall(authServiceUrl, content, headerOptions).then(response => {
 });
 
 export default {
+  //mixins: [disableNav],
+
   data() {
     return{
     errors:[],  
@@ -73,6 +75,7 @@ export default {
       return this.$route.params.id;
     }
   },*/
+  
   methods: {
     async login(uname, pass) {
       console.log("uname = " + uname);
