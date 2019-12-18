@@ -4,12 +4,18 @@ import VueAxios from 'vue-axios'
  
 Vue.use(VueAxios, axios);
 
-const httpClient = {
+const authService = {
 
-    get: async (url, parameters) => {
+    getCall: async (url, parameters) => {
         axios({
             method: 'GET',
             url: url,
+            headers: {
+                "Content-Type": 'application/x-www-form-urlencoded',
+                "Access-Control-Allow-Origin": '*',
+                "Access-Control-Allow-Headers" : "x-requested-with, authorization",
+                "Authorization": "Basic " + btoa("admin : ClientSecret")
+            },
             params: parameters
         }).then((response) => {
             
@@ -25,9 +31,11 @@ const httpClient = {
         })
     },
     
-    post: async (url, parameters, options) => {
+    postCall: async (url, parameters, options) => {
         console.log('postCall');
+
         axios.post(url, parameters, options).then((response) => {
+            console.log("response", response);
             if(response.status >= 400) {                        
                 console.log("RESPONSE STATUS: ", response.status)
                 console.log("RESPONSE: ", response)
@@ -41,5 +49,4 @@ const httpClient = {
         
     },
 }
-
-export default httpClient;
+export default authService;
