@@ -34,18 +34,18 @@ const authService = {
     postCall: async (url, parameters, options) => {        
         console.log('postCall');        
         
-        axios.post(url, parameters, options).then((response) => {
-            console.log("response", response);            
-            if(response.status >= 400) {                        
-                console.log("RESPONSE STATUS: ", response.status)
-                console.log("RESPONSE: ", response)
-                return;
-            }
-            if(response.status == 200) {
-                console.log("response.data", response);
-                return response.data.access_token;
-            }                    
-        })
+        let response = await axios.post(url, parameters, options).catch(function(e){ console.log(e); return 'error catch';});
+        
+        if(response.status >= 400) {                        
+            console.log("RESPONSE STATUS: ", response.status)
+            console.log("RESPONSE: ", response)
+            return 'error';
+        }
+        if(response.status == 200) {
+            console.log("response.data", response);
+            console.log("response.data", response.data.access_token);
+            return response.data.access_token;
+        }
         
     },
 } 

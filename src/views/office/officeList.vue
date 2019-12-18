@@ -1,13 +1,13 @@
 <template>
   <div>
-    <NavBar />
-    <ContentWrapper>
+    <!-- <NavBar /> -->
+    
       <div class="container">
         <office-table />
 
         <button class="btn btn-primary text-center" @click="addOffice">Add Office</button>
       </div>
-    </ContentWrapper>
+    
   </div>
 </template>
 
