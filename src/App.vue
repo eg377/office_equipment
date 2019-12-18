@@ -1,27 +1,21 @@
 <template>
-    <div>
-        <!-- <NavBar/> -->
-        <router-view/> 
-    </div>
+  <div id="app">    
+     <router-view/>
+  </div>
 </template>
 
 <script>
-    import store from './store/index.js'
-    import NavBar from '../src/components/NavBar/navbar.vue'
-
-    export default {
-        name: 'App',
-        store,
-        components: {
-            NavBar
-        }
-    }
+export default {
+  name: 'App'
+}
 </script>
 
-<style lang="scss">
+<style>
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
 
-  // Import Main styles for this application
-  @import '@/styles/bootstrap.scss';
-  @import '@/styles/app.scss';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+#app {
+  text-align: center;  
+}
 </style>
