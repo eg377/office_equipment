@@ -60,7 +60,7 @@
           this.deleteOffice = false
         },
         async confirmDelete() {
-          const promise = officeService.deleteOffice(idToDelete)
+          const promise = officeService.deleteOffice(this.idToDelete)
           promise.then(res => {
             this.clearDelete()
             this.getOffices()
