@@ -1,14 +1,10 @@
 <template>
   <mdb-navbar expand="large" dark id="nBar">
-    <!-- <a href="/main" class="navbar-brand">Cognizant</a> -->
-    <a @click="goToMain" class="navbar-brand" id="homeButton">Cognizant</a>
+    <a href="/main" class="navbar-brand">Cognizant</a>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
-        <!-- <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item> -->
-        <mdb-nav-item @click="goToOfficeList" active id="drop">To Office</mdb-nav-item>
+        <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item>
         <mdb-nav-item href="/login" id="drop">Logout</mdb-nav-item>
-        <!-- this goToLogin messes up the CSS for some reason -->
-        <!-- <mdb-nav-item @click="goToLogin" id="drop">Logout</mdb-nav-item> -->
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>
@@ -20,22 +16,12 @@
   /* display: inline-block; */
 }
 
-#homeButton {
-  color: white;
-}
-
 #drop {
   text-align: right;
 }
 </style>
 
-
 <script>
-
-
-
-
-
 import {
   mdbDropdown,
   mdbDropdownToggle,
@@ -50,7 +36,6 @@ import {
 } from "mdbvue";
 export default {
   name: "HelloWorld",
-
   components: {
     mdbNavbar,
     mdbNavbarBrand,
@@ -62,17 +47,6 @@ export default {
     mdbDropdownToggle,
     mdbDropdownMenu,
     mdbDropdownItem
-  },
-  methods: {
-    goToMain(){
-      this.$router.push({path: "main"})
-    },
-    goToLogin(){
-      this.$router.push({path: "login"})
-    },
-    goToOfficeList(){
-      this.$router.push({path: "officeList"})
-    }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <NavBar /> -->
+    <NavBar />
     <ContentWrapper>
       <div class="container">
         <office-table />
@@ -14,13 +14,13 @@
 <script>
 import ContentWrapper from "../../components/Layout/ContentWrapper";
 import officeListTableVue from "./officeListComponents/officeListTable.vue";
-// import NavBar from "../../../src/components/NavBar/navbar.vue";
+import NavBar from "../../../src/components/NavBar/navbar.vue";
 
 export default {
   components: {
     "office-table": officeListTableVue,
     ContentWrapper: ContentWrapper,
-    //NavBar
+    NavBar
   },
   methods: {
     addOffice() {
