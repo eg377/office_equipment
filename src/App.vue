@@ -1,19 +1,22 @@
 <template>
     <div>
-        <!-- <NavBar/> -->
+        <header v-show="this.$router.history.current.path!=='/login'">
+            <navbar />  
+        </header>
+
         <router-view/> 
     </div>
 </template>
 
 <script>
     import store from './store/index.js'
-    import NavBar from '../src/components/NavBar/navbar.vue'
+    import navbar from './components/NavBar/navbar'
 
     export default {
         name: 'App',
         store,
         components: {
-            NavBar
+            navbar
         }
     }
 </script>
