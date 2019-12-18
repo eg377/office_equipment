@@ -4,9 +4,12 @@
       <div class="content-heading text-center">
         <h1>Add New Office</h1>
       </div>
-      <form @submit = "validateAndSubmit" class="jumbotron jumbotron-fluid">
+      <form @submit="validateAndSubmit" class="jumbotron jumbotron-fluid">
+          <div v-if="errors.length">
+          <div class="alert alert-warning" v-bind:key="index" v-for="(error, index) in errors">{{error}}</div>
+        </div>
         <div class="form-group">
-          <button type="button" class="close text-danger" aria-label="Close">
+          <button v-on:click="redirect" type="button" class="close text-danger" aria-label="Close">
             <span aria-hidden="true">
               <i class="far fa-times-circle"></i>
             </span>
@@ -53,7 +56,7 @@
 <script>
 import OfficeDataService from "../../service/common/OfficeDataService";
 export default {
-  name: "Office",
+  name: "office",
   data() {
     return {
       officeName: "Cognizant",
@@ -71,6 +74,10 @@ export default {
     }
   },
   methods: {
+
+      redirect: function (event) {
+       this.$router.push("/officeList");
+      },
     //this code checks the validity of the fields
 
     validateAndSubmit(e) {
