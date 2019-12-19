@@ -5,8 +5,12 @@
         <h1>Add New Office</h1>
       </div>
       <form @submit="validateAndSubmit" class="jumbotron jumbotron-fluid">
-          <div v-if="errors.length">
-          <div class="alert alert-warning" v-bind:key="index" v-for="(error, index) in errors">{{error}}</div>
+        <div v-if="errors.length">
+          <div
+            class="alert alert-warning"
+            v-bind:key="index"
+            v-for="(error, index) in errors"
+          >{{error}}</div>
         </div>
         <div class="form-group">
           <button v-on:click="redirect" type="button" class="close text-danger" aria-label="Close">
@@ -74,10 +78,9 @@ export default {
     }
   },
   methods: {
-
-      redirect: function (event) {
-       this.$router.push("/officeList");
-      },
+    redirect: function(event) {
+      this.$router.push("/officeList");
+    },
     //this code checks the validity of the fields
 
     validateAndSubmit(e) {
@@ -95,9 +98,6 @@ export default {
       if (!this.state) {
         this.errors.push("Enter valid values");
       }
-      if (!this.country) {
-        this.errors.push("Enter valid values");
-      }
       if (!this.zip) {
         this.errors.push("Enter valid values");
       }
@@ -105,10 +105,15 @@ export default {
       //When the user input is valid, if there is no id in the path
       //then the office is saved to the database and the app is routed to officeList
       if (this.errors.length === 0) {
-        if (this.id === -1) {
+        if (this.id === "-1") {
           OfficeDataService.createOffice({
-            office: this.office
-          }).then(() => {
+            officeName: this.officeName,
+            address:this.address,
+            city: this.city,
+            state: this.state,
+            zip: this.zip
+          }).then((res) => {
+            console.log(res.data)
             this.$router.push("/officeList");
           });
         }
@@ -116,9 +121,13 @@ export default {
         //When the user input is valid, if there is id in the path
         //then the office is updated in the database and the app is routed to officeList
         else {
-          OfficeDataService.updateOffice(this.id, {
+          OfficeDataService.updateOffice(parseInt(this.id), {
             id: this.id,
-            office: this.office
+            officeName: this.officeName,
+            address:this.address,
+            city: this.city,
+            state: this.state,
+            zip: this.zip
           }).then(() => {
             this.$router.push("/officeList");
           });
