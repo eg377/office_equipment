@@ -50,6 +50,7 @@ grant_type: password
   
  */
 
+<<<<<<< HEAD
 const VUE_APP_TEST = process.env.VUE_APP_TEST;
 
 console.log(VUE_APP_TEST);
@@ -71,6 +72,8 @@ authService.postCall(authServiceUrl, content, headerOptions).then(response => {
 
 //const token = await authService.postCall(authServiceUrl, content, headerOptions);
 //console.log('TOKEN',token);
+=======
+>>>>>>> master
 
 new Vue({
   i18n,

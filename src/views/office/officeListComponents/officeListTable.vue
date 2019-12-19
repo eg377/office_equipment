@@ -1,61 +1,84 @@
 <template>
-    <table class="table table-hover table-dark">
+  <div>
+    <table class="table table-hover table-dark mt-3">
       <thead>
         <tr>
           <th scope = "col">ID</th>
           <th scope = "col">Office Name</th>
           <th scope = "col">Address</th>
           <th scope = "col">City</th>
-          <th scope = "col">State</th>
           <th scope = "col">Zip Code</th>
+          <th scope = "col"></th>
           <th scope = "col"></th>
         </tr>
       </thead>
       <tbody>
-        <table-row v-for="office in offices" :key="office.officeId" :office="office"/>
+        <table-row 
+          v-for="office in activeOffices" :key="office.officeId" :office="office"
+          @delete-office="setDelete"/>
       </tbody>
     </table>
+    <div class="text-center" v-show="loading">Loading Offices...</div>
+    <div class="text-center" v-show="deleteOffice">
+      Are you sure you want to delete office {{idToDelete}}?<br/>
+      <button class="btn btn-primary" @click="confirmDelete">Yes</button>
+      <button class="btn btn-danger" @click="clearDelete">No</button>
+    </div>
+  </div>
 </template>
 
 <script>
     import officeListTableRow from "./officeListTableRow";
+    import officeService from "../../../service/common/OfficeDataService.js"
 
     export default {
-         data() {
-    return {
-      offices: []
-    };
-  },
-  created() {
-    this.getOffices();
-  },
-  methods: {
-    getOffices() {
-      // eventually, this will make a call to the backend to get offices
-      this.offices = [
-        {
-          officeId: 0,
-          officeName: "office",
-          streetAddress: "123 officelandia",
-          city: "officeland",
-          state: "OF",
-          zip: "12345",
-          active: true
+      data() {
+        return {
+         offices: [],
+         loading: false,
+         deleteOffice: false,
+         idToDelete: 1
+        };
+       },
+      created() {
+        this.getOffices();
+      },
+      methods: {
+        async getOffices() {
+          this.loading = true
+          const promise = officeService.getAllOffices();
+          promise.then(result => {
+          this.offices = result
+          this.loading = false
+          })
         },
-        {
-          officeId: 1,
-          officeName: "heck",
-          streetAddress: "filler data",
-          city: "filler",
-          state: "FI",
-          zip: "00000",
-          active: true
+        setDelete(id) {
+          this.deleteOffice = true
+          this.idToDelete = id
+        },
+        clearDelete() {
+          this.deleteOffice = false
+        },
+        async confirmDelete() {
+          const promise = officeService.deleteOffice(this.idToDelete)
+          promise.then(res => {
+            this.clearDelete()
+            this.getOffices()
+          })
         }
-      ];
-    }
-  },
-  components: {
-      "table-row": officeListTableRow,
-  },
+      },
+      components: {
+        "table-row": officeListTableRow,
+      },
+      watch: {
+        "route": "getOffices"
+      },
+      computed: {
+        activeOffices() {
+          let active = this.offices.filter(office => office.active)
+
+          return active 
+        }
+      },
     }
 </script>
