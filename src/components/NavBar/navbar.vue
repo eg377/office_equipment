@@ -6,7 +6,7 @@
       <mdb-navbar-nav right>
         <!-- <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item> -->
         <mdb-nav-item @click="goToOfficeList" active id="drop">To Office</mdb-nav-item>
-        <mdb-nav-item href="/login" id="drop">Logout</mdb-nav-item>
+        <mdb-nav-item @click="logout" id="drop">Logout</mdb-nav-item>
         <!-- this goToLogin messes up the CSS for some reason -->
         <!-- <mdb-nav-item @click="goToLogin" id="drop">Logout</mdb-nav-item> -->
       </mdb-navbar-nav>
@@ -19,11 +19,9 @@
   background-color: #002d93;
   /* display: inline-block; */
 }
-
 #homeButton {
   color: white;
 }
-
 #drop {
   text-align: right;
 }
@@ -31,11 +29,6 @@
 
 
 <script>
-
-
-
-
-
 import {
   mdbDropdown,
   mdbDropdownToggle,
@@ -50,7 +43,6 @@ import {
 } from "mdbvue";
 export default {
   name: "HelloWorld",
-
   components: {
     mdbNavbar,
     mdbNavbarBrand,
@@ -72,7 +64,12 @@ export default {
     },
     goToOfficeList(){
       this.$router.push({path: "officeList"})
+    },
+    logout() {
+      sessionStorage.clear();
+      this.$router.push({path: "login"});
     }
+
   }
 };
 </script>

@@ -8,6 +8,9 @@
     <td @click="editOffice" class="edit-office text-center">
       <i class="fas fa-pencil-alt" ></i>
     </td>
+    <td @click="$emit('delete-office', office.officeId)" class="edit-office text-center">
+      <i class="fas fa-trash"></i>
+    </td>
   </tr>
 </template>
 
@@ -26,13 +29,19 @@ export default {
               query: {
                 id: this.office.officeId
               }})
-        }
+        },
     },
 }
 </script>
 
 <style scoped>
   .edit-office:hover {
-    cursor: pointer
+    cursor: pointer;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .edit-office {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
   }
 </style>

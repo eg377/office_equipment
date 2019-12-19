@@ -1,26 +1,29 @@
 <template>
   <div>
     <!-- <NavBar /> -->
-    <ContentWrapper>
+    
       <div class="container">
+        <div class="text-center">
+          <button class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
+        </div>
         <office-table />
 
-        <button class="btn btn-primary text-center" @click="addOffice">Add Office</button>
+
       </div>
-    </ContentWrapper>
+    
   </div>
 </template>
 
 <script>
 import ContentWrapper from "../../components/Layout/ContentWrapper";
 import officeListTableVue from "./officeListComponents/officeListTable.vue";
-// import NavBar from "../../../src/components/NavBar/navbar.vue";
+import NavBar from "../../../src/components/NavBar/navbar.vue";
 
 export default {
   components: {
     "office-table": officeListTableVue,
     ContentWrapper: ContentWrapper,
-    //NavBar
+    NavBar
   },
   methods: {
     addOffice() {
@@ -29,3 +32,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .add-btn {
+    width: 50%;
+  }
+</style>
