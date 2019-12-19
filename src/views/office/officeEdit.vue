@@ -1,10 +1,10 @@
 <template>
-  <ContentWrapper>
     <div class="container">
       <div class="content-heading text-center">
-        <h1>Add New Office</h1>
+        <h1 v-if="!id">Add Office</h1>
+        <h1 v-if="id">Update Office</h1>
       </div>
-      <form @submit="validateAndSubmit" class="jumbotron jumbotron-fluid">
+      <form class="jumbotron jumbotron-fluid">
           <div v-if="errors.length">
           <div class="alert alert-warning" v-bind:key="index" v-for="(error, index) in errors">{{error}}</div>
         </div>
@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
           <label for="officeName">Name</label>
-          <input type="text" class="form-control" id="officeName" v-model="officeName" />
+          <input type="text" class="form-control" id="officeName" v-model="office.officeName" />
         </div>
 
         <div class="form-group">
@@ -26,7 +26,7 @@
             type="text"
             class="form-control"
             id="inputAddress"
-            v-model="address"
+            v-model="office.streetAddress"
             placeholder="1234 Main St"
           />
         </div>
@@ -36,31 +36,30 @@
             type="text"
             class="form-control"
             id="inputAddress2"
-            v-model="address2"
+            v-model="office.address2"
             placeholder="Apartment, studio, or floor"
           />
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" v-model="city" />
+            <input type="text" class="form-control" id="inputCity" v-model="office.city" />
           </div>
           <div class="form-group col-md-4">
             <label for="inputState">State</label>
-            <input id="inputState" class="form-control" v-model="state" />
+            <input id="inputState" class="form-control" />
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" v-model="zip" />
+            <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
           </div>
         </div>
         <div class="form-group text-center">
-          <button type="submit" class="btn btn-lg btn-primary">Save</button>
-          <button type="reset" class="btn btn-lg btn-danger ml-2">Cancel</button>
+          <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
+          <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
         </div>
       </form>
     </div>
-  </ContentWrapper>
 </template>
 
 <script>
@@ -69,22 +68,37 @@ export default {
   name: "office",
   data() {
     return {
-      officeName: "Cognizant",
-      address: "500 Frank Burr Blvd",
-      address2: "",
-      city: "Teaneck",
-      state: "NJ",
-      country: "USA",
-      zip: "07666",
+      office: {
+        officeName: '',
+        streetAddress: '',
+        city: '',
+        zip: '',
+        active: true
+      },
+      id: this.$route.query.id,
       errors: []
     };
   },
-  computed: {
-    id() {
-      return this.$route.params.id;
+  created() {
+    console.log("Form Created");
+    // console.log('params: ' + this.$router.query.id);
+    if(this.id){
+      OfficeDataService.getOfficeById(this.id).then( result => {
+        this.office = result;
+      });
     }
   },
+  computed: {
+    // id() {
+    //   return this.$route.query.id;
+    // }
+  },
   methods: {
+
+      cancelForm: function(event){
+        event.preventDefault();
+        this.$router.push("/officeList");
+      },
 
       redirect: function (event) {
        this.$router.push("/officeList");
@@ -94,32 +108,24 @@ export default {
     validateAndSubmit(e) {
       e.preventDefault();
       this.errors = [];
-      if (!this.officeName) {
+      if (!this.office.officeName) {
         this.errors.push("Enter valid values");
       }
-      if (!this.address) {
+      if (!this.office.streetAddress) {
         this.errors.push("Enter valid values");
       }
-      if (!this.city) {
+      if (!this.office.city) {
         this.errors.push("Enter valid values");
       }
-      if (!this.state) {
-        this.errors.push("Enter valid values");
-      }
-      if (!this.country) {
-        this.errors.push("Enter valid values");
-      }
-      if (!this.zip) {
+      if (!this.office.zip) {
         this.errors.push("Enter valid values");
       }
 
       //When the user input is valid, if there is no id in the path
       //then the office is saved to the database and the app is routed to officeList
       if (this.errors.length === 0) {
-        if (this.id === -1) {
-          OfficeDataService.createOffice({
-            office: this.office
-          }).then(() => {
+        if (!this.id) {
+          OfficeDataService.createOffice(this.office).then(() => {
             this.$router.push("/officeList");
           });
         }
@@ -127,10 +133,7 @@ export default {
         //When the user input is valid, if there is id in the path
         //then the office is updated in the database and the app is routed to officeList
         else {
-          OfficeDataService.updateOffice(this.id, {
-            id: this.id,
-            office: this.office
-          }).then(() => {
+          OfficeDataService.updateOffice(this.id, this.office).then(() => {
             this.$router.push("/officeList");
           });
         }
