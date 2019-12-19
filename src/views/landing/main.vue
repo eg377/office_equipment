@@ -32,6 +32,11 @@ const RegionValues = {
   IN: 7810 // India
 };
 
+const EquipValues = {
+  US: 100, // USA
+  IN: 235 // India
+};
+
 export default {
   name: "appLanding",
   components: {
@@ -123,7 +128,6 @@ export default {
         },
         shadowSize: 0
       },
-
       // VectorMap
       series: {
         regions: [
@@ -134,23 +138,6 @@ export default {
           }
         ]
       },
-      // markers: [
-      //   { latLng: [41.9, 12.45], name: "Vatican City" },
-      //   { latLng: [43.73, 7.41], name: "Monaco" },
-      //   { latLng: [-0.52, 166.93], name: "Nauru" },
-      //   { latLng: [-8.51, 179.21], name: "Tuvalu" },
-      //   { latLng: [7.11, 171.06], name: "Marshall Islands" },
-      //   { latLng: [17.3, -62.73], name: "Saint Kitts and Nevis" },
-      //   { latLng: [3.2, 73.22], name: "Maldives" },
-      //   { latLng: [35.88, 14.5], name: "Malta" },
-      //   { latLng: [41.0, -71.06], name: "New England" },
-      //   { latLng: [12.05, -61.75], name: "Grenada" },
-      //   { latLng: [13.16, -59.55], name: "Barbados" },
-      //   { latLng: [17.11, -61.85], name: "Antigua and Barbuda" },
-      //   { latLng: [-4.61, 55.45], name: "Seychelles" },
-      //   { latLng: [7.35, 134.46], name: "Palau" },
-      //   { latLng: [42.5, 1.51], name: "Andorra" }
-      // ],
       options: {
         map: "world_mill_en",
         backgroundColor: defaultColors.bgColor,
@@ -186,20 +173,10 @@ export default {
         },
         onRegionLabelShow: (e, el, code) => {
           if (RegionValues[code])
-            el.html(el.html() + ": " + RegionValues[code] + " Offices");
+            el.html(el.html() + ": " +"<br>"+ RegionValues[code] + " Offices"+"<br>");
+            el.html(el.html() + EquipValues[code] + " Equippments");
         }
       },
-
-      selectedLanguage() {
-        switch (this.$i18n.i18next.language) {
-          case "es":
-            return "Spanish";
-            break;
-          case "en":
-          default:
-            return "English";
-        }
-      }
     };
   }
 };
@@ -255,5 +232,19 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #002d93;
+}
+
+body .jvectormap-zoomin, body .jvectormap-zoomout {
+    position: absolute;
+    left: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 2px;
+    background: #515253;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    line-height: 10px;
+    text-align: center;
 }
 </style>
