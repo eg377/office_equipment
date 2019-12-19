@@ -1,7 +1,7 @@
 <template>
   <div>
-    <NavBar />
-    <ContentWrapper>
+    <!-- <NavBar /> -->
+    
       <div class="container">
         <div class="text-center">
           <button class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
@@ -10,7 +10,7 @@
 
 
       </div>
-    </ContentWrapper>
+    
   </div>
 </template>
 
@@ -27,8 +27,7 @@ export default {
   },
   methods: {
     addOffice() {
-      // this.$router.push({path: "officeEdit"})
-      this.$router.push(`/officeedit/2`);
+      this.$router.push({path: "officeEdit"})
     }
   }
 };

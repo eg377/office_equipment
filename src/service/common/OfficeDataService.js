@@ -2,11 +2,12 @@ import axios from 'axios';
 
 
 const OFFICE_API_URL = 'https://sunshine-fe-ms.cfapps.io'
-const AuthStr = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzY3MjY2NDQsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJmMjA3M2MzNS02YjUyLTRlZTUtODY3Ni03ZmZkODdhODg2OTkiLCJjbGllbnRfaWQiOiJDbGllbnRJZCIsInNjb3BlIjpbImFsbCJdfQ.qOPui8E4dB3wnZGenhoPJ5ITNF6WssQfA2ffbkLyQHk'
+const token = sessionStorage.getItem('access_token');
+const AuthStr = `Bearer ${token}`
+
 class OfficeDataService {
 
     getAllOffices(){
-        
         return axios.get(OFFICE_API_URL + '/api/offices', {headers: { Authorization: AuthStr }})
             .then(response => {
                 console.log(response.data);
@@ -14,26 +15,30 @@ class OfficeDataService {
             })
     }
 
-    getOfficeById(id){
-        
-        return axios.get(`${OFFICE_API_URL}/api/offices/office/${id}`, {headers: { Authorization: AuthStr }})
+    getOfficeById(officeId) {
+        return axios.get(`${OFFICE_API_URL}/api/offices/${officeId}`, {headers: { Authorization: AuthStr }})
             .then(response => {
                 console.log(response.data);
                 return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
             })
     }
 
     createOffice(office) {
-        console.log(office);
+        console.log("creating office");
         return axios.post(`${OFFICE_API_URL}/api/offices`, office, {headers: { Authorization: AuthStr }})
                     .then(res => {
                         console.log(res.data)
                     })
     }
 
-    updateOffice(id) {
-        console.log("updating")
-        return axios.put(`${OFFICE_API_URL}/api/offices/office/${id}`)
+    updateOffice(id, office) {
+        console.log('Editing Office')
+        return axios.put(`${OFFICE_API_URL}/api/offices/${id}`, office,{headers: { Authorization: AuthStr }})
+            .then(res=>{
+                console.log(res.data)
+            })
     }
 
     deleteOffice(officeId) {
@@ -45,8 +50,6 @@ class OfficeDataService {
                 console.log(`Error: ${err}`)
             })
     }
-
-   
 }
 
 export default new OfficeDataService()

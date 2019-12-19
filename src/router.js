@@ -33,7 +33,7 @@ export default new Router({
             component: officeListView
         },
         {
-            path: '/officeEdit/:id',
+            path: '/officeEdit',
             component: officeEditView
         },        
         {

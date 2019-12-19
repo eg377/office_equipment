@@ -13,7 +13,7 @@
 
 
     <div>
-        <NavBar />
+        <!--<NavBar /> -->
       <!-- <img id="cogLogo" alt="Cognizant logo" src="../../../src/assets/CognizantLogo.png" /> -->
       <img id="officeImage" alt="Vue logo" src="../../../src/assets/Cognizant-Chennai.jpg" />
     </div>
