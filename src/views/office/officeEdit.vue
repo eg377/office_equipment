@@ -75,7 +75,7 @@ export default {
         zip: '',
         active: true
       },
-      id: this.$route.query.id,
+      id: this.$route.params.id,
       errors: []
     };
   },
@@ -97,11 +97,11 @@ export default {
 
       cancelForm: function(event){
         event.preventDefault();
-        this.$router.push("/officeList");
+        this.$router.push({name: "offices"});
       },
 
       redirect: function (event) {
-       this.$router.push("/officeList");
+       this.$router.push({name: "offices"});
       },
     //this code checks the validity of the fields
 
@@ -126,7 +126,7 @@ export default {
       if (this.errors.length === 0) {
         if (!this.id) {
           OfficeDataService.createOffice(this.office).then(() => {
-            this.$router.push("/officeList");
+            this.$router.push({name: "offices"});
           });
         }
 
@@ -134,7 +134,7 @@ export default {
         //then the office is updated in the database and the app is routed to officeList
         else {
           OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push("/officeList");
+            this.$router.push({name: "offices"});
           });
         }
       }
