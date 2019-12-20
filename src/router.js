@@ -50,10 +50,17 @@ export default new Router({
         },
         {
             path: '/userList',
+            name: 'users',
             component: userListView
         },
         {
-            path: '/userEdit',
+            path: '/users/new',
+            name: 'addUser',
+            component: userEditView
+        },
+        {
+            path: '/user/edit/:id',
+            name: 'editUser',
             component: userEditView   
         },     
         {

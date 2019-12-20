@@ -122,7 +122,7 @@ export default {
     }
   },
   watch: {
-    route: "getUsers"
+    "route": "getUsers"
   },
   computed: {
     activeUsers() {
