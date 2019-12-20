@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     addOffice() {
-      this.$router.push({path: "officeEdit"})
+      this.$router.push({name: "addOffice"})
     }
   }
 };

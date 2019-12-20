@@ -87,7 +87,7 @@ export default {
       } else {
         console.log('token available',token);
         sessionStorage.setItem('access_token', token );
-        this.$router.push({path:'/main' });
+        this.$router.push({name:'main' });
       }
     },
     checkForm(e){

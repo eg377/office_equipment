@@ -25,8 +25,8 @@ export default {
     methods: {
         editOffice() {
             this.$router.push({
-              path: "officeEdit",
-              query: {
+              name: "editOffice",
+              params: {
                 id: this.office.officeId
               }})
         },

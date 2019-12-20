@@ -57,17 +57,17 @@ export default {
   },
   methods: {
     goToMain(){
-      this.$router.push({path: "main"})
+      this.$router.push({name: "main"})
     },
     goToLogin(){
-      this.$router.push({path: "login"})
+      this.$router.push({name: "login"})
     },
     goToOfficeList(){
-      this.$router.push({path: "officeList"})
+      this.$router.push({name: "offices"})
     },
     logout() {
       sessionStorage.clear();
-      this.$router.push({path: "login"});
+      this.$router.push({name: "login"});
     }
 
   }

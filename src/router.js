@@ -18,22 +18,32 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [{
             path: '/',
+            name: 'root',      
             redirect: '/login',
         },
         {
-            path: '/login',          
+            path: '/login',
+            name: 'login',          
             component: loginView,
         },
         {
             path: '/main',
+            name: 'main',      
             component: maingView
         },
         {
-            path: '/officeList',
+            path: '/offices',
+            name: 'offices',      
             component: officeListView
         },
         {
-            path: '/officeEdit',
+            path: '/offices/new',
+            name: 'addOffice',      
+            component: officeEditView
+        },
+        {
+            path: 'offices/edit/:id',
+            name: 'editOffice',
             component: officeEditView
         },        
         {
