@@ -50,6 +50,11 @@ class OfficeDataService {
                 console.log(`Error: ${err}`)
             })
     }
+<<<<<<< HEAD
+=======
+
+   
+>>>>>>> 50d0a882d69d8172e72dbb0931e5e90f18761bdd
 }
 
 export default new OfficeDataService()
