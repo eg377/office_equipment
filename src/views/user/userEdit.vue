@@ -63,7 +63,7 @@
 </template>
 
 <script>
-// import OfficeDataService from "../../service/common/userDataService";
+import OfficeDataService from "../../service/common/UserDataService";
 export default {
   name: "user",
   data() {
@@ -81,11 +81,11 @@ export default {
   },
   created() {
     console.log("Form Created");
-    // console.log('params: ' + this.$router.query.id);
+    console.log('params: ' + this.$router.query.id);
     if(this.id){
-    //   UserDataService.getUserById(this.id).then( result => {
-        // this.user = result;
-    //   });
+      UserDataService.getUserById(this.id).then( result => {
+        this.user = result;
+      });
     }
   },
   computed: {
@@ -134,7 +134,7 @@ export default {
         //then the office is updated in the database and the app is routed to officeList
         else {
           OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push("/officeList");
+            this.$router.push("/userList");
           });
         }
       }

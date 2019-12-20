@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     addUser() {
-      this.$router.push({path: "userEdit"})
+      this.$router.push({path: "users/new"})
     }
   }
 };

@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import userService from "../../../service/common/UserDataServe.js";
+import userService from "../../../service/common/UserDataService.js";
 
 export default {
   data() {
@@ -107,7 +107,7 @@ export default {
     },
     editUser() {
       this.$router.push({
-        path: "userEdit",
+        path: "user/edit/:id",
         query: {
           id: this.user.userId
         }
