@@ -16,6 +16,9 @@
         <table-row 
           v-for="office in activeOffices" :key="office.officeId" :office="office"
           @delete-office="setDelete"/>
+        <table-row class="inactive"
+          v-for="office in inactiveOffices" :key="office.officeId" :office="office"
+          @delete-office="setDelete"/>
       </tbody>
     </table>
     <div class="text-center" v-show="loading">Loading Offices...</div>
@@ -76,9 +79,18 @@
       computed: {
         activeOffices() {
           let active = this.offices.filter(office => office.active)
-
           return active 
+        },
+        inactiveOffices() {
+          let inactive = this.offices.filter(office => !office.active);
+          return inactive;
         }
       },
     }
 </script>
+
+<style>
+  .inactive{
+    background-color: darkgray;
+  }
+</style>

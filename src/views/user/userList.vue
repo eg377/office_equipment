@@ -4,9 +4,9 @@
     
       <div class="container">
         <div class="text-center">
-          <button class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
+          <button class="btn btn-primary text-center add-btn" @click="addUser">Add User</button>
         </div>
-        <office-table />
+        <user-table />
 
 
       </div>
@@ -16,18 +16,18 @@
 
 <script>
 import ContentWrapper from "../../components/Layout/ContentWrapper";
-import officeListTableVue from "./officeListComponents/officeListTable.vue";
+import userListTableVue from "./userListComponents/userListTable.vue";
 import NavBar from "../../../src/components/NavBar/navbar.vue";
 
 export default {
   components: {
-    "office-table": officeListTableVue,
+    "user-table": userListTableVue,
     ContentWrapper: ContentWrapper,
     NavBar
   },
   methods: {
-    addOffice() {
-      this.$router.push({name: "addOffice"})
+    addUser() {
+      this.$router.push({path: "users/new"})
     }
   }
 };

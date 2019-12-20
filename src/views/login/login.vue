@@ -41,10 +41,8 @@
     <!----------------------------------->
   
 </form>
-  </div>
-      </div>
-      
-    </div>  
+<button @click="userAdded">Add User</button>  
+</div>    
 </template>
  
 <script>
@@ -87,7 +85,7 @@ export default {
       } else {
         console.log('token available',token);
         sessionStorage.setItem('access_token', token );
-        this.$router.push({path:'/main' });
+        this.$router.push({name:'main' });
       }
     },
     checkForm(e){
@@ -108,6 +106,9 @@ export default {
       }
 
 
+    },
+    userAdded(){
+      console.log("Work in progress")
     }
   }
 };
