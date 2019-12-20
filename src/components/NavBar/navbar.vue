@@ -6,6 +6,7 @@
       <mdb-navbar-nav right>
         <!-- <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item> -->
         <mdb-nav-item @click="goToOfficeList" active id="drop">To Office</mdb-nav-item>
+        <mdb-nav-item @click="goToUserList" active id="drop">To User</mdb-nav-item>
         <mdb-nav-item @click="logout" id="drop">Logout</mdb-nav-item>
         <!-- this goToLogin messes up the CSS for some reason -->
         <!-- <mdb-nav-item @click="goToLogin" id="drop">Logout</mdb-nav-item> -->
@@ -64,6 +65,9 @@ export default {
     },
     goToOfficeList(){
       this.$router.push({path: "officeList"})
+    },
+    goToUserList(){
+      this.$router.push({path: "userList"})
     },
     logout() {
       sessionStorage.clear();
