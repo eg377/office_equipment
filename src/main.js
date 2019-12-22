@@ -21,6 +21,7 @@ import './vendor.js'
 import App from './App.vue'
 import router from './router'
 import i18next from './i18n.js';
+import * as VueGoogleMaps from "vue2-google-maps";
 import authService from './service/common/CommonCall'
 //import axios from 'axios'
 //import VueAxios from 'vue-axios'
@@ -49,7 +50,12 @@ password: admin
 grant_type: password
   
  */
-
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyDn5REd-ifbdS-DtVviYTCaIuGEKVhMdeA",
+    libraries: "places" // necessary for places input
+  }
+});
 
 new Vue({
   i18n,

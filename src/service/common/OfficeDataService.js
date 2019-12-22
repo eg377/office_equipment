@@ -31,6 +31,7 @@ class OfficeDataService {
                     .then(res => {
                         console.log(res.data)
                     })
+                    
     }
 
     updateOffice(id, office) {
