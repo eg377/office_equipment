@@ -1,8 +1,8 @@
 <template>
     <div class="container">
       <div class="content-heading text-center">
-        <h1 v-if="!id">Add Office</h1>
-        <h1 v-if="id">Update Office</h1>
+        <h1 v-if="!id">Add User</h1>
+        <h1 v-if="id">Update User</h1>
       </div>
       <form class="jumbotron jumbotron-fluid">
           <div v-if="errors.length">
@@ -16,8 +16,8 @@
           </button>
         </div>
         <div class="form-group">
-          <label for="officeName">Name</label>
-          <input type="text" class="form-control" id="officeName" v-model="office.officeName" />
+          <label for="userName">Name</label>
+          <input type="text" class="form-control" id="userName" v-model="user.userName" />
         </div>
 
         <div class="form-group">
@@ -26,7 +26,7 @@
             type="text"
             class="form-control"
             id="inputAddress"
-            v-model="office.streetAddress"
+            v-model="user.streetAddress"
             placeholder="1234 Main St"
           />
         </div>
@@ -36,14 +36,14 @@
             type="text"
             class="form-control"
             id="inputAddress2"
-            v-model="office.address2"
+            v-model="user.address2"
             placeholder="Apartment, studio, or floor"
           />
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" v-model="office.city" />
+            <input type="text" class="form-control" id="inputCity" v-model="user.city" />
           </div>
           <div class="form-group col-md-4">
             <label for="inputState">State</label>
@@ -51,7 +51,7 @@
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
+            <input type="text" class="form-control" id="inputZip" v-model="user.zip" />
           </div>
         </div>
         <div class="form-group text-center">
@@ -63,28 +63,28 @@
 </template>
 
 <script>
-import OfficeDataService from "../../service/common/OfficeDataService";
+import OfficeDataService from "../../service/common/UserDataService";
 export default {
-  name: "office",
+  name: "user",
   data() {
     return {
-      office: {
-        officeName: '',
+      user: {
+        userName: '',
         streetAddress: '',
         city: '',
         zip: '',
         active: true
       },
-      id: this.$route.params.id,
+      id: this.$route.query.id,
       errors: []
     };
   },
   created() {
     console.log("Form Created");
-    // console.log('params: ' + this.$router.query.id);
+    console.log('params: ' + this.$router.query.id);
     if(this.id){
-      OfficeDataService.getOfficeById(this.id).then( result => {
-        this.office = result;
+      UserDataService.getUserById(this.id).then( result => {
+        this.user = result;
       });
     }
   },
@@ -97,44 +97,44 @@ export default {
 
       cancelForm: function(event){
         event.preventDefault();
-        this.$router.push({name: "offices"});
+        this.$router.push("/userList");
       },
 
       redirect: function (event) {
-       this.$router.push({name: "offices"});
+       this.$router.push("/userList");
       },
     //this code checks the validity of the fields
 
     validateAndSubmit(e) {
       e.preventDefault();
       this.errors = [];
-      if (!this.office.officeName) {
+      if (!this.user.userName) {
         this.errors.push("Enter valid values");
       }
-      if (!this.office.streetAddress) {
+      if (!this.user.streetAddress) {
         this.errors.push("Enter valid values");
       }
-      if (!this.office.city) {
+      if (!this.user.city) {
         this.errors.push("Enter valid values");
       }
-      if (!this.office.zip) {
+      if (!this.user.zip) {
         this.errors.push("Enter valid values");
       }
 
       //When the user input is valid, if there is no id in the path
-      //then the office is saved to the database and the app is routed to officeList
+      //then the user is saved to the database and the app is routed to officeList
       if (this.errors.length === 0) {
         if (!this.id) {
-          OfficeDataService.createOffice(this.office).then(() => {
-            this.$router.push({name: "offices"});
-          });
+        //   userDataService.createUser(this.user).then(() => {
+            // this.$router.push("/officeList");
+        //   });
         }
 
         //When the user input is valid, if there is id in the path
         //then the office is updated in the database and the app is routed to officeList
         else {
           OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push({name: "offices"});
+            this.$router.push("/userList");
           });
         }
       }
