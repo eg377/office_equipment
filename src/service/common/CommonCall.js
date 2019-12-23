@@ -65,7 +65,12 @@ const authService = {
         } catch (e) {
             return false;
         }
-    }
+    },
+    
+    logoutStub: async () => {
+        console.log('logoutStub');  
+        return 'logged out';   
+   }
 }
 
 export default authService;
