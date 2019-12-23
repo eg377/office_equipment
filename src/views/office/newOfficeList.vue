@@ -2,37 +2,82 @@
   <div class="card card-default">
     <!-- <div class="card-header">Sortable</div> -->
     <div class="card-body">
-      <!-- <button @click="getOffices()">Get Offices Button</button> -->
-      <b-table v-if="checkIfAdmin()" responsive striped hover :items="activeOffices" :fields="fieldsSortable">
-        <template  slot="actions" scope="row">
-          <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
-            <i class="fas fa-edit fa-2x icon-button"></i>
-            <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
-          </span>  
-          &nbsp;&nbsp;
-          <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
-          <span class="fa-stack edit-office" @click="setDelete(row.item)">
-            <i class="far fa-trash-alt fa-2x icon-button"></i>
-            <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
-          </span>
-        </template>
-      </b-table>
-
-      <b-table v-else responsive striped hover :items="activeOffices" :fields="activeNoneAdminSortable">
-      </b-table>
-
-
-      <br>
-      <br>
-      <br>
-      <div v-if="checkIfAdmin()">
-        <h3>Inactive Offices</h3>
-        <b-table responsive striped hover :items="inactiveOffices" :fields="adminFieldsSortable">
+      <div class="overflow-auto" v-if="checkIfAdmin()">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+        <b-table
+          responsive
+          striped
+          hover
+          :items="activeOffices"
+          :fields="fieldsSortable"
+          id="my-table"
+          :per-page="perPage"
+          :current-page="currentPage"
+        >
           <template slot="actions" scope="row">
             <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
-            <i class="fas fa-edit fa-2x icon-button"></i>
-            <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
-          </span> &nbsp;&nbsp;
+              <i class="fas fa-edit fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
+            </span>&nbsp;&nbsp;
+            <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
+            <span class="fa-stack edit-office" @click="setDelete(row.item)">
+              <i class="far fa-trash-alt fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
+            </span>
+          </template>
+        </b-table>
+      </div>
+      <div class="overflow-auto" v-else>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+        <b-table
+          responsive
+          striped
+          hover
+          :items="activeOffices"
+          :fields="activeNoneAdminSortable"
+          id="my-table"
+          :per-page="perPage"
+          :current-page="currentPage"
+        ></b-table>
+      </div>
+      <!-- <button @click="getOffices()">Get Offices Button</button> -->
+
+      <br />
+      <br />
+      <br />
+      <div v-if="checkIfAdmin()">
+        <h3>Inactive Offices</h3>
+        <b-pagination
+          v-model="inactiveCurrentPage"
+          :total-rows="inactiveRows"
+          :per-page="perPage"
+          aria-controls="inactive-table"
+        ></b-pagination>
+        <b-table
+          responsive
+          striped
+          hover
+          :items="inactiveOffices"
+          :fields="adminFieldsSortable"
+          id="inactive-table"
+          :per-page="perPage"
+          :current-page="inactiveCurrentPage"
+        >
+          <template slot="actions" scope="row">
+            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
+              <i class="fas fa-edit fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
+            </span>&nbsp;&nbsp;
           </template>
         </b-table>
       </div>
@@ -50,11 +95,14 @@
 
 <script>
 import officeService from "../../service/common/OfficeDataService.js";
-import authService from '../../service/common/CommonCall'
+import authService from "../../service/common/CommonCall";
 
 export default {
   data() {
     return {
+      perPage: 5,
+      currentPage: 1,
+      inactiveCurrentPage: 1,
       loading: false,
       deleteOffice: false,
       idToDelete: undefined,
@@ -63,7 +111,10 @@ export default {
       watch: {
         route: "getOffices"
       },
-
+      transProps: {
+        // Transition name
+        name: "flip-list"
+      },
       // Fields with Sortable definition
       // Note 'isActive' is left out and will not appear in the rendered table
       activeNoneAdminSortable: {
@@ -90,7 +141,7 @@ export default {
         country: {
           label: "Country",
           sortable: true
-        },
+        }
         // actions: {
         //   label: "Actions"
         // }
@@ -173,7 +224,7 @@ export default {
     this.getOffices();
   },
   methods: {
-    checkIfAdmin(){
+    checkIfAdmin() {
       return authService.checkAuthority("ROLE_ADMIN");
     },
     editOffice(id) {
@@ -223,13 +274,18 @@ export default {
     inactiveOffices() {
       let inactive = this.offices.filter(office => !office.active);
       return inactive;
+    },
+    rows() {
+      return this.activeOffices.length;
+    },
+    inactiveRows() {
+      return this.inactiveOffices.length;
     }
   }
 };
 </script>
 
 <style scoped>
-
 .inactive {
   background-color: darkgray;
 }
@@ -262,26 +318,23 @@ export default {
   border: solid 1px #ddd;
   border-radius: 0.5em;
   font-family: "Source Sans Pro", sans-serif;
-
-  
 }
 
-  .icon-tooltip {
+.icon-tooltip {
+  opacity: 0;
+}
 
-    opacity: 0;
-  }
+.edit-office:hover .icon-tooltip {
+  opacity: 0.5;
+}
 
-  .edit-office:hover .icon-tooltip {
-    opacity: 0.5;
-  }
+.icon-button {
+  opacity: 0.5;
+}
 
-  .icon-button {
-    opacity: 0.5;
-  }
-
-  .edit-office:hover .icon-button {
-    opacity: 0;
-  }
+.edit-office:hover .icon-button {
+  opacity: 0;
+}
 </style>
 
 
