@@ -13,12 +13,13 @@
         </div>
         <br />
         <gmap-map
-          :center="center"
+          :center="center[0]"
           :options="{styles: styles}"
           style="width:100%;  height: 450px;"
           :zoom="2"
         >
           <gmap-marker
+            :icon=image
             :key="index"
             v-for="(m, index) in markers"
             :position="m.position"
@@ -39,10 +40,10 @@ export default {
   data() {
     return {
       loading: false,
-      center: { lat: 30.508, lng: -73.587 },
-      // { lat: 35.001237, lng: -88.15932 }, north america
-      // { lat: 20.698587, lng: 78.26626 }, asia
-      // { lat: 49.883319, lng: 16.418917 } europe
+      center: [{ lat: 30.508, lng: -73.587 },
+      { lat: 35.001237, lng: -88.15932 }, 
+      { lat: 20.698587, lng: 78.26626 }, 
+      { lat: 49.883319, lng: 16.418917 } ],
       markers: [],
       places: [],
       currentPlace: null,
@@ -266,6 +267,8 @@ export default {
       ]
     };
   },
+
+  
   mounted() {
     this.geolocate();
   },
