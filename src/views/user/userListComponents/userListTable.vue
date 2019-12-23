@@ -1,5 +1,27 @@
 <template>
   <div>
+    <div class="card card-default">
+      <div class="text-center">
+          <button class="btn btn-primary text-center add-btn" @click="addUser">Add User</button>
+      </div>
+      <div class="card-body">
+      <b-table responsive striped hover :items="users" :fields="userFields">
+          <template slot="actions" scope="row">
+            <span class="fa-stack edit-office" @click="editUser(row.item.username)">
+              <i class="fas fa-edit fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
+            </span>  
+            &nbsp;&nbsp;            
+            <span class="fa-stack edit-office" @click="deleteUser(row.item.username)">
+              <i class="far fa-trash-alt fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
+            </span>
+          </template>
+        </b-table>
+      </div>
+    </div>
+
+<!--
     <table class="table table-hover table-dark mt-3">
       <thead>
         <tr>
@@ -35,13 +57,8 @@
         />
       </tbody>
     </table>
-    <div class="text-center" v-show="loading">Loading Users...</div>
-    <!--<div class="text-center" v-show="deleteUser">
-      Are you sure you want to delete user {{idToDelete}}?
-      <br />
-      <button class="btn btn-primary" @click="confirmDelete">Yes</button>
-      <button class="btn btn-danger" @click="clearDelete">No</button>
-    </div>-->
+    -->
+    <div class="text-center" v-show="loading">Loading Users...</div>    
   </div>
 </template>
 
@@ -72,7 +89,33 @@ export default {
       ],
       loading: false,
      // deleteUser: false,
-      idToDelete: 1
+      idToDelete: 1,      
+      userFields: {
+        username: {
+          label: "User Name",
+          sortable: true
+        },
+        firstName: {
+          label: "First Name",
+          sortable: true
+        },
+        lastName: {
+          label: "Last NAme",
+          sortable: true
+        },
+        role: {
+          label: "Role",
+          sortable: true          
+        },
+        department: {
+          label: "Department",
+          sortable: true
+        },
+        actions: {
+          label: "Actions"
+        }
+      },
+      
     };
   },
   created() {
@@ -88,11 +131,26 @@ export default {
     }
   },
   methods: {
+    addUser() {
+      this.$router.push({path: "users/new"})
+    },
     async getUsers() {
       this.loading = true;
       const promise = userService.getAllUsers();
-      promise.then(result => {
-        this.users = result;
+      promise.then(result => {        
+        var userList = [];
+        result.map(m => 
+          userList.push(
+          {
+            username:m.username,
+            firstName: m.firstName,
+            lastName: m.lastName,
+            role: m.roles != null && m.roles.length > 0 ? m.roles[0].name : '',
+            department: m.department
+          }
+          )
+        );
+        this.users = userList;
         this.loading = false;
       });
     },
@@ -167,4 +225,27 @@ export default {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
 }
+
+
+.icon-tooltip {
+
+    opacity: 0;
+  }
+
+  .edit-office:hover .icon-tooltip {
+    opacity: 0.5;
+  }
+
+  .icon-button {
+    opacity: 0.5;
+  }
+
+  .edit-office:hover .icon-button {
+    opacity: 0;
+  }
+
+  .add-btn {
+    width: 30%;
+  }
+
 </style>
