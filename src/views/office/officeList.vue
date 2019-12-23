@@ -1,21 +1,14 @@
 <template>
   <div>
     <!-- <NavBar /> -->
-    
-      <div class="container">
-        <div class="text-center">
-          <button 
-            class="btn btn-primary text-center add-btn" 
-            @click="addOffice"
-            v-if="isAdmin">
-              Add Office
-          </button>
-        </div>
-        <office-table :isAdmin="isAdmin" />
 
-
+    <div class="container">
+      <div class="text-center">
+        <button v-if="checkIfAdmin()" class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
       </div>
-    
+      <!-- <office-table /> -->
+      <newOfficeList />
+    </div>
   </div>
 </template>
 
@@ -23,16 +16,22 @@
 import ContentWrapper from "../../components/Layout/ContentWrapper";
 import officeListTableVue from "./officeListComponents/officeListTable.vue";
 import NavBar from "../../../src/components/NavBar/navbar.vue";
+import newOfficeList from "./newOfficeList";
+import authService from '../../service/common/CommonCall'
 
 export default {
   components: {
     "office-table": officeListTableVue,
     ContentWrapper: ContentWrapper,
-    NavBar
+    NavBar,
+    newOfficeList
   },
   methods: {
+    checkIfAdmin(){
+      return authService.checkAuthority("ROLE_ADMIN");
+    },
     addOffice() {
-      this.$router.push({name: "addOffice"})
+      this.$router.push({ name: "addOffice" });
     }
   },
   computed: {
@@ -46,15 +45,12 @@ export default {
         return e;
       }
     },
-    isAdmin() {
-      return this.userPermissions.includes("ROLE_ADMIN")
-    }
   },
 };
 </script>
 
 <style scoped>
-  .add-btn {
-    width: 50%;
-  }
+.add-btn {
+  width: 50%;
+}
 </style>

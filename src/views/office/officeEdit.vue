@@ -1,36 +1,40 @@
 <template>
-    <div class="container">
-      <div class="content-heading text-center">
-        <h1 v-if="!id">Add Office</h1>
-        <h1 v-if="id">Update Office</h1>
+  <div class="container">
+    <div class="content-heading text-center">
+      <h1 v-if="!id">Add Office</h1>
+      <h1 v-if="id">Update Office</h1>
+    </div>
+    <form class="jumbotron jumbotron-fluid">
+      <div v-if="errors.length">
+        <div
+          class="alert alert-warning"
+          v-bind:key="index"
+          v-for="(error, index) in errors"
+        >{{error}}</div>
       </div>
-      <form class="jumbotron jumbotron-fluid">
-          <div v-if="errors.length">
-          <div class="alert alert-warning" v-bind:key="index" v-for="(error, index) in errors">{{error}}</div>
-        </div>
-        <div class="form-group">
-          <button v-on:click="redirect" type="button" class="close text-danger" aria-label="Close">
-            <span aria-hidden="true">
-              <i class="far fa-times-circle"></i>
-            </span>
-          </button>
-        </div>
-        <div class="form-group">
-          <label for="officeName">Name</label>
-          <input type="text" class="form-control" id="officeName" v-model="office.officeName" />
-        </div>
+      <div class="form-group">
+        <button v-on:click="redirect" type="button" class="close text-danger" aria-label="Close">
+          <span aria-hidden="true">
+            <i class="far fa-times-circle"></i>
+          </span>
+        </button>
+      </div>
+      <div class="form-group">
+        <label for="officeName">Name</label>
+        <input type="text" class="form-control" id="officeName" v-model="office.officeName" />
+      </div>
 
-        <div class="form-group">
-          <label for="inputAddress">Address</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAddress"
-            v-model="office.streetAddress"
-            placeholder="1234 Main St"
-          />
-        </div>
-        <div class="form-group">
+      <div class="form-group">
+        <label for="inputAddress">Address</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputAddress"
+          v-model="office.streetAddress"
+          placeholder="1234 Main St"
+        />
+      </div>
+      <!-- <div class="form-group">
           <label for="inputAddress2">Address 2</label>
           <input
             type="text"
@@ -39,6 +43,11 @@
             v-model="office.address2"
             placeholder="Apartment, studio, or floor"
           />
+      </div>-->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">City</label>
+          <input type="text" class="form-control" id="inputCity" v-model="office.city" />
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -69,8 +78,23 @@
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
           <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
         </div>
-      </form>
-    </div>
+      </div>
+      <div class="form-group">
+        <label for="inputCountry">Country</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputCountry"
+          v-model="office.country"
+          placeholder="USA"
+        />
+      </div>
+      <div class="form-group text-center">
+        <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
+        <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -80,23 +104,32 @@ export default {
   data() {
     return {
       office: {
+<<<<<<< HEAD
         officeName: '',
         streetAddress: '',
         city: '',
         zip: '',
         state: '',
         country: '',
+=======
+        officeName: "",
+        streetAddress: "",
+        city: "",
+        zip: "",
+>>>>>>> be00e1e3137776bff6204b4fb3d433cdebf32262
         active: true
       },
-      id: this.$route.params.id,
+      //original id: this.$route.params.id,
+      //id: this.$route.params.id,
+      id: this.$route.query.id,
       errors: []
     };
   },
   created() {
     console.log("Form Created");
     // console.log('params: ' + this.$router.query.id);
-    if(this.id){
-      OfficeDataService.getOfficeById(this.id).then( result => {
+    if (this.id) {
+      OfficeDataService.getOfficeById(this.id).then(result => {
         this.office = result;
       });
     }
@@ -107,15 +140,14 @@ export default {
     // }
   },
   methods: {
+    cancelForm: function(event) {
+      event.preventDefault();
+      this.$router.push({ name: "offices" });
+    },
 
-      cancelForm: function(event){
-        event.preventDefault();
-        this.$router.push({name: "offices"});
-      },
-
-      redirect: function (event) {
-       this.$router.push({name: "offices"});
-      },
+    redirect: function(event) {
+      this.$router.push({ name: "offices" });
+    },
     //this code checks the validity of the fields
 
     validateAndSubmit(e) {
@@ -139,7 +171,7 @@ export default {
       if (this.errors.length === 0) {
         if (!this.id) {
           OfficeDataService.createOffice(this.office).then(() => {
-            this.$router.push({name: "offices"});
+            this.$router.push({ name: "offices" });
           });
         }
 
@@ -147,7 +179,7 @@ export default {
         //then the office is updated in the database and the app is routed to officeList
         else {
           OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push({name: "offices"});
+            this.$router.push({ name: "offices" });
           });
         }
       }
