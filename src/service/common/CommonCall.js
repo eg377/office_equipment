@@ -48,5 +48,24 @@ const authService = {
         }
         
     },
-} 
+
+    getToken: () => {
+        try {
+            const accessToken = sessionStorage.getItem('access_token');
+            return JSON.parse(atob(accessToken.split('.')[1]));
+        } catch (e) {
+            return false;
+        }
+    },
+
+    checkAuthority: (role) => {
+        const token = this.getToken();
+        try {
+            return token.authorities.includes(role);
+        } catch (e) {
+            return false;
+        }
+    }
+}
+
 export default authService;
