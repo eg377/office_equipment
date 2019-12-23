@@ -2,25 +2,71 @@
   <div class="card card-default">
     <!-- <div class="card-header">Sortable</div> -->
     <div class="card-body">
+      <div class="overflow-auto" v-if="checkIfAdmin()">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+        <b-table
+          responsive
+          striped
+          hover
+          :items="activeOffices"
+          :fields="fieldsSortable"
+          id="my-table"
+          :per-page="perPage"
+          :current-page="currentPage"
+        >
+          <template slot="actions" scope="row">
+            <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
+            <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
+            <i id="editButton" class="far fa-trash-alt fa-2x" @click="setDelete(row.item)"></i>
+          </template>
+        </b-table>
+      </div>
+      <div class="overflow-auto" v-else>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+        <b-table
+          responsive
+          striped
+          hover
+          :items="activeOffices"
+          :fields="activeNoneAdminSortable"
+          id="my-table"
+          :per-page="perPage"
+          :current-page="currentPage"
+        ></b-table>
+      </div>
       <!-- <button @click="getOffices()">Get Offices Button</button> -->
-      <b-table v-if="checkIfAdmin()" responsive striped hover :items="activeOffices" :fields="fieldsSortable">
-        <template  slot="actions" scope="row">
-          <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
-          <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
-          <i id="editButton" class="far fa-trash-alt fa-2x" @click="setDelete(row.item)"></i>
-        </template>
-      </b-table>
 
-      <b-table v-else responsive striped hover :items="activeOffices" :fields="activeNoneAdminSortable">
-      </b-table>
-
-
-      <br>
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
       <div v-if="checkIfAdmin()">
         <h3>Inactive Offices</h3>
-        <b-table responsive striped hover :items="inactiveOffices" :fields="adminFieldsSortable">
+        <b-pagination
+          v-model="inactiveCurrentPage"
+          :total-rows="inactiveRows"
+          :per-page="perPage"
+          aria-controls="inactive-table"
+        ></b-pagination>
+        <b-table
+          responsive
+          striped
+          hover
+          :items="inactiveOffices"
+          :fields="adminFieldsSortable"
+          id="inactive-table"
+          :per-page="perPage"
+          :current-page="inactiveCurrentPage"
+        >
           <template slot="actions" scope="row">
             <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
           </template>
@@ -40,11 +86,14 @@
 
 <script>
 import officeService from "../../service/common/OfficeDataService.js";
-import authService from '../../service/common/CommonCall'
+import authService from "../../service/common/CommonCall";
 
 export default {
   data() {
     return {
+      perPage: 5,
+      currentPage: 1,
+      inactiveCurrentPage: 1,
       loading: false,
       deleteOffice: false,
       idToDelete: undefined,
@@ -53,7 +102,10 @@ export default {
       watch: {
         route: "getOffices"
       },
-
+      transProps: {
+        // Transition name
+        name: "flip-list"
+      },
       // Fields with Sortable definition
       // Note 'isActive' is left out and will not appear in the rendered table
       activeNoneAdminSortable: {
@@ -80,7 +132,7 @@ export default {
         country: {
           label: "Country",
           sortable: true
-        },
+        }
         // actions: {
         //   label: "Actions"
         // }
@@ -163,7 +215,7 @@ export default {
     this.getOffices();
   },
   methods: {
-    checkIfAdmin(){
+    checkIfAdmin() {
       return authService.checkAuthority("ROLE_ADMIN");
     },
     editOffice(id) {
@@ -213,13 +265,19 @@ export default {
     inactiveOffices() {
       let inactive = this.offices.filter(office => !office.active);
       return inactive;
+    },
+    rows() {
+      return this.activeOffices.length;
+    },
+    inactiveRows() {
+      return this.inactiveOffices.length;
     }
   }
 };
 </script>
 
 <style scoped>
-#editButton:hover{
+#editButton:hover {
   opacity: 0.5;
 }
 
