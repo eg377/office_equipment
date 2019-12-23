@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     addUser() {
+      console.log('token',sessionStorage.getItem('access_token'));
       this.$router.push({path: "users/new"})
     }
   }

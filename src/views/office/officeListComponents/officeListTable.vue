@@ -12,7 +12,7 @@
           <th scope = "col" v-if="isAdmin"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="isAdmin">
         <table-row 
           v-for="office in activeOffices" 
           :key="office.officeId" 
@@ -24,7 +24,7 @@
           :key="office.officeId" 
           :office="office"
           @delete-office="setDelete"
-          v-if="isAdmin"/>
+          />
       </tbody>
     </table>
     <div class="text-center" v-show="loading">Loading Offices...</div>

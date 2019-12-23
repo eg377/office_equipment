@@ -27,6 +27,7 @@ class UserDataService {
 
     async createUser(user) {
         console.log("creating user");
+        console.log(AuthStr);
         const res = await axios.post(`${USER_API_URL}/api/users`, user, { headers: { Authorization: AuthStr } });
         console.log(res.data);
     }

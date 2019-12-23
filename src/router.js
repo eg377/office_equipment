@@ -85,13 +85,13 @@ export default new Router({
             component: userEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.canActivate(to));
-            }
+            }            
         },           
         {
             path: '/reports',
             name: 'reports',
             component: dashboard1
-        },               
+        },
         {
             path: '*',
             redirect: '/'

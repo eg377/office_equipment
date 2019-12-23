@@ -44,6 +44,40 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-md-12">
+                <div class="card flex-row align-items-center align-items-stretch border-0">
+                    <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
+                        <em class="icon-globe fa-3x"></em>
+                    </div>
+                    <div class="col-8 py-3 bg-purple rounded-right">
+                        <div class="h2 mt-0">{{americaUserCount}}
+                        </div>
+                        <div class="text-uppercase">America</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card flex-row align-items-center align-items-stretch border-0">
+                    <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
+                        <em class="fas fa-users fa-3x"></em>
+                    </div>
+                    <div class="col-8 py-3 bg-primary rounded-right">
+                        <div class="h2 mt-0">{{europeUserCount}}</div>
+                        <div class="text-uppercase">Europe</div>
+                    </div>
+                </div>
+            </div>            
+            <div class="col-xl-3 col-lg-6 col-md-12">
+                <div class="card flex-row align-items-center align-items-stretch border-0">
+                    <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+                        <em class="fas fa-toolbox fa-3x"></em>                        
+                    </div>
+                    <div class="col-8 py-3 bg-green rounded-right">
+                        <div class="h2 mt-0">{{asiaUserCount}}</div>
+                        <div class="text-uppercase">Asia</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12">
                 <!-- START date widget-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-green justify-content-center rounded-left">
@@ -208,6 +242,9 @@
                 officeCount: 20,
                 userCount: 3456,
                 equipmentCount: 254,
+                americaUserCount: 950,
+                europeUserCount: 1300,
+                asiaUserCount: 1200,
                 flotData: [{
                     "label": "Uniques",
                     "color": "#768294",

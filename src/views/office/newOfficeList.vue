@@ -228,7 +228,10 @@ export default {
 };
 </script>
 
-<style scoped>
+// <style scoped>
+ /* #editButton:hover{ */
+
+ /* } */
 
 .inactive {
   background-color: darkgray;
