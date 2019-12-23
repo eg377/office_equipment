@@ -7,7 +7,7 @@
         <template  slot="actions" scope="row">
           <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
           <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
-          <i class="far fa-trash-alt fa-2x" @click="setDelete(row.item)"></i>
+          <i id="editButton" class="far fa-trash-alt fa-2x" @click="setDelete(row.item)"></i>
         </template>
       </b-table>
 
@@ -20,9 +20,9 @@
       <br>
       <div v-if="checkIfAdmin()">
         <h3>Inactive Offices</h3>
-        <b-table :items="inactiveOffices" :fields="adminFieldsSortable">
+        <b-table responsive striped hover :items="inactiveOffices" :fields="adminFieldsSortable">
           <template slot="actions" scope="row">
-            <i class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
+            <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
           </template>
         </b-table>
       </div>
@@ -220,7 +220,7 @@ export default {
 
 <style scoped>
 #editButton:hover{
-
+  opacity: 0.5;
 }
 
 .inactive {
