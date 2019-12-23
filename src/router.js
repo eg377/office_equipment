@@ -10,6 +10,8 @@ const maingView = () => import ('@/views/landing/main.vue')
 const loginView = () => import ('@/views/login/login.vue')
 const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
+const userListView = () => import ('@/views/user/userList.vue')
+const userEditView = () => import ('@/views/user/userEdit.vue')
 
 Vue.use(Router)
 
@@ -45,7 +47,22 @@ export default new Router({
             path: 'offices/edit/:id',
             name: 'editOffice',
             component: officeEditView
-        },        
+        },
+        {
+            path: '/userList',
+            name: 'users',
+            component: userListView
+        },
+        {
+            path: '/users/new',
+            name: 'addUser',
+            component: userEditView
+        },
+        {
+            path: '/user/edit/:id',
+            name: 'editUser',
+            component: userEditView   
+        },     
         {
             path: '*',
             redirect: '/'
