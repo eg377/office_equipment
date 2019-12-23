@@ -94,8 +94,8 @@ export default {
         active: true
       },
       //original id: this.$route.params.id,
-      //id: this.$route.params.id,
-      id: this.$route.query.id,
+      id: this.$route.params.id,
+      //id: this.$route.query.id,
       errors: []
     };
   },
