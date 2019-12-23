@@ -27,7 +27,7 @@
       <br>
       <div v-if="checkIfAdmin()">
         <h3>Inactive Offices</h3>
-        <b-table :items="inactiveOffices" :fields="adminFieldsSortable">
+        <b-table responsive striped hover :items="inactiveOffices" :fields="adminFieldsSortable">
           <template slot="actions" scope="row">
             <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
             <i class="fas fa-edit fa-2x icon-button"></i>
@@ -229,9 +229,6 @@ export default {
 </script>
 
 <style scoped>
-#editButton:hover{
-
-}
 
 .inactive {
   background-color: darkgray;
@@ -275,11 +272,11 @@ export default {
   }
 
   .edit-office:hover .icon-tooltip {
-    opacity: 1;
+    opacity: 0.5;
   }
 
   .icon-button {
-    opacity: 1;
+    opacity: 0.5;
   }
 
   .edit-office:hover .icon-button {
