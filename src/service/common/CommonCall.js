@@ -59,7 +59,7 @@ const authService = {
     },
 
     checkAuthority: (role) => {
-        const token = this.getToken();
+        const token = authService.getToken();
         try {
             return token.authorities.includes(role);
         } catch (e) {
