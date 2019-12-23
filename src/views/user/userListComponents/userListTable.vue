@@ -48,6 +48,23 @@
 <script>
 import userService from "../../../service/common/UserDataService.js";
 
+import Vue from 'vue';
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
+ 
+// include the default style
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+ 
+// Tell Vue to install the plugin.
+Vue.use(VuejsDialog,{
+  html: true,
+  loader: true,
+  okText: 'Disable',
+  cancelText: 'Cancel',
+  animation: 'bounce'
+});
+
+
 export default {
   data() {
     return {
@@ -96,11 +113,21 @@ export default {
       });
     },
     async deleteUser(username){
-      const promise = userService.deleteUser(this.username);
-      promise.then(res => {
-        this.clearDelete();
-        this.getUsers();
+      Vue.dialog
+        .confirm('Disable User?')
+        .then(function(dialog) {
+        console.log('Clicked on proceed');
+      })
+      .catch(function() {
+        console.log('Clicked on cancel');
       });
+
+
+      // const promise = userService.deleteUser(this.username);
+      // promise.then(res => {
+      //   this.clearDelete();
+      //   this.getUsers();
+      // });
     },
     // async confirmDelete() {
     //   const promise = userService.deleteUser(this.idToDelete);
