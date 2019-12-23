@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
           <label for="role" >Role</label>
-          <input type="text" class="form-control" is="role" v-model="user.role"/>
+          <input type="text" class="form-control" id="role" v-model="user.role"/>
         </div>
         <div class="form-group text-center">
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import OfficeDataService from "../../service/common/UserDataService";
+import userDataService from "../../service/common/UserDataService";
 export default {
   name: "user",
   data() {
@@ -54,16 +54,18 @@ export default {
         role: '',
         active: true
       },
-      id: this.$route.query.id,
+      id: this.$route.params.id,
       errors: []
     };
   },
   created() {
-    console.log("Form Created");
+    console.log("Form Created 1", this.id);
     // console.log('params: ' + this.$router.query.id);
     if(this.id){
-      UserDataService.getUserById(this.id).then( result => {
+      console.log("Form Created 2");
+      userDataService.getUserByName(this.id).then( result => {
         this.user = result;
+
       });
     }
   },

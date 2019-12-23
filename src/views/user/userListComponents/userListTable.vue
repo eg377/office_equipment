@@ -19,10 +19,10 @@
           <td>{{user.lastName}}</td>
           <td>{{user.roles[0].name}}</td>
           <td>{{user.department}}</td>
-          <td @click="editUser" class="edit-user text-center">
+          <td @click="editUser(user.username)" class="edit-user text-center">
             <i class="fas fa-pencil-alt"></i>
           </td>
-          <td @click="$emit('delete-user', user.userId)" class="edit-user text-center">
+          <td @click="deleteUser(user.username)" class="edit-user text-center">
             <i class="fas fa-trash"></i>
           </td>
         </tr>
@@ -31,17 +31,17 @@
           v-for="user in inactiveUsers"
           :key="user.userId"
           :user="user"
-          @delete-user="setDelete"
+          
         />
       </tbody>
     </table>
     <div class="text-center" v-show="loading">Loading Users...</div>
-    <div class="text-center" v-show="deleteUser">
+    <!--<div class="text-center" v-show="deleteUser">
       Are you sure you want to delete user {{idToDelete}}?
       <br />
       <button class="btn btn-primary" @click="confirmDelete">Yes</button>
       <button class="btn btn-danger" @click="clearDelete">No</button>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
       users: [
       ],
       loading: false,
-      deleteUser: false,
+     // deleteUser: false,
       idToDelete: 1
     };
   },
@@ -86,22 +86,29 @@ export default {
     clearDelete() {
       this.deleteUser = false;
     },
-    editUser() {
-      console.log(this.user.id)
+    editUser(id) {
+      console.log(id)
       this.$router.push({
         name: "editUser",
         params: {
-          id: this.user.Id
+          id: id
         }
       });
     },
-    async confirmDelete() {
-      const promise = userService.deleteUser(this.idToDelete);
+    async deleteUser(username){
+      const promise = userService.deleteUser(this.username);
       promise.then(res => {
         this.clearDelete();
         this.getUsers();
       });
-    }
+    },
+    // async confirmDelete() {
+    //   const promise = userService.deleteUser(this.idToDelete);
+    //   promise.then(res => {
+    //     this.clearDelete();
+    //     this.getUsers();
+    //   });
+    // }
   },
   watch: {
     "route": "getUsers"
