@@ -47,12 +47,23 @@
           </div>
           <div class="form-group col-md-4">
             <label for="inputState">State</label>
-            <input id="inputState" class="form-control" />
+            <region-select 
+              v-model="office.state"
+              :region="office.state"
+              :country="office.country"
+              className="form-control"/>
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip">Zip</label>
             <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
           </div>
+        </div>
+        <div class="form-group">
+          <label for="inputCountry">Country</label>
+          <country-select 
+            v-model="office.country" 
+            :country="office.country" 
+            className="form-control" />
         </div>
         <div class="form-group text-center">
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
@@ -73,6 +84,8 @@ export default {
         streetAddress: '',
         city: '',
         zip: '',
+        state: '',
+        country: '',
         active: true
       },
       id: this.$route.params.id,

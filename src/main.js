@@ -15,6 +15,7 @@ import 'mdbvue/lib/css/mdb.min.css'
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18Next from '@panter/vue-i18next';
+import vueCountryRegionSelect from 'vue-country-region-select'
 
 import './vendor.js'
 
@@ -24,12 +25,15 @@ import i18next from './i18n.js';
 import authService from './service/common/CommonCall'
 //import axios from 'axios'
 //import VueAxios from 'vue-axios'
+
+
  
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue);
 Vue.use(VueI18Next);
+Vue.use(vueCountryRegionSelect)
 //Vue.use(VueAxios, axios);
 
 
