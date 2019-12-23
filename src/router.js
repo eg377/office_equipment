@@ -63,13 +63,12 @@ export default new Router({
             path: '/user/edit/:id',
             name: 'editUser',
             component: userEditView   
-        },        
+        },           
         {
-            path: '/report/dashboard1',
-            name: 'dashboard1',
+            path: '/reports',
+            name: 'reports',
             component: dashboard1
         },
-        
         {
             path: '*',
             redirect: '/'
