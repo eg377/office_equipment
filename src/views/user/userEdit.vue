@@ -16,6 +16,10 @@
           </button>
         </div>
         <div class="form-group">
+          <label for="username" >Username</label>
+          <input type="text" class="form-control" id="username" v-model="user.username"/>
+        </div>
+        <div class="form-group">
           <label for="firstName">First Name</label>
           <input type="text" class="form-control" id="firstName" v-model="user.firstName" />
         </div>
@@ -30,8 +34,16 @@
           <input type="text" class="form-control" id="userId" v-model="user.userId"/>
         </div>
         <div class="form-group">
+          <label for="password">Password</label>
+          <input type="text" class="form-control" id="password" v-model="user.password"/>
+        </div>
+        <div class="form-group">
           <label for="role" >Role</label>
           <input type="text" class="form-control" id="role" v-model="user.role"/>
+        </div>
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" class="form-control" id="department" v-model="user.department"/>
         </div>
         <div class="form-group text-center">
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
@@ -48,10 +60,13 @@ export default {
   data() {
     return {
       user: {
+        username: '',
         firstName: '',
         lastName: '',
         userId: '',
+        password: '',
         role: '',
+        department: '',
         active: true
       },
       id: this.$route.params.id,
@@ -100,6 +115,12 @@ export default {
       }
       if (!this.user.role) {
         this.errors.push("Enter a role");
+      }
+      if(!this.user.department){
+        this.errors.push("Enter a department");
+      }
+      if(!this.user.username){
+        this.errors.push("Enter a username");
       }
 
       //When the user input is valid, if there is no id in the path

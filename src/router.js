@@ -12,6 +12,7 @@ const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
 const userListView = () => import ('@/views/user/userList.vue')
 const userEditView = () => import ('@/views/user/userEdit.vue')
+const reportsView = () => import ('@/views/reports.vue')
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
             path: '/user/edit/:id',
             name: 'editUser',
             component: userEditView   
+        },
+        {
+            path: '/reports',
+            name: 'reports',
+            component: reportsView   
         },     
         {
             path: '*',
