@@ -40,8 +40,7 @@
       </div>  
     <!----------------------------------->
   
-</form>
-<button @click="userAdded">Add User</button>  
+</form> 
 </div>    
 </template>
  
@@ -106,9 +105,6 @@ export default {
       }
 
 
-    },
-    userAdded(){
-      console.log("Work in progress")
     }
   }
 };

@@ -67,7 +67,7 @@ export default {
       this.$router.push({name: "offices"})
     },
     goToUserList(){
-      this.$router.push({path: "userList"})
+      this.$router.push({path: "users"})
     },
     logout() {
       sessionStorage.clear();

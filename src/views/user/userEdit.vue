@@ -16,43 +16,22 @@
           </button>
         </div>
         <div class="form-group">
-          <label for="userName">Name</label>
-          <input type="text" class="form-control" id="userName" v-model="user.userName" />
-        </div>
-
-        <div class="form-group">
-          <label for="inputAddress">Address</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAddress"
-            v-model="user.streetAddress"
-            placeholder="1234 Main St"
-          />
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" v-model="user.firstName" />
         </div>
         <div class="form-group">
-          <label for="inputAddress2">Address 2</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAddress2"
-            v-model="user.address2"
-            placeholder="Apartment, studio, or floor"
-          />
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastname" v-model="user.lastName"/>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" v-model="user.city" />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <input id="inputState" class="form-control" />
-          </div>
-          <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" v-model="user.zip" />
-          </div>
+        </div>
+        <div class="form-group">
+          <label for="userId">User iD</label>
+          <input type="text" class="form-control" id="userId" v-model="user.userId"/>
+        </div>
+        <div class="form-group">
+          <label for="role" >Role</label>
+          <input type="text" class="form-control" is="role" v-model="user.role"/>
         </div>
         <div class="form-group text-center">
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
@@ -69,10 +48,10 @@ export default {
   data() {
     return {
       user: {
-        userName: '',
-        streetAddress: '',
-        city: '',
-        zip: '',
+        firstName: '',
+        lastName: '',
+        userId: '',
+        role: '',
         active: true
       },
       id: this.$route.query.id,
@@ -81,7 +60,7 @@ export default {
   },
   created() {
     console.log("Form Created");
-    console.log('params: ' + this.$router.query.id);
+    // console.log('params: ' + this.$router.query.id);
     if(this.id){
       UserDataService.getUserById(this.id).then( result => {
         this.user = result;
@@ -97,44 +76,44 @@ export default {
 
       cancelForm: function(event){
         event.preventDefault();
-        this.$router.push("/userList");
+        this.$router.push({name: "users"});
       },
 
       redirect: function (event) {
-       this.$router.push("/userList");
+       this.$router.push({name: "users"});
       },
     //this code checks the validity of the fields
 
     validateAndSubmit(e) {
       e.preventDefault();
       this.errors = [];
-      if (!this.user.userName) {
-        this.errors.push("Enter valid values");
+      if (!this.user.firstName) {
+        this.errors.push("Enter a first name");
       }
-      if (!this.user.streetAddress) {
-        this.errors.push("Enter valid values");
+      if (!this.user.lastName) {
+        this.errors.push("Enter a last name");
       }
-      if (!this.user.city) {
-        this.errors.push("Enter valid values");
+      if (!this.user.userId) {
+        this.errors.push("Enter a user id");
       }
-      if (!this.user.zip) {
-        this.errors.push("Enter valid values");
+      if (!this.user.role) {
+        this.errors.push("Enter a role");
       }
 
       //When the user input is valid, if there is no id in the path
       //then the user is saved to the database and the app is routed to officeList
       if (this.errors.length === 0) {
         if (!this.id) {
-        //   userDataService.createUser(this.user).then(() => {
-            // this.$router.push("/officeList");
-        //   });
+          userDataService.createUser(this.user).then(() => {
+            this.$router.push({name: "users"});
+          });
         }
 
         //When the user input is valid, if there is id in the path
         //then the office is updated in the database and the app is routed to officeList
         else {
-          OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push("/userList");
+          userDataService.updateUser(this.id, this.office).then(() => {
+            this.$router.push({name: "users"});
           });
         }
       }

@@ -49,7 +49,7 @@ export default new Router({
             component: officeEditView
         },
         {
-            path: '/userList',
+            path: '/users',
             name: 'users',
             component: userListView
         },

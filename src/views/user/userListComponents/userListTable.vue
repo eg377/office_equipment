@@ -53,8 +53,8 @@ export default {
         {
           Id: 1,
           userId: 820123,
-          firstName: "Sean",
-          lastName: "Grano",
+          firstName: "Somebody",
+          lastName: "Else",
           role: "Developer"
         },
         {
@@ -107,9 +107,9 @@ export default {
     },
     editUser() {
       this.$router.push({
-        path: "user/edit/:id",
-        query: {
-          id: this.user.userId
+        name: "editUser",
+        params: {
+          id: this.user.Id
         }
       });
     },
