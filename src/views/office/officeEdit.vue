@@ -44,11 +44,6 @@
             placeholder="Apartment, studio, or floor"
           />
       </div>-->
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputCity">City</label>
-          <input type="text" class="form-control" id="inputCity" v-model="office.city" />
-        </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputCity">City</label>
@@ -78,21 +73,7 @@
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
           <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="inputCountry">Country</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputCountry"
-          v-model="office.country"
-          placeholder="USA"
-        />
-      </div>
-      <div class="form-group text-center">
-        <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
-        <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
-      </div>
+
     </form>
   </div>
 </template>
@@ -104,19 +85,12 @@ export default {
   data() {
     return {
       office: {
-<<<<<<< HEAD
         officeName: '',
         streetAddress: '',
         city: '',
         zip: '',
         state: '',
         country: '',
-=======
-        officeName: "",
-        streetAddress: "",
-        city: "",
-        zip: "",
->>>>>>> be00e1e3137776bff6204b4fb3d433cdebf32262
         active: true
       },
       //original id: this.$route.params.id,

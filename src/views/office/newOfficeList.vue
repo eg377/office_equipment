@@ -5,9 +5,16 @@
       <!-- <button @click="getOffices()">Get Offices Button</button> -->
       <b-table v-if="checkIfAdmin()" responsive striped hover :items="activeOffices" :fields="fieldsSortable">
         <template  slot="actions" scope="row">
-          <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
+          <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
+            <i class="fas fa-edit fa-2x icon-button"></i>
+            <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
+          </span>  
+          &nbsp;&nbsp;
           <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
-          <i class="far fa-trash-alt fa-2x" @click="setDelete(row.item)"></i>
+          <span class="fa-stack edit-office" @click="setDelete(row.item)">
+            <i class="far fa-trash-alt fa-2x icon-button"></i>
+            <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
+          </span>
         </template>
       </b-table>
 
@@ -22,7 +29,10 @@
         <h3>Inactive Offices</h3>
         <b-table :items="inactiveOffices" :fields="adminFieldsSortable">
           <template slot="actions" scope="row">
-            <i class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
+            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
+            <i class="fas fa-edit fa-2x icon-button"></i>
+            <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
+          </span> &nbsp;&nbsp;
           </template>
         </b-table>
       </div>
@@ -170,7 +180,7 @@ export default {
       this.$router.push({
         name: "editOffice",
         //path: "office/edit",
-        query: {
+        params: {
           id: id
         }
       });
@@ -229,13 +239,13 @@ export default {
 
 .edit-office:hover {
   cursor: pointer;
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .edit-office {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
+  word-wrap: normal;
+  color: inherited;
 }
 
 #deleteMessage {
@@ -255,7 +265,26 @@ export default {
   border: solid 1px #ddd;
   border-radius: 0.5em;
   font-family: "Source Sans Pro", sans-serif;
+
+  
 }
+
+  .icon-tooltip {
+
+    opacity: 0;
+  }
+
+  .edit-office:hover .icon-tooltip {
+    opacity: 1;
+  }
+
+  .icon-button {
+    opacity: 1;
+  }
+
+  .edit-office:hover .icon-button {
+    opacity: 0;
+  }
 </style>
 
 
