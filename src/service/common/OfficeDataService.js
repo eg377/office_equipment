@@ -27,6 +27,7 @@ class OfficeDataService {
 
     createOffice(office) {
         console.log("creating office");
+        console.log(office);
         return axios.post(`${OFFICE_API_URL}/api/offices`, office, {headers: { Authorization: AuthStr }})
                     .then(res => {
                         console.log(res.data)

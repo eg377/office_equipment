@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import {AuthGuard} from "./guards/AuthGuard";
+
 // Layouts
 //import Layout from '@/components/Layout/Layout'
 //import LayoutHorizontal from '@/components/Layout/LayoutHorizontal'
@@ -31,37 +33,58 @@ export default new Router({
         {
             path: '/main',
             name: 'main',      
-            component: maingView
+            component: maingView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },
         {
             path: '/offices',
             name: 'offices',      
-            component: officeListView
+            component: officeListView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },
         {
             path: '/offices/new',
             name: 'addOffice',      
-            component: officeEditView
+            component: officeEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },
         {
-            path: 'offices/edit/:id',
+            path: 'offices/edit',
             name: 'editOffice',
-            component: officeEditView
+            component: officeEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },
         {
             path: '/userList',
             name: 'users',
-            component: userListView
+            component: userListView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },
         {
             path: '/users/new',
             name: 'addUser',
-            component: userEditView
+            component: userEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },
         {
             path: '/user/edit/:id',
             name: 'editUser',
-            component: userEditView   
+            component: userEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.canActivate(to));
+            }
         },     
         {
             path: '*',

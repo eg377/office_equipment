@@ -34,7 +34,16 @@
           placeholder="1234 Main St"
         />
       </div>
-
+      <!-- <div class="form-group">
+          <label for="inputAddress2">Address 2</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress2"
+            v-model="office.address2"
+            placeholder="Apartment, studio, or floor"
+          />
+      </div>-->
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputCity">City</label>
@@ -42,16 +51,22 @@
         </div>
         <div class="form-group col-md-4">
           <label for="inputState">State</label>
-          <input type="text" id="inputState" class="form-control" v-model="office.state" />
+          <input id="inputState" class="form-control" v-model="office.state"/>
         </div>
         <div class="form-group col-md-2">
           <label for="inputZip">Zip</label>
           <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
         </div>
-        <div class="form-group col-md-4">
-          <label for="inputCountry">Country</label>
-          <input type="text" id="inputCountry" class="form-control" v-model="office.country" />
-        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputCountry">Country</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputCountry"
+          v-model="office.country"
+          placeholder="USA"
+        />
       </div>
       <div class="form-group text-center">
         <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
@@ -97,11 +112,11 @@ export default {
   methods: {
     cancelForm: function(event) {
       event.preventDefault();
-      this.$router.push("/officeList");
+      this.$router.push({ name: "offices" });
     },
 
     redirect: function(event) {
-      this.$router.push("/officeList");
+      this.$router.push({ name: "offices" });
     },
     //this code checks the validity of the fields
 
@@ -126,7 +141,7 @@ export default {
       if (this.errors.length === 0) {
         if (!this.id) {
           OfficeDataService.createOffice(this.office).then(() => {
-            this.$router.push("/officeList");
+            this.$router.push({ name: "offices" });
           });
         }
 
@@ -134,7 +149,7 @@ export default {
         //then the office is updated in the database and the app is routed to officeList
         else {
           OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push("/officeList");
+            this.$router.push({ name: "offices" });
           });
         }
       }

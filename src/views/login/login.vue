@@ -63,7 +63,8 @@ export default {
     return{
     errors:[],  
     username: "",
-    password: ""
+    password: "",
+    returnUrl: this.$route.params.returnUrl,
     };
   },
  /* computed: {
@@ -85,7 +86,12 @@ export default {
       } else {
         console.log('token available',token);
         sessionStorage.setItem('access_token', token );
-        this.$router.push({name:'main' });
+        if (this.returnUrl) {
+            // this.router.navigateByUrl(this.returnUrl);
+            this.$router.push(this.returnUrl.fullPath);
+        } else {
+            this.$router.push({name:'main' });
+        }
       }
     },
     checkForm(e){
