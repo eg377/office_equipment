@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="text-center">
-        <button class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
+        <button v-if="checkIfAdmin()" class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
       </div>
       <!-- <office-table /> -->
       <newOfficeList />
@@ -17,6 +17,7 @@ import ContentWrapper from "../../components/Layout/ContentWrapper";
 import officeListTableVue from "./officeListComponents/officeListTable.vue";
 import NavBar from "../../../src/components/NavBar/navbar.vue";
 import newOfficeList from "./newOfficeList";
+import authService from '../../service/common/CommonCall'
 
 export default {
   components: {
@@ -26,6 +27,9 @@ export default {
     newOfficeList
   },
   methods: {
+    checkIfAdmin(){
+      return authService.checkAuthority("ROLE_ADMIN");
+    },
     addOffice() {
       this.$router.push({ name: "addOffice" });
     }

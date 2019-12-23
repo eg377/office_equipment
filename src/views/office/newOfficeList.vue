@@ -3,17 +3,22 @@
     <!-- <div class="card-header">Sortable</div> -->
     <div class="card-body">
       <!-- <button @click="getOffices()">Get Offices Button</button> -->
-      <b-table responsive striped hover :items="activeOffices" :fields="fieldsSortable">
-        <template slot="actions" scope="row">
+      <b-table v-if="checkIfAdmin()" responsive striped hover :items="activeOffices" :fields="fieldsSortable">
+        <template  slot="actions" scope="row">
           <i id="editButton" class="fas fa-edit fa-2x" @click="editOffice(row.item.officeId)"></i>&nbsp;&nbsp;
           <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
           <i class="far fa-trash-alt fa-2x" @click="setDelete(row.item)"></i>
         </template>
       </b-table>
+
+      <b-table v-else responsive striped hover :items="activeOffices" :fields="activeNoneAdminSortable">
+      </b-table>
+
+
       <br>
       <br>
       <br>
-      <div>
+      <div v-if="checkIfAdmin()">
         <h3>Inactive Offices</h3>
         <b-table :items="inactiveOffices" :fields="adminFieldsSortable">
           <template slot="actions" scope="row">
@@ -35,6 +40,7 @@
 
 <script>
 import officeService from "../../service/common/OfficeDataService.js";
+import authService from '../../service/common/CommonCall'
 
 export default {
   data() {
@@ -50,11 +56,36 @@ export default {
 
       // Fields with Sortable definition
       // Note 'isActive' is left out and will not appear in the rendered table
+      activeNoneAdminSortable: {
+        officeName: {
+          label: "Office Name",
+          sortable: true
+        },
+        streetAddress: {
+          label: "Address",
+          sortable: true
+        },
+        city: {
+          label: "City",
+          sortable: true
+        },
+        zip: {
+          label: "Zip Code",
+          sortable: true
+        },
+        state: {
+          label: "State",
+          sortable: true
+        },
+        country: {
+          label: "Country",
+          sortable: true
+        },
+        // actions: {
+        //   label: "Actions"
+        // }
+      },
       fieldsSortable: {
-        // officeId: {
-        //   label: "ID",
-        //   sortable: true
-        // },
         officeName: {
           label: "Office Name",
           sortable: true
@@ -132,6 +163,9 @@ export default {
     this.getOffices();
   },
   methods: {
+    checkIfAdmin(){
+      return authService.checkAuthority("ROLE_ADMIN");
+    },
     editOffice(id) {
       this.$router.push({
         name: "editOffice",
