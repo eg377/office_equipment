@@ -56,7 +56,7 @@ export default new Router({
             }
         },
         {
-            path: 'offices/edit',
+            path: 'offices/edit/:id',
             name: 'editOffice',
             component: officeEditView,
             beforeEnter(to, from, next){

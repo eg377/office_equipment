@@ -19,6 +19,7 @@
 <style>
 #nBar {
   background-color: #002d93;
+  min-height: 75px;
   /* display: inline-block; */
 }
 #homeButton {
@@ -73,9 +74,14 @@ export default {
     goToReport(){
       this.$router.push({name: "reports"})
     },
+    
     logout() {
-      sessionStorage.clear();
-      this.$router.push({name: "login"});
+      this.$store.dispatch('login/logout')
+           .then((response) => {
+             console.log("Got logout response " + response);
+
+             this.$router.push({name: "login"})
+             } )
     }
 
   }
