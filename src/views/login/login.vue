@@ -1,22 +1,18 @@
 <template>  
     <div class="card" >
       <header class="card-header">
-        <!--<img  id="cogLogo" alt="Cognizant logo" src="../assets/CognizantLogo.png" style="max-width:220px; width:100%; padding: 0px 50px 20px;  display: block; margin-left: auto; margin-right: auto">-->
-       <!-- <p class="card-header-title">Login</p> -->
-       
-            <img  id="cogLogo" alt="Cognizant logo" src="/img/CognizantLogo.png" style="max-width:220px; width:100%; padding: 20px 50px 20px;  display: block; margin-left: auto; margin-right: auto">
+                   <img  id="cogLogo" alt="Cognizant logo" src="/img/CognizantLogo.png" style="max-width:220px; width:100%; padding: 20px 50px 20px;  display: block; margin-left: auto; margin-right: auto">
        
       </header>
 
-    <form id="app" @submit="checkForm">
+    <form id="login" @submit="checkForm">
 
     <ul v-if="errors.length">
-        <p>Please correct follwing error</p>
+        <p>Please correct following error</p>
         <li class="errorMsg" v-for="error in errors" v-bind:key="error">
         {{ error }}
         </li>
-    </ul>    
-  
+    </ul>   
 
         
     <div class="card-content">        
@@ -41,58 +37,50 @@
     <!----------------------------------->
   
 </form>
-<button @click="userAdded">Add User</button>  
-</div>    
+  </div>
+      </div>      
+    </div>  
 </template>
  
 <script>
-import authService from '../../service/common/CommonCall'
-
-const authServiceUrl = "https://sunshine-auth-service.cfapps.io/oauth/token";
-
-const headerOptions = {
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + btoa( 'ClientId:ClientSecret')
-    }     
-};
-
+import { mapGetters } from 'vuex'  
 
 export default {
   data() {
     return{
     errors:[],  
     username: "",
-    password: "",
-    returnUrl: this.$route.params.returnUrl,
+    password: ""
     };
   },
- /* computed: {
-    id(){
-      return this.$route.params.id;
-    }
-  },*/
+  computed: {
+          ...mapGetters('login', ['isAuthenticated'])
+  },
   methods: {
-    async login(uname, pass) {
+        
+    login (uname, passwd) {
       console.log("uname = " + uname);
-      console.log("pass = " + pass);
-      console.log("Login functionality to be added")
-      const content = 'grant_type=password&username=' + uname + '&password=' + pass;
-      let token = await authService.postCall(authServiceUrl, content, headerOptions);
-      console.log('1. token value: ' + token);
-      if(token === undefined) {
-        console.log('token error',token);
-        alert('login error');
-      } else {
-        console.log('token available',token);
-        sessionStorage.setItem('access_token', token );
-        if (this.returnUrl) {
-            // this.router.navigateByUrl(this.returnUrl);
-            this.$router.push(this.returnUrl.fullPath);
-        } else {
-            this.$router.push({name:'main' });
-        }
-      }
+      console.log("passwd = " + passwd);
+      this.$store.dispatch('login/login', {username: uname, password: passwd})
+        .then(
+           (response) => {
+            console.log("Got login response " + response)
+            this.username = ''
+            this.password = '' 
+            if (response !== undefined && response !== 'error')           
+               this.$router.push({path:'/main' })
+            else 
+               this.errors.push("Some login info is not correct");
+
+           }
+          )
+          .catch(()=>{ 
+            this.username = ''
+            this.password = ''
+            console.error("Got nothing from server." )
+          })
+            
+        
     },
     checkForm(e){
       e.preventDefault();
@@ -112,9 +100,6 @@ export default {
       }
 
 
-    },
-    userAdded(){
-      console.log("Work in progress")
     }
   }
 };
