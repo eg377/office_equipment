@@ -18,6 +18,7 @@
 <style>
 #nBar {
   background-color: #002d93;
+  min-height: 75px;
   /* display: inline-block; */
 }
 #homeButton {
