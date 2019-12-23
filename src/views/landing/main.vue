@@ -3,13 +3,6 @@
     <h1 id="title">Cognizant Location Resource Manager</h1>
     <div id="appLanding">
       <div>
-        <!-- <div class="div continentList">
-          <ul>
-            <li @click="centerMap">North America</li>
-            <li>Europe</li>
-            <li>Asia</li>
-          </ul>
-        </div> -->
         <div>
           <!-- <h2>Search and add a pin</h2> -->
           <label>
@@ -20,7 +13,7 @@
         </div>
         <br />
         <gmap-map
-          :center="center[0]"
+          :center="center"
           :options="{styles: styles}"
           style="width:100%;  height: 450px;"
           :zoom="2"
@@ -39,18 +32,17 @@
   
 <script>
 import officeService from "../../service/common/OfficeDataService.js";
+import Vue from "vue";
 
 export default {
   name: "appLanding",
   data() {
     return {
       loading: false,
-      center: [
-        { lat: 30.508, lng: -73.587 },
-        { lat: 35.001237, lng: -88.15932 },
-        { lat: 20.698587, lng: 78.26626 },
-        { lat: 49.883319, lng: 16.418917 }
-      ],
+      center: { lat: 30.508, lng: -73.587 },
+      // { lat: 35.001237, lng: -88.15932 }, north america
+      // { lat: 20.698587, lng: 78.26626 }, asia
+      // { lat: 49.883319, lng: 16.418917 } europe
       markers: [],
       places: [],
       currentPlace: null,
@@ -286,8 +278,24 @@ export default {
       const promise = officeService.getAllOffices();
       promise.then(result => {
         this.offices = result;
-        console.log(result);
-        console.log(this.places);
+
+        //here we push each office into a geocoder to parse lat and long
+        // for google maps to add a marker
+        result.forEach(e => {
+          Vue.$geocoder.setDefaultMode("address");
+          var addressObj = {
+            address_line_1: e.streetAddress,
+            address_line_2: "",
+            city: e.city,
+            state: e.state, // province also valid
+            zip_code: e.zip, // postal_code also valid
+            country: e.country
+          };
+          Vue.$geocoder.send(addressObj, res => {
+            this.setPlace(res.results[0]);
+            this.addMarker();
+          });
+        });
         this.loading = false;
       });
     },
@@ -295,22 +303,25 @@ export default {
     setPlace(place) {
       this.currentPlace = place;
     },
-    centerMap() {
-      alert('map centered');
-      this.center = this.center[3];
-    },
+
     addMarker() {
       if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
-        };
+        let marker;
+        if (typeof this.currentPlace.geometry.location.lat === typeof 123) {
+          marker = {
+            lat: this.currentPlace.geometry.location.lat,
+            lng: this.currentPlace.geometry.location.lng
+          };
+        } else {
+          marker = {
+            lat: this.currentPlace.geometry.location.lat(),
+            lng: this.currentPlace.geometry.location.lng()
+          };
+        }
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
-        console.log(this.markers);
-        console.log(this.places);
       }
     },
     geolocate: function() {
@@ -355,5 +366,3 @@ body {
   padding: 0;
 }
 </style>
-
-// api key AIzaSyAybscOSzHux6W0Mod_-4HqzwoHk3kG_8g

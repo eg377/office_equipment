@@ -22,6 +22,7 @@ import App from './App.vue'
 import router from './router'
 import i18next from './i18n.js';
 import * as VueGoogleMaps from "vue2-google-maps";
+import Geocoder from "@pderas/vue2-geocoder";
 import authService from './service/common/CommonCall'
 //import axios from 'axios'
 //import VueAxios from 'vue-axios'
@@ -50,6 +51,13 @@ password: admin
 grant_type: password
   
  */
+Vue.use(Geocoder, {
+  defaultCountryCode: null, // e.g. 'CA'
+  defaultLanguage:    null, // e.g. 'en'
+  defaultMode:        'address', // or 'lat-lng'
+  googleMapsApiKey:   "AIzaSyDn5REd-ifbdS-DtVviYTCaIuGEKVhMdeA"
+});
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyDn5REd-ifbdS-DtVviYTCaIuGEKVhMdeA",
