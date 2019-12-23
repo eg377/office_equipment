@@ -3,20 +3,22 @@
     <table class="table table-hover table-dark mt-3">
       <thead>
         <tr>
-          <th scope="col">User ID</th>
+          <th scope="col">Username</th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Role</th>
+          <th scope="col">Department</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.Id" :user="user" @delete-user="setDelete">
-          <th scope="row">{{user.userId}}</th>
+          <th scope="row">{{user.username}}</th>
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
-          <td>{{user.role}}</td>
+          <td>{{user.roles[0].name}}</td>
+          <td>{{user.department}}</td>
           <td @click="editUser" class="edit-user text-center">
             <i class="fas fa-pencil-alt"></i>
           </td>
@@ -50,27 +52,6 @@ export default {
   data() {
     return {
       users: [
-        {
-          Id: 1,
-          userId: 820123,
-          firstName: "Somebody",
-          lastName: "Else",
-          role: "Developer"
-        },
-        {
-          Id: 2,
-          userId: 123245,
-          firstName: "Blah",
-          lastName: "Blub",
-          role: "Admin"
-        },
-        {
-          Id: 3,
-          userId: 987376,
-          firstName: "ha",
-          lastName: "ha",
-          role: "Manager"
-        }
       ],
       loading: false,
       deleteUser: false,
@@ -79,7 +60,7 @@ export default {
   },
   created() {
     //comment this back when the backend is up and running
-    // this.getUsers();
+    this.getUsers();
   },
   props: {
     user: {
@@ -106,6 +87,7 @@ export default {
       this.deleteUser = false;
     },
     editUser() {
+      console.log(this.user.id)
       this.$router.push({
         name: "editUser",
         params: {
