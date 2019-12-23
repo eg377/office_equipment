@@ -33,7 +33,19 @@ export default {
     addOffice() {
       this.$router.push({ name: "addOffice" });
     }
-  }
+  },
+  computed: {
+    userPermissions() {
+      const token = sessionStorage.getItem("access_token")
+
+      try {
+        const parsed = JSON.parse(atob(token.split('.')[1]))
+        return parsed.authorities;
+      } catch (e) {
+        return e;
+      }
+    },
+  },
 };
 </script>
 
