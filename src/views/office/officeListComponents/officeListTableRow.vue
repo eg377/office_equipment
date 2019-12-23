@@ -5,13 +5,13 @@
     <td>{{office.streetAddress}}</td>
     <td>{{office.city}}</td>
     <td>{{office.zip}}</td>
-    <td @click="editOffice" class="edit-office text-center">
+    <td @click="editOffice" class="edit-office text-center" v-if="isAdmin">
       <span class="fa-stack">
         <i class="fas fa-pencil-alt icon-button" ></i>
         <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
       </span>
     </td>
-    <td @click="$emit('delete-office', office.officeId)" class="edit-office text-center">
+    <td @click="$emit('delete-office', office.officeId)" class="edit-office text-center" v-if="isAdmin">
       <span class="fa-stack">
         <i class="fas fa-trash icon-button"></i>
         <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
@@ -27,6 +27,10 @@ export default {
             type: Object,
             default: {}
         },
+        isAdmin: {
+          type: Boolean,
+          default: true
+        }
     },
     methods: {
         editOffice() {
