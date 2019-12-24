@@ -13,7 +13,7 @@
         </div>
         <br />
         <gmap-map
-          :center="center[3]"
+          :center="center[0]"
           :options="{styles: styles}"
           style="width:100%;  height: 450px;"
           :zoom="2"
