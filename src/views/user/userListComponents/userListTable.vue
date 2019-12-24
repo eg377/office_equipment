@@ -42,7 +42,6 @@
           <td>{{user.roles[0].name}}</td>
           <td>{{user.department}}</td>
           <td @click="editUser(user.username)" class="edit-user text-center">
-
             <i class="fas fa-pencil-alt"></i>
           </td>
           <td @click="deleteUser(user.username)" class="edit-user text-center">
@@ -145,7 +144,7 @@ export default {
             username:m.username,
             firstName: m.firstName,
             lastName: m.lastName,
-            role: m.roles != null && m.roles.length > 0 ? m.roles[0].name : '',
+            role: m.roles != null && m.roles.length > 0 ? m.roles[0].name.split("ROLE_")[1] : '',
             department: m.department
           }
           )
