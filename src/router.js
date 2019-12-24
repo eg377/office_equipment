@@ -64,6 +64,31 @@ export default new Router({
             }
         },
         {
+            path: '/equipment/:id',
+            name: 'equipment',
+            component: equipmentListView
+        },
+        {
+            path: '/equipments',
+            name: 'equipments',
+            component: newEquipmentList
+        },
+        {
+            path: '/equipment/new',
+            name: 'addEquipment',
+            component: equipmentEditView
+        },
+        {
+            path: '/equipment/edit/:officeId',
+            name: 'editEquipment',
+            component: equipmentEditView
+        },
+        {
+            path: '/equipment/details',
+            name: 'equipmentDetail',
+            component: equipmentDetailView
+        },
+        {
             path: '/users',
             name: 'users',
             component: userListView,
@@ -85,7 +110,7 @@ export default new Router({
             component: userEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.canActivate(to));
-            }            
+            }   
         },           
         {
             path: '/report',
