@@ -118,8 +118,7 @@ export default {
       
     };
   },
-  created() {
-    //comment this back when the backend is up and running
+  created() {   
     this.getUsers();
   },
   props: {
