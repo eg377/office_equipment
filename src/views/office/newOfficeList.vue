@@ -2,6 +2,28 @@
   <div class="card card-default">
     <!-- <div class="card-header">Sortable</div> -->
     <div class="card-body">
+      <b-col lg="6" class="my-1">
+        <b-form-group
+          label="Office(s) Search:"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          label-for="filterInput"
+          class="mb-0"
+        >
+          <b-input-group size="sm">
+            <b-form-input
+              v-model="filter"
+              type="search"
+              id="filterInput"
+              placeholder="Type to Search"
+            ></b-form-input>
+            <b-input-group-append>
+              <button :disabled="!filter" @click="filter = ''">Clear</button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
       <div class="overflow-auto" v-if="checkIfAdmin()">
         <b-pagination
           v-model="currentPage"
@@ -16,6 +38,8 @@
           :items="activeOffices"
           :fields="fieldsSortable"
           id="my-table"
+          @filtered="onFiltered"
+          :filter="filter"
           :per-page="perPage"
           :current-page="currentPage"
         >
@@ -46,6 +70,8 @@
           :items="activeOffices"
           :fields="activeNoneAdminSortable"
           id="my-table"
+          @filtered="onFiltered"
+          :filter="filter"
           :per-page="perPage"
           :current-page="currentPage"
         ></b-table>
@@ -70,6 +96,8 @@
           :items="inactiveOffices"
           :fields="adminFieldsSortable"
           id="inactive-table"
+          @filtered="onFiltered"
+          :filter="filter"
           :per-page="perPage"
           :current-page="inactiveCurrentPage"
         >
@@ -100,6 +128,7 @@ import authService from "../../service/common/CommonCall";
 export default {
   data() {
     return {
+      filter: null,
       perPage: 5,
       currentPage: 1,
       inactiveCurrentPage: 1,
@@ -264,6 +293,12 @@ export default {
         this.clearDelete();
         this.getOffices();
       });
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      console.log(filteredItems);
+      //this.inactiveOffices = filteredItems;
+      this.inactiveCurrentPage = 1;
     }
   },
   computed: {
