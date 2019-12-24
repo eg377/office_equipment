@@ -7,7 +7,7 @@ const AuthGuard = {
             if (authService.getToken().exp > (Date.now() / 1000))
                 return true;
         }
-        console.log("No Authority!!")
+        console.log("No Authority!!");
         Router.push({ name: 'login', params: { returnUrl: to } });
     }
 };

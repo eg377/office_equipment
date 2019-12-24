@@ -39,9 +39,16 @@
           <th scope="row">{{user.username}}</th>
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
+<<<<<<< HEAD
           <td>{{user.roles[0].name}}</td>
           <td>{{user.department}}</td>
           <td @click="editUser(user.username)" class="edit-user text-center">
+=======
+          <td>
+            <label style="padding: 0 5px;" v-for="role in user.roles">{{role.name.slice(5)}} </label>
+          </td>
+          <td @click="editUser" class="edit-user text-center">
+>>>>>>> 75588731f523fc35fc45188c4ac4e415a1d06b5a
             <i class="fas fa-pencil-alt"></i>
           </td>
           <td @click="deleteUser(user.username)" class="edit-user text-center">

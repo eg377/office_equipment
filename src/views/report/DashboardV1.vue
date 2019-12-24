@@ -42,11 +42,33 @@
                         <div class="text-uppercase">Equipments</div>
                     </div>
                 </div>
+            </div>            
+            <div class="col-xl-3 col-lg-6 col-md-12">
+                <!-- START date widget-->
+                <div class="card flex-row align-items-center align-items-stretch border-0">
+                    <div class="col-4 d-flex align-items-center bg-green justify-content-center rounded-left">
+                        <div class="text-center">
+                            <!-- See formats: https://docs.angularjs.org/api/ng/filter/date-->
+                            <Now class="text-sm" format="MMMM"></Now>
+                            <br>
+                            <Now class="h2 mt-0" format="D"></Now>
+                        </div>
+                    </div>
+                    <div class="col-8 py-3 rounded-right">
+                        <Now class="text-uppercase" format="dddd"></Now>
+                        <br>
+                        <Now class="h2 mt-0" format="h:mm"></Now>
+                        <Now class="text-muted text-sm" format="a"></Now>
+                    </div>
+                </div>
+                <!-- END date widget-->
             </div>
+        </div>
+        <div class="row">
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
-                        <em class="icon-globe fa-3x"></em>
+                        <em class="fas fa-users fa-3x"></em>
                     </div>
                     <div class="col-8 py-3 bg-purple rounded-right">
                         <div class="h2 mt-0">{{americaUserCount}}
@@ -69,33 +91,13 @@
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
-                        <em class="fas fa-toolbox fa-3x"></em>                        
+                        <em class="fas fa-users fa-3x"></em>
                     </div>
                     <div class="col-8 py-3 bg-green rounded-right">
                         <div class="h2 mt-0">{{asiaUserCount}}</div>
                         <div class="text-uppercase">Asia</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-12">
-                <!-- START date widget-->
-                <div class="card flex-row align-items-center align-items-stretch border-0">
-                    <div class="col-4 d-flex align-items-center bg-green justify-content-center rounded-left">
-                        <div class="text-center">
-                            <!-- See formats: https://docs.angularjs.org/api/ng/filter/date-->
-                            <Now class="text-sm" format="MMMM"></Now>
-                            <br>
-                            <Now class="h2 mt-0" format="D"></Now>
-                        </div>
-                    </div>
-                    <div class="col-8 py-3 rounded-right">
-                        <Now class="text-uppercase" format="dddd"></Now>
-                        <br>
-                        <Now class="h2 mt-0" format="h:mm"></Now>
-                        <Now class="text-muted text-sm" format="a"></Now>
-                    </div>
-                </div>
-                <!-- END date widget-->
             </div>
         </div>
         <!-- END cards box-->

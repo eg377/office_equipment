@@ -17,67 +17,67 @@
 </template>
 
 <style>
-#nBar {
-  background-color: #002d93;
-  /* display: inline-block; */
-}
-#homeButton {
-  color: white;
-}
-#drop {
-  text-align: right;
-}
+  #nBar {
+    background-color: #002d93;
+    /* display: inline-block; */
+  }
+  #homeButton {
+    color: white;
+  }
+  #drop {
+    text-align: right;
+  }
 </style>
 
 
 <script>
-import {
-  mdbDropdown,
-  mdbDropdownToggle,
-  mdbDropdownMenu,
-  mdbDropdownItem,
-  mdbContainer,
-  mdbNavbar,
-  mdbNavbarBrand,
-  mdbNavbarToggler,
-  mdbNavbarNav,
-  mdbNavItem
-} from "mdbvue";
-export default {
-  name: "HelloWorld",
-  components: {
+  import {
+    mdbDropdown,
+    mdbDropdownToggle,
+    mdbDropdownMenu,
+    mdbDropdownItem,
+    mdbContainer,
     mdbNavbar,
     mdbNavbarBrand,
     mdbNavbarToggler,
     mdbNavbarNav,
-    mdbNavItem,
-    mdbContainer,
-    mdbDropdown,
-    mdbDropdownToggle,
-    mdbDropdownMenu,
-    mdbDropdownItem
-  },
-  methods: {
-    goToMain(){
-      this.$router.push({name: "main"})
+    mdbNavItem
+  } from "mdbvue";
+  export default {
+    name: "HelloWorld",
+    components: {
+      mdbNavbar,
+      mdbNavbarBrand,
+      mdbNavbarToggler,
+      mdbNavbarNav,
+      mdbNavItem,
+      mdbContainer,
+      mdbDropdown,
+      mdbDropdownToggle,
+      mdbDropdownMenu,
+      mdbDropdownItem
     },
-    goToLogin(){
-      this.$router.push({name: "login"})
-    },
-    goToOfficeList(){
-      this.$router.push({name: "offices"})
-    },
-    goToUserList(){
-      this.$router.push({path: "users"})
-    },
-    goToReport(){
-      this.$router.push({name: "reports"})
-    },
-    logout() {
-      sessionStorage.clear();
-      this.$router.push({name: "login"});
-    }
+    methods: {
+      goToMain(){
+        this.$router.push({name: "main"})
+      },
+      goToLogin(){
+        this.$router.push({name: "login"})
+      },
+      goToOfficeList(){
+        this.$router.push({name: "offices"})
+      },
+      goToUserList(){
+        this.$router.push({path: "userList"})
+      },
+      goToReport(){
+        this.$router.push({path: "report"})
+      },
+      logout() {
+        sessionStorage.clear();
+        this.$router.push({name: "login"});
+      }
 
-  }
-};
+    }
+  };
 </script>
