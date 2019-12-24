@@ -15,9 +15,10 @@ const officeEditView = () => import ('@/views/office/officeEdit.vue')
 const equipmentListView = () => import ('@/views/equipment/equipmentList.vue')
 const equipmentEditView = () => import ('@/views/equipment/equipmentEdit.vue')
 const equipmentDetailView = () => import ('@/views/equipment/equipmentDetail.vue')
+const newEquipmentList = () => import ('@/views/equipment/newEquipmentList.vue')
 const userListView = () => import ('@/views/user/userList.vue')
 const userEditView = () => import ('@/views/user/userEdit.vue')
-const dashboard1 = () => import ('@/views/report/dashboardV1.vue')
+const dashboard1 = () => import ('@/views/report/DashboardV1.vue')
 
 Vue.use(Router)
 
