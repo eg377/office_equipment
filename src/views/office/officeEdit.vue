@@ -90,7 +90,11 @@ export default {
         country: "",
         active: true
       },
-      id: this.$route.query.id,
+
+      //original id: this.$route.params.id,
+      id: this.$route.params.id,
+      //id: this.$route.query.id,
+
       errors: []
     };
   },
