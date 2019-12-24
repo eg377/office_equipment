@@ -17,7 +17,6 @@
 </template>
 
 <style>
-<<<<<<< HEAD
   #nBar {
     background-color: #002d93;
     /* display: inline-block; */
@@ -28,19 +27,6 @@
   #drop {
     text-align: right;
   }
-=======
-#nBar {
-  background-color: #002d93;
-  min-height: 75px;
-  /* display: inline-block; */
-}
-#homeButton {
-  color: white;
-}
-#drop {
-  text-align: right;
-}
->>>>>>> a3abf20cd7ebc0dd5c6ab5e3996e3bab252f0eaa
 </style>
 
 
@@ -82,7 +68,7 @@
         this.$router.push({name: "offices"})
       },
       goToUserList(){
-        this.$router.push({path: "userList"})
+        this.$router.push({path: "users"})
       },
       goToReport(){
         this.$router.push({path: "report"})
