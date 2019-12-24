@@ -13,10 +13,12 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.Id" :user="user" @delete-user="setDelete">
-          <th scope="row">{{user.userId}}</th>
+          <th scope="row">{{user.username}}</th>
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
-          <td>{{user.role}}</td>
+          <td>
+            <label v-for="role in user.roles">{{role.name.slice(5).toLowerCase()}} </label>
+          </td>
           <td @click="editUser" class="edit-user text-center">
             <i class="fas fa-pencil-alt"></i>
           </td>
@@ -49,29 +51,7 @@ import userService from "../../../service/common/UserDataService.js";
 export default {
   data() {
     return {
-      users: [
-        {
-          Id: 1,
-          userId: 820123,
-          firstName: "Sean",
-          lastName: "Grano",
-          role: "Developer"
-        },
-        {
-          Id: 2,
-          userId: 123245,
-          firstName: "Blah",
-          lastName: "Blub",
-          role: "Admin"
-        },
-        {
-          Id: 3,
-          userId: 987376,
-          firstName: "ha",
-          lastName: "ha",
-          role: "Manager"
-        }
-      ],
+      users: [],
       loading: false,
       deleteUser: false,
       idToDelete: 1
@@ -79,7 +59,7 @@ export default {
   },
   created() {
     //comment this back when the backend is up and running
-    // this.getUsers();
+    this.getUsers();
   },
   props: {
     user: {
