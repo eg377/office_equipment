@@ -14,6 +14,7 @@ const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
 const userListView = () => import ('@/views/user/userList.vue')
 const userEditView = () => import ('@/views/user/userEdit.vue')
+const dashboard1 = () => import ('@/views/report/dashboardV1.vue')
 
 Vue.use(Router)
 
@@ -63,7 +64,7 @@ export default new Router({
             }
         },
         {
-            path: '/userList',
+            path: '/users',
             name: 'users',
             component: userListView,
             beforeEnter(to, from, next){
@@ -84,8 +85,13 @@ export default new Router({
             component: userEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.canActivate(to));
-            }
-        },     
+            }            
+        },           
+        {
+            path: '/report',
+            name: 'report',
+            component: dashboard1
+        },
         {
             path: '*',
             redirect: '/'

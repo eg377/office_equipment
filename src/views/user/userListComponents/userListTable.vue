@@ -1,12 +1,35 @@
 <template>
   <div>
+    <div class="card card-default">
+      <div class="text-center">
+          <button class="btn btn-primary text-center add-btn" @click="addUser">Add User</button>
+      </div>
+      <div class="card-body">
+      <b-table responsive striped hover :items="users" :fields="userFields">
+          <template slot="actions" scope="row">
+            <span class="fa-stack edit-office" @click="editUser(row.item.username)">
+              <i class="fas fa-edit fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
+            </span>  
+            &nbsp;&nbsp;            
+            <span class="fa-stack edit-office" @click="deleteUser(row.item.username)">
+              <i class="far fa-trash-alt fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
+            </span>
+          </template>
+        </b-table>
+      </div>
+    </div>
+
+<!--
     <table class="table table-hover table-dark mt-3">
       <thead>
         <tr>
-          <th scope="col">User ID</th>
+          <th scope="col">Username</th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Role</th>
+          <th scope="col">Department</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
@@ -16,13 +39,13 @@
           <th scope="row">{{user.username}}</th>
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
-          <td>
-            <label style="padding: 0 5px;" v-for="role in user.roles">{{role.name.slice(5)}} </label>
-          </td>
-          <td @click="editUser" class="edit-user text-center">
+          <td>{{user.roles[0].name}}</td>
+          <td>{{user.department}}</td>
+          <td @click="editUser(user.username)" class="edit-user text-center">
+
             <i class="fas fa-pencil-alt"></i>
           </td>
-          <td @click="$emit('delete-user', user.userId)" class="edit-user text-center">
+          <td @click="deleteUser(user.username)" class="edit-user text-center">
             <i class="fas fa-trash"></i>
           </td>
         </tr>
@@ -31,33 +54,72 @@
           v-for="user in inactiveUsers"
           :key="user.userId"
           :user="user"
-          @delete-user="setDelete"
+          
         />
       </tbody>
     </table>
-    <div class="text-center" v-show="loading">Loading Users...</div>
-    <div class="text-center" v-show="deleteUser">
-      Are you sure you want to delete user {{idToDelete}}?
-      <br />
-      <button class="btn btn-primary" @click="confirmDelete">Yes</button>
-      <button class="btn btn-danger" @click="clearDelete">No</button>
-    </div>
+    -->
+    <div class="text-center" v-show="loading">Loading Users...</div>    
   </div>
 </template>
 
 <script>
 import userService from "../../../service/common/UserDataService.js";
 
+import Vue from 'vue';
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
+ 
+// include the default style
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+ 
+// Tell Vue to install the plugin.
+Vue.use(VuejsDialog,{
+  html: true,
+  loader: true,
+  okText: 'Disable',
+  cancelText: 'Cancel',
+  animation: 'bounce'
+});
+
+
 export default {
   data() {
     return {
-      users: [],
+      users: [
+      ],
       loading: false,
-      deleteUser: false,
-      idToDelete: 1
+     // deleteUser: false,
+      idToDelete: 1,      
+      userFields: {
+        username: {
+          label: "User Name",
+          sortable: true
+        },
+        firstName: {
+          label: "First Name",
+          sortable: true
+        },
+        lastName: {
+          label: "Last NAme",
+          sortable: true
+        },
+        role: {
+          label: "Role",
+          sortable: true          
+        },
+        department: {
+          label: "Department",
+          sortable: true
+        },
+        actions: {
+          label: "Actions"
+        }
+      },
+      
     };
   },
-  created() {
+  created() {   
     this.getUsers();
   },
   props: {
@@ -69,11 +131,26 @@ export default {
     }
   },
   methods: {
+    addUser() {
+      this.$router.push({path: "users/new"})
+    },
     async getUsers() {
       this.loading = true;
       const promise = userService.getAllUsers();
-      promise.then(result => {
-        this.users = result.splice(4);
+      promise.then(result => {        
+        var userList = [];
+        result.map(m => 
+          userList.push(
+          {
+            username:m.username,
+            firstName: m.firstName,
+            lastName: m.lastName,
+            role: m.roles != null && m.roles.length > 0 ? m.roles[0].name : '',
+            department: m.department
+          }
+          )
+        );
+        this.users = userList;
         this.loading = false;
       });
     },
@@ -84,21 +161,39 @@ export default {
     clearDelete() {
       this.deleteUser = false;
     },
-    editUser() {
+    editUser(id) {
+      console.log(id)
       this.$router.push({
-        path: "user/edit/:id",
-        query: {
-          id: this.user.userId
+        name: "editUser",
+        params: {
+          id: id
         }
       });
     },
-    async confirmDelete() {
-      const promise = userService.deleteUser(this.idToDelete);
-      promise.then(res => {
-        this.clearDelete();
-        this.getUsers();
+    async deleteUser(username){
+      Vue.dialog
+        .confirm('Disable User?')
+        .then(function(dialog) {
+        console.log('Clicked on proceed');
+      })
+      .catch(function() {
+        console.log('Clicked on cancel');
       });
-    }
+
+
+      // const promise = userService.deleteUser(this.username);
+      // promise.then(res => {
+      //   this.clearDelete();
+      //   this.getUsers();
+      // });
+    },
+    // async confirmDelete() {
+    //   const promise = userService.deleteUser(this.idToDelete);
+    //   promise.then(res => {
+    //     this.clearDelete();
+    //     this.getUsers();
+    //   });
+    // }
   },
   watch: {
     "route": "getUsers"
@@ -130,4 +225,27 @@ export default {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
 }
+
+
+.icon-tooltip {
+
+    opacity: 0;
+  }
+
+  .edit-office:hover .icon-tooltip {
+    opacity: 0.5;
+  }
+
+  .icon-button {
+    opacity: 0.5;
+  }
+
+  .edit-office:hover .icon-button {
+    opacity: 0;
+  }
+
+  .add-btn {
+    width: 30%;
+  }
+
 </style>
