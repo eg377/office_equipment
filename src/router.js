@@ -12,9 +12,13 @@ const maingView = () => import ('@/views/landing/main.vue')
 const loginView = () => import ('@/views/login/login.vue')
 const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
+const equipmentListView = () => import ('@/views/equipment/equipmentList.vue')
+const equipmentEditView = () => import ('@/views/equipment/equipmentEdit.vue')
+const equipmentDetailView = () => import ('@/views/equipment/equipmentDetail.vue')
+const newEquipmentList = () => import ('@/views/equipment/newEquipmentList.vue')
 const userListView = () => import ('@/views/user/userList.vue')
 const userEditView = () => import ('@/views/user/userEdit.vue')
-const dashboard1 = () => import ('@/views/report/dashboardV1.vue')
+const dashboard1 = () => import ('@/views/report/DashboardV1.vue')
 
 Vue.use(Router)
 
@@ -64,6 +68,32 @@ export default new Router({
             }
         },
         {
+            path: '/equipment/:id',
+            name: 'equipment',
+            component: equipmentListView
+            
+        },
+        {
+            path: '/equipments',
+            name: 'equipments',
+            component: newEquipmentList
+        },
+        {
+            path: '/equipment/new',
+            name: 'addEquipment',
+            component: equipmentEditView
+        },
+        {
+            path: '/equipment/edit/:officeId',
+            name: 'editEquipment',
+            component: equipmentEditView
+        },
+        {
+            path: '/equipment/details',
+            name: 'equipmentDetail',
+            component: equipmentDetailView
+        },
+        {
             path: '/users',
             name: 'users',
             component: userListView,
@@ -85,7 +115,7 @@ export default new Router({
             component: userEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.canActivate(to));
-            }            
+            }   
         },           
         {
             path: '/report',
