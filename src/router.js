@@ -71,6 +71,7 @@ export default new Router({
             path: '/equipment/:id',
             name: 'equipment',
             component: equipmentListView
+            
         },
         {
             path: '/equipments',

@@ -53,6 +53,10 @@
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
             </span>
+            <span class="fa-stack edit-office" @click="equipment(row.item.officeId)">
+              <i class="fas fa-briefcase fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Equipments</span>
+            </span>
           </template>
         </b-table>
       </div>
@@ -253,6 +257,14 @@ export default {
     this.getOffices();
   },
   methods: {
+    equipment(id) {
+      this.$router.push({
+        name: "equipment",
+        params: {
+          id: id
+        }
+      });
+    },
     checkIfAdmin() {
       return authService.checkAuthority("ROLE_ADMIN");
     },
