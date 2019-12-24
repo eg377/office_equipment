@@ -20,6 +20,10 @@
         </button>
       </div>
       <div class="form-group">
+        <label for="inputCountry">Country</label>
+        <country-select v-model="office.country" :country="office.country" class="form-control" />
+      </div>
+      <div class="form-group">
         <label for="officeName">Name</label>
         <input type="text" class="form-control" id="officeName" v-model="office.officeName" />
       </div>
@@ -44,36 +48,29 @@
             placeholder="Apartment, studio, or floor"
           />
       </div>-->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" v-model="office.city" />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <region-select 
-              v-model="office.state"
-              :region="office.state"
-              :country="office.country"
-              className="form-control"/>
-          </div>
-          <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
-          </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">City</label>
+          <input type="text" class="form-control" id="inputCity" v-model="office.city" />
         </div>
-        <div class="form-group">
-          <label for="inputCountry">Country</label>
-          <country-select 
-            v-model="office.country" 
-            :country="office.country" 
-            className="form-control" />
+        <div class="form-group col-md-4">
+          <label for="inputState">State/Region</label>
+          <region-select
+            v-model="office.state"
+            :region="office.state"
+            :country="office.country"
+            class="form-control"
+          />
         </div>
-        <div class="form-group text-center">
-          <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
-          <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Zip</label>
+          <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
         </div>
-
+      </div>
+      <div class="form-group text-center">
+        <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
+        <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
+      </div>
     </form>
   </div>
 </template>
@@ -85,12 +82,12 @@ export default {
   data() {
     return {
       office: {
-        officeName: '',
-        streetAddress: '',
-        city: '',
-        zip: '',
-        state: '',
-        country: '',
+        officeName: "",
+        streetAddress: "",
+        city: "",
+        zip: "",
+        state: "",
+        country: "",
         active: true
       },
       id: this.$route.query.id,
