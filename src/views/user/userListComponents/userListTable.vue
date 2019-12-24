@@ -17,7 +17,7 @@
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
           <td>
-            <label v-for="role in user.roles">{{role.name.slice(5).toLowerCase()}} </label>
+            <label style="padding: 0 5px;" v-for="role in user.roles">{{role.name.slice(5)}} </label>
           </td>
           <td @click="editUser" class="edit-user text-center">
             <i class="fas fa-pencil-alt"></i>
@@ -58,7 +58,6 @@ export default {
     };
   },
   created() {
-    //comment this back when the backend is up and running
     this.getUsers();
   },
   props: {
@@ -74,7 +73,7 @@ export default {
       this.loading = true;
       const promise = userService.getAllUsers();
       promise.then(result => {
-        this.users = result;
+        this.users = result.splice(4);
         this.loading = false;
       });
     },
