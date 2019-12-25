@@ -1,99 +1,85 @@
 <template>
     <div class="card" >
-        <header class="card-header">
-            <!--<img  id="cogLogo" alt="Cognizant logo" src="../assets/CognizantLogo.png" style="max-width:220px; width:100%; padding: 0px 50px 20px;  display: block; margin-left: auto; margin-right: auto">-->
-            <!-- <p class="card-header-title">Login</p> -->
+      <header class="card-header">
+                   <img  id="cogLogo" alt="Cognizant logo" src="/img/CognizantLogo.png" style="max-width:220px; width:100%; padding: 20px 50px 20px;  display: block; margin-left: auto; margin-right: auto">
+       
+      </header>
 
-            <img  id="cogLogo" alt="Cognizant logo" src="/img/CognizantLogo.png" style="max-width:220px; width:100%; padding: 20px 50px 20px;  display: block; margin-left: auto; margin-right: auto">
+    <form id="login" @submit="checkForm">
 
-        </header>
+    <ul v-if="errors.length">
+        <p>Please correct following error</p>
+        <li class="errorMsg" v-for="error in errors" v-bind:key="error">
+        {{ error }}
+        </li>
+    </ul>   
 
-        <form id="app" @submit="checkForm">
-
-            <ul v-if="errors.length">
-                <p>Please correct follwing error</p>
-                <li class="errorMsg" v-for="error in errors" v-bind:key="error">
-                    {{ error }}
-                </li>
-            </ul>
-
-
-
-            <div class="card-content">
-                <div class="content">
-                    <div class="row-m2">
-                        <div class="field">
-                            <label for="username" class="inputLabel">username : </label>
-                            <input type="text" id="username" v-model="username" class="inputText"/>
-                        </div>
-                    </div>
-                    <div class="row-m2">
-                        <div class="field">
-                            <label for="password" class="inputLabel">password : </label>
-                            <input type="password" id="password" v-model="password" class="inputText" />
-                        </div>
-                    </div>
-                </div>
-                <div class="inputGroup3">
-                    <button class="loginBtn" >Login</button> <!--- v-on:click="login(username,password)" --->
-                </div>
-            </div>
-            <!----------------------------------->
-
-        </form>
-        <button @click="userAdded">Add User</button>
-    </div>
+        
+    <div class="card-content">        
+        <div class="content">
+          <div class="row-m2">
+          <div class="field">
+            <label for="username" class="inputLabel">username : </label>
+            <input type="text" id="username" v-model="username" class="inputText"/>
+          </div>
+          </div>
+          <div class="row-m2">
+          <div class="field">
+            <label for="password" class="inputLabel">password : </label>
+            <input type="password" id="password" v-model="password" class="inputText" />
+          </div>
+          </div>
+        </div>
+        <div class="inputGroup3">
+          <button class="loginBtn" >Login</button> <!--- v-on:click="login(username,password)" --->
+        </div> 
+      </div>  
+    <!----------------------------------->
+      
+</form>
+    <button @click="userAdded">Add User</button>
+  </div>
+  
 </template>
 
 <script>
-    import authService from '../../service/common/CommonCall'
+  import { mapGetters } from 'vuex'  
 
-    const authServiceUrl = "https://sunshine-auth-service.cfapps.io/oauth/token";
-
-    const headerOptions = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa( 'ClientId:ClientSecret')
-        }
+  export default {
+  data() {
+    return{
+    errors:[],  
+    username: "",
+    password: ""
     };
-
-
-    export default {
-        data() {
-            return{
-                errors:[],
-                username: "",
-                password: "",
-                returnUrl: this.$route.params.returnUrl,
-            };
-        },
-        /* computed: {
-           id(){
-             return this.$route.params.id;
+  },  
+  computed: {
+          ...mapGetters('login', ['isAuthenticated'])
+  },
+  methods: {
+    login (uname, passwd) {
+      console.log("uname = " + uname);
+      console.log("passwd = " + passwd);
+      this.$store.dispatch('login/login', {username: uname, password: passwd})
+        .then(
+           (response) => {
+            console.log("Got login response " + response)
+            this.username = ''
+            this.password = '' 
+            if (response !== undefined && response !== 'error')
+               this.$router.push({name: 'main' }) 
+            else 
+               this.errors.push("Some login info is not correct");
            }
-         },*/
-        methods: {
-            async login(uname, pass) {
-                console.log("uname = " + uname);
-                console.log("pass = " + pass);
-                console.log("Login functionality to be added")
-                const content = 'grant_type=password&username=' + uname + '&password=' + pass;
-                let token = await authService.postCall(authServiceUrl, content, headerOptions);
-                console.log('1. token value: ' + token);
-                if(token === undefined) {
-                    console.log('token error',token);
-                    alert('login error');
-                } else {
-                    console.log('token available',token);
-                    sessionStorage.setItem('access_token', token );
-                    if (this.returnUrl) {
-                        // this.router.navigateByUrl(this.returnUrl);
-                        this.$router.push(this.returnUrl.fullPath);
-                    } else {
-                        this.$router.push({name:'main' });
-                    }
-                }
-            },
+          )
+          .catch(()=>{ 
+            this.username = ''
+            this.password = ''
+            console.error("Got nothing from server." )
+          })          
+        
+    },   
+        
             checkForm(e){
                 e.preventDefault();
                 this.errors = [];
