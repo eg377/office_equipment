@@ -20,10 +20,17 @@
         </button>
       </div>
       <div class="form-group">
+        <label for="officeManagerId">Manager ID</label>
+        <input type="text" class="form-control" id="officeManagerId" v-model="office.managerId" />
+      </div>
+      <div class="form-group">
+        <label for="inputCountry">Country</label>
+        <country-select v-model="office.country" :country="office.country" class="form-control" />
+      </div>
+      <div class="form-group">
         <label for="officeName">Name</label>
         <input type="text" class="form-control" id="officeName" v-model="office.officeName" />
       </div>
-
       <div class="form-group">
         <label for="inputAddress">Address</label>
         <input
@@ -44,36 +51,40 @@
             placeholder="Apartment, studio, or floor"
           />
       </div>-->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" v-model="office.city" />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <region-select 
-              v-model="office.state"
-              :region="office.state"
-              :country="office.country"
-              className="form-control"/>
-          </div>
-          <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
-          </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">City</label>
+          <input type="text" class="form-control" id="inputCity" v-model="office.city" />
         </div>
-        <div class="form-group">
-          <label for="inputCountry">Country</label>
-          <country-select 
-            v-model="office.country" 
-            :country="office.country" 
-            className="form-control" />
+        <div v-if="office.country" class="form-group col-md-4">
+          <label for="inputState">{{displayStateOrRegion}}</label>
+          <region-select
+            v-model="office.state"
+            :region="office.state"
+            :country="office.country"
+            class="form-control"
+          />
         </div>
-        <div class="form-group text-center">
-          <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
-          <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Postal Code</label>
+          <input type="text" class="form-control" id="inputZip" v-model="office.zip" />
         </div>
+      </div>
 
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputWebsite">Website</label>
+          <input type="text" class="form-control" id="inputWebsite" v-model="office.website" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputFax">Fax #</label>
+          <input type="text" class="form-control" id="inputFax" v-model="office.fax" />
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
+        <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
+      </div>
     </form>
   </div>
 </template>
@@ -85,17 +96,22 @@ export default {
   data() {
     return {
       office: {
-        officeName: '',
-        streetAddress: '',
-        city: '',
-        zip: '',
-        state: '',
-        country: '',
+        officeName: "",
+        streetAddress: "",
+        city: "",
+        zip: "",
+        state: "",
+        country: "",
+        managerId: "",
+        fax: "",
+        website: "",
         active: true
       },
+
       //original id: this.$route.params.id,
-      //id: this.$route.params.id,
-      id: this.$route.query.id,
+      id: this.$route.params.id,
+      //id: this.$route.query.id,
+
       errors: []
     };
   },
@@ -112,6 +128,13 @@ export default {
     // id() {
     //   return this.$route.query.id;
     // }
+    displayStateOrRegion() {
+      if (this.office.country === "US") {
+        return "State";
+      } else {
+        return "Region";
+      }
+    }
   },
   methods: {
     cancelForm: function(event) {
@@ -136,9 +159,9 @@ export default {
       if (!this.office.city) {
         this.errors.push("Enter valid values");
       }
-      if (!this.office.zip) {
-        this.errors.push("Enter valid values");
-      }
+      // if (!this.office.zip) {
+      //   this.errors.push("Enter valid values");
+      // }
 
       //When the user input is valid, if there is no id in the path
       //then the office is saved to the database and the app is routed to officeList

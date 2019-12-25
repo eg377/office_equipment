@@ -7,48 +7,62 @@ const AuthStr = `Bearer ${token}`
 
 class UserDataService {
 
-    getAllUsers(){
-        return axios.get(USER_API_URL + '/api/users', {headers: { Authorization: AuthStr }})
-            .then(response => {
-                console.log(response.data);
-                return response.data;
-            })
+    async getAllUsers(){
+        const response = await axios.get(USER_API_URL + '/api/users', { headers: { Authorization: AuthStr } });
+        console.log(response.data);
+        return response.data;
     }
 
-    getUserById(userId) {
-        return axios.get(`${user_API_URL}/api/users/${userId}`, {headers: { Authorization: AuthStr }})
-            .then(response => {
-                console.log(response.data);
-                return response.data;
-            }).catch( error => {
-                console.log(`Error: ${error}`)
-            })
+    async getUserByName(username) {
+        console.log("this.getUserByName", username)
+        try {
+            const response = await axios.get(USER_API_URL + '/api/users/' + username, { headers: { Authorization: AuthStr } });
+            console.log(response.data);
+            return response.data;
+        }
+        catch (error) {
+            console.log(`Error: ${error}`);
+        }
     }
 
-    createUser(user) {
+    async createUser(user) {
         console.log("creating user");
-        return axios.post(`${user_API_URL}/api/users`, user, {headers: { Authorization: AuthStr }})
-                    .then(res => {
-                        console.log(res.data)
-                    })
+        console.log(AuthStr);
+        var userParam = {
+            "username": user.username,
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "email": user.username + "@cognizant.com",
+            "department": user.department,
+            "password": user.password,
+            "roles":[
+                {
+                    "id": 3,
+                    "name": "ROLE_DEVELOPER"
+                }
+            ]
+        }; 
+        var jsonUser = JSON.stringify(userParam);
+        console.log("jsonUser",jsonUser);
+        const res = await axios.post(`${USER_API_URL}/api/users`, jsonUser, { headers: { Authorization: AuthStr , "Content-Type": 'application/json', } });
+        console.log(res.data);
     }
 
-    updateUser(id, user) {
+
+    async updateUser(id, user) {
         console.log('Editing user')
-        return axios.put(`${user_API_URL}/api/users/${id}`, user,{headers: { Authorization: AuthStr }})
-            .then(res=>{
-                console.log(res.data)
-            })
+        const res = await axios.put(`${USER_API_URL}/api/users/${id}`, user, { headers: { Authorization: AuthStr } });
+        console.log(res.data);
     }
 
-    deleteUser(userId) {
-        return axios.delete(`${user_API_URL}/api/users/${userId}`, {headers: { Authorization: AuthStr }})
-            .then(res => {
-                console.log("user deleted")
-            })
-            .catch(err => {
-                console.log(`Error: ${err}`)
-            })
+    async deleteUser(username) {
+        try {
+            const res = await axios.delete(`${USER_API_URL}/api/users/${username}`, { headers: { Authorization: AuthStr } });
+            console.log("user deleted");
+        }
+        catch (err) {
+            console.log(`Error: ${err}`);
+        }
     }
 }
 
