@@ -35,11 +35,11 @@
         </div> 
       </div>  
     <!----------------------------------->
-  
+      
 </form>
+    <button @click="userAdded">Add User</button>
   </div>
-      </div>      
-    </div>  
+  
 </template>
  
 <script>
@@ -68,7 +68,7 @@ export default {
             this.username = ''
             this.password = '' 
             if (response !== undefined && response !== 'error')           
-               this.$router.push({path:'/main' })
+               this.$router.push({name: 'main' })
             else 
                this.errors.push("Some login info is not correct");
 
@@ -98,8 +98,9 @@ export default {
       if(this.errors.length === 0){
          this.login(this.username, this.password); 
       }
-
-
+    },    
+     userAdded(){
+                console.log("Work in progress")
     }
   }
 };

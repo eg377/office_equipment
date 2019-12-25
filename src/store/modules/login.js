@@ -78,7 +78,7 @@ Vue.use(Vuex)
     const mutations = {
       logout (state) {
         if(typeof window !== 'undefined') {
-          window.localStorage.setItem('token', null);
+          window.localStorage.setItem('access_token', null);
           window.localStorage.setItem('tokenExpiration', null);
           sessionStorage.clear();
         }
@@ -90,10 +90,10 @@ Vue.use(Vuex)
           state.isAuthenticated = false;
         } else {
           if(typeof window !== 'undefined') {
-            window.localStorage.setItem('token', token);
+            window.localStorage.setItem('access_token', token);
             /*console.log("token expiration: " +  token.expiration)
             window.localStorage.setItem('tokenExpiration', token.expiration); */          
-            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('access_token', token);
             state.isAuthenticated = true;
           }       
        }
