@@ -67,8 +67,8 @@ export default {
             console.log("Got login response " + response)
             this.username = ''
             this.password = '' 
-            if (response !== undefined && response !== 'error')           
-               this.$router.push({name: 'main' })
+            if (response !== undefined && response !== 'error')
+               this.$router.push({name: 'main' }) 
             else 
                this.errors.push("Some login info is not correct");
 
