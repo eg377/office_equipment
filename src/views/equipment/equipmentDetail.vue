@@ -13,19 +13,19 @@
         </div>
         <div class="form-group">
           <label for="equipmentId" class="lblTitle">Equipment Id: </label>
-          <label for="equipmentId" id="equipmentId" class="actualData" /> {{equipment.equipmentId}} </label>
+          <label for="equipmentId" id="equipmentId" class="actualData"> {{equipment.equipmentId}} </label>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="officeId" class="lblTitle">Office Id:  </label>&nbsp;&nbsp;
             <!--<input type="text" class="form-control" id="inputType" v-model="equipment.equipmentType" />-->
-             <label for="officeId" id="officeId" class="actualData"/>{{equipment.officeId}}</label>
+             <label for="officeId" id="officeId" class="actualData">{{equipment.officeId}}</label>
           </div>
         </div>  
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="type" class="lblTitle">Type: </label>&nbsp;&nbsp;
-            <label for="type" id="type" class="actualData"/>{{equipment.equipmentType}}</label>
+            <label for="type" id="type" class="actualData">{{equipment.equipmentType}}</label>
           </div>
         </div>  
         <div class="form-row">
@@ -38,13 +38,13 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="userId" class="lblTitle">User Id: </label>&nbsp;&nbsp;
-            <label for="userId" id="userId" class="actualData"/>{{equipment.userId}}</label>
+            <label for="userId" id="userId" class="actualData">{{equipment.userId}}</label>
           </div>
         </div>  
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="comment" class="lblTitle">Comments: </label>&nbsp;&nbsp;
-            <label for="comment" id="comment" class="actualData"/>{{equipment.comment}}</label>
+            <label for="comment" id="comment" class="actualData">{{equipment.comment}}</label>
           </div>
         </div>  
 
@@ -92,7 +92,7 @@ export default {
       },
 
       redirect: function (event) {
-       this.$router.push({name: "equipments"});
+       this.$router.push({name: "allEquipments"});
       },
 
       }
