@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import authService from '../../service/common/CommonCall'
+    import { mapGetters } from 'vuex'  
     export default {
         data() {
             return{
@@ -51,23 +51,41 @@
             "password": "validatePassword"
         },
         created(){
-            if (authService.getToken()) {
+            if (this.isAuthenticated) {
                 this.$router.push({name: 'main'});
             }
         },
+      
+        computed: {
+          ...mapGetters('login', ['isAuthenticated'])
+        },
         methods: {
-            async login(username, password) {
-                let token = await authService.login(username, password);
-                if(!token) {
-                    this.loginError = true;
-                } else {
+            login (uname, passwd) {
+          console.log("calllllllled");
+              this.$store.dispatch('login/login', {username: uname, password: passwd})
+             .then(
+               (response) => {
+                console.log("Got login response " + response)
+                // this.username = ''
+                // this.password = '' 
+                 if (response !== undefined && response !== 'error' && response !== null) {
                     if (this.returnUrl) {
                         this.$router.push(this.returnUrl.fullPath);
                     } else {
                         this.$router.push({name:'main'});
-                    }
-                }
-            },
+                    } }
+                 else 
+                   this.loginError = true;
+               }
+          )
+          .catch(()=>{ 
+            // this.username = ''
+            // this.password = ''
+            console.error("Got nothing from server." )
+          })          
+        
+    },   
+            
             submitForm(e){
                 e.preventDefault();
                 this.errors = [];
