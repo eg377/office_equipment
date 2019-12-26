@@ -51,11 +51,16 @@
             <span class="fa-stack edit-office" @click="setDelete(row.item)">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
-            </span>
+            </span>&nbsp;&nbsp;
+            <span class="fa-stack edit-office" @click="openMap(row.item)">
+              <i class="fas fa-map-marker-alt fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Map</span>
+            </span>&nbsp;&nbsp;
             <span class="fa-stack edit-office" @click="equipment(row.item.officeId)">
               <i class="fas fa-briefcase fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Equipments</span>
             </span>
+
           </template>
         </b-table>
       </div>
@@ -248,6 +253,10 @@ export default {
     this.getOffices();
   },
   methods: {
+    openMap(office) {
+      const url = `https://www.google.com/maps/search/${office.streetAddress} ${office.city} ${office.state} ${office.zip}`
+      window.open(url, '_blank')
+    },
     equipment(id) {
       console.log("equipment method called with OfficeId = " + id);
       this.$router.push({
