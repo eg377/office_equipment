@@ -65,7 +65,7 @@
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
           <button @click="cancelForm" class="btn btn-lg btn-danger ml-2">Cancel</button>
         </div>
-      </form>
+      
     </div>
 </template>
 
@@ -141,11 +141,11 @@ export default {
 
       cancelForm: function(event){
         event.preventDefault();
-        this.$router.push({name: "equipment"});
+        this.$router.push({name: "equipments"});
       },
 
       redirect: function (event) {
-       this.$router.push({name: "equipment"});
+       this.$router.push({name: "equipments"});
       },
     //this code checks the validity of the fields
 
