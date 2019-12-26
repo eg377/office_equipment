@@ -13,7 +13,7 @@
                         <em class="icon-globe fa-3x"></em>
                     </div>
                     <div class="col-8 py-3 bg-purple rounded-right">
-                        <div class="h2 mt-0">{{officeCount}}
+                        <div class="h2 mt-0">{{officeCount.length}}
                         </div>
                         <div class="text-uppercase">Offices</div>
                     </div>
@@ -26,7 +26,7 @@
                         <em class="fas fa-users fa-3x"></em>
                     </div>
                     <div class="col-8 py-3 bg-primary rounded-right">
-                        <div class="h2 mt-0">{{userCount}}</div>
+                        <div class="h2 mt-0">{{userCount.length}}</div>
                         <div class="text-uppercase">Users</div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <em class="fas fa-toolbox fa-3x"></em>                        
                     </div>
                     <div class="col-8 py-3 bg-green rounded-right">
-                        <div class="h2 mt-0">{{equipmentCount}}</div>
+                        <div class="h2 mt-0">{{equipmentCount.length}}</div>
                         <div class="text-uppercase">Equipments</div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <Now class="text-uppercase" format="dddd"></Now>
                         <br>
                         <Now class="h2 mt-0" format="h:mm"></Now>
-                        <Now class="text-muted text-sm" format="a"></Now>
+                        <Now class="text-muted text-sm" format="a"></Now> EST
                     </div>
                 </div>
                 <!-- END date widget-->
@@ -230,6 +230,10 @@
     import FlotChart from '@/components/Charts/Flot';
     import Now from '@/components/Common/Now';
 
+    import Offices from '../../service/common/OfficeDataService'
+    import Users from '../../service/common/UserDataService'
+    import Equipments from '../../service/common/EquipmentDataService'
+
     export default {
         name: 'DashboardV1',
         components: {
@@ -241,9 +245,9 @@
         },
         data() {
             return {
-                officeCount: 20,
-                userCount: 3456,
-                equipmentCount: 254,
+                officeCount: [],
+                userCount: [],
+                equipmentCount: [],
                 americaUserCount: 950,
                 europeUserCount: 1300,
                 asiaUserCount: 1200,
@@ -313,7 +317,7 @@
                 scaleColor: false,
                 lineWidth: 10,
                 lineCap: 'round',
-                size: 145
+                size: 145 
             };
             new EasyPieChart(this.$refs.easypie, pieOptions1);
         },
@@ -323,9 +327,35 @@
             },
             onRefresh (_,done) {
                 setTimeout(done, 2000)
+            },
+            async getUsers(){
+                console.log("getUsers");
+                const promise = Users.getAllUsers();
+                promise.then(result => {
+                this.userCount = result;
+                });
+                console.log("getUsers end");
+            },
+            async getOffices(){
+                const promise = Offices.getAllOffices();
+                promise.then(result => {
+                this.officeCount = result;
+                });
+            },
+            async getEquipment(){
+                const promise = Equipments.getAllEquipments();
+                promise.then(result => {
+                this.equipmentCount = result;
+                });
             }
+        },
+        computed: {
+        },
+        created() {
+            this.getUsers();
+            this.getOffices();
+            this.getEquipment();
         }
-
     }
 
 </script>
