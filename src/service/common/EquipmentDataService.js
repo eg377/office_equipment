@@ -27,10 +27,10 @@ class EquipmentDataService {
     createEquipment(equipment) {
         console.log("creating equipment");
         console.log(equipment);
-        return axios.post(`${EQUIPMENT_API_URL}/api/equipment`, equipment, {headers: { Authorization: AuthStr }})
-                    .then(res => {
-                        console.log(res.data)
-                    })
+        return axios.post(`${EQUIPMENT_API_URL}/api/equipment/register`, equipment, {headers: { Authorization: AuthStr }})
+            .then(res => {
+                console.log(res.data)
+            })
     }
 
     updateEquipment(id, equipment) {
@@ -52,7 +52,7 @@ class EquipmentDataService {
     }
 
     getEquipmentsByOfficeId(officeId) {
-        return axios.get(`${EQUIPMENT_API_URL}/api/equipment/${officeId}`, {headers: { Authorization: AuthStr }})
+        return axios.get(`${EQUIPMENT_API_URL}/api/equipment/office/${officeId}`, {headers: { Authorization: AuthStr }})
             .then(response => {
                 console.log("getEquipmentsByOfficeId called -> " + response.data);
                 return response.data;

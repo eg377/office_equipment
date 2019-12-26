@@ -65,7 +65,7 @@ export default {
         //     active: true
         // },
         // officeId: this.$route.params.officeId,
-        // id: this.$route.params.id,              //just added to check id is passing or no
+        id: this.$route.params.id,              //just added to check id is passing or no
         
         // errors: []
         };
