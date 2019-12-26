@@ -4,7 +4,7 @@
     <div class="card-body">
       <b-col lg="6" class="my-1">
         <b-form-group
-          label="Office(s) Search:"
+          label="Equipment(s) Search:"
           label-cols-sm="3"
           label-align-sm="right"
           label-size="sm"
@@ -35,7 +35,7 @@
           responsive
           striped
           hover
-          :items="activeOffices"
+          :items="equipments"
           :fields="fieldsSortable"
           id="my-table"
           @filtered="onFiltered"
@@ -44,18 +44,18 @@
           :current-page="currentPage"
         >
           <template slot="actions" scope="row">
-            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
+            <span class="fa-stack edit-equipment" @click="editEquipment(row.item.equipmentId)">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>&nbsp;&nbsp;
             <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
-            <span class="fa-stack edit-office" @click="setDelete(row.item)">
+            <span class="fa-stack edit-equipment" @click="setDelete(row.item)">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
             </span>
-            <span class="fa-stack edit-office" @click="equipment(row.item.officeId)">
-              <i class="fas fa-briefcase fa-2x icon-button"></i>
-              <span class="icon-tooltip fa-stack-1x font-weight-bold">Equipments</span>
+            <span class="fa-stack edit-equipment" @click="equipmentDetail(row.item.equipmentId)">
+              <i class="fas fa-eye fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">View Equipment Details</span>
             </span>
           </template>
         </b-table>
@@ -71,7 +71,7 @@
           responsive
           striped
           hover
-          :items="activeOffices"
+          :items="equipments"
           :fields="activeNoneAdminSortable"
           id="my-table"
           @filtered="onFiltered"
@@ -85,38 +85,9 @@
       <br />
       <br />
       <br />
-      <div v-if="checkIfAdmin()">
-        <h3>Inactive Offices</h3>
-        <b-pagination
-          v-model="inactiveCurrentPage"
-          :total-rows="inactiveRows"
-          :per-page="perPage"
-          aria-controls="inactive-table"
-        ></b-pagination>
-        <b-table
-          responsive
-          striped
-          hover
-          :items="inactiveOffices"
-          :fields="adminFieldsSortable"
-          id="inactive-table"
-          @filtered="onFiltered"
-          :filter="filter"
-          :per-page="perPage"
-          :current-page="inactiveCurrentPage"
-        >
-          <template slot="actions" scope="row">
-            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
-              <i class="fas fa-edit fa-2x icon-button"></i>
-              <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
-            </span>&nbsp;&nbsp;
-          </template>
-        </b-table>
-      </div>
-
       <!-- YOU ARE SIMPLY NOT VIEWING THE DELETED OFFICES BUT THEY ARE A SOFT DELETE. -->
-      <div id="deleteMessage" class="text-center" v-show="deleteOffice">
-        Are you sure you want to delete office: {{deleteOfficeName}}?
+      <div id="deleteMessage" class="text-center" v-show="deleteEquipment">
+        Are you sure you want to delete equipment: {{deleteEquipmentName}}?
         <br />
         <button class="btn btn-primary" @click="confirmDelete">Yes</button>
         <button class="btn btn-danger" @click="clearDelete">No</button>
@@ -126,23 +97,26 @@
 </template>
 
 <script>
-import officeService from "../../service/common/OfficeDataService.js";
+// import officeService from "../../service/common/OfficeDataService.js";
+import equipmentService from "../../service/common/EquipmentDataService.js";
 import authService from "../../service/common/CommonCall";
 
 export default {
   data() {
+      
     return {
+         //id: this.$route.params.id   ,
       filter: null,
       perPage: 5,
       currentPage: 1,
       inactiveCurrentPage: 1,
       loading: false,
-      deleteOffice: false,
+      deleteEquipment: false,
       idToDelete: undefined,
-      deleteOfficeName: "",
-      offices: [],
+      deleteEquipmentName: "",
+      equipments: [],
       watch: {
-        route: "getOffices"
+        route: "getEquipments"
       },
       transProps: {
         // Transition name
@@ -151,57 +125,25 @@ export default {
       // Fields with Sortable definition
       // Note 'isActive' is left out and will not appear in the rendered table
       activeNoneAdminSortable: {
-        officeName: {
-          label: "Office Name",
+        equipmentType: {
+          label: "Equipment Type",
           sortable: true
         },
-        streetAddress: {
-          label: "Address",
+        assigned: {
+          label: "Assigned",
           sortable: true
         },
-        city: {
-          label: "City",
-          sortable: true
-        },
-        zip: {
-          label: "Zip Code",
-          sortable: true
-        },
-        state: {
-          label: "State",
-          sortable: true
-        },
-        country: {
-          label: "Country",
-          sortable: true
+        actions: {
+           label: "Actions"
         }
-        // actions: {
-        //   label: "Actions"
-        // }
       },
       fieldsSortable: {
-        officeName: {
-          label: "Office Name",
+        equipmentType: {
+          label: "Equipment Type",
           sortable: true
         },
-        streetAddress: {
-          label: "Address",
-          sortable: true
-        },
-        city: {
-          label: "City",
-          sortable: true
-        },
-        zip: {
-          label: "Zip Code",
-          sortable: true
-        },
-        state: {
-          label: "State",
-          sortable: true
-        },
-        country: {
-          label: "Country",
+        assigned: {
+          label: "Assigned",
           sortable: true
         },
         actions: {
@@ -209,32 +151,12 @@ export default {
         }
       },
       adminFieldsSortable: {
-        officeId: {
+        equipmentId: {
           label: "ID",
           sortable: true
         },
-        officeName: {
-          label: "Office Name",
-          sortable: true
-        },
-        streetAddress: {
-          label: "Address",
-          sortable: true
-        },
-        city: {
-          label: "City",
-          sortable: true
-        },
-        zip: {
-          label: "Zip Code",
-          sortable: true
-        },
-        state: {
-          label: "State",
-          sortable: true
-        },
-        country: {
-          label: "Country",
+        equipmentType: {
+          label: "Equipment Type",
           sortable: true
         },
         actions: {
@@ -254,13 +176,39 @@ export default {
     };
   },
   async created() {
-    this.getOffices();
+    this.getEquipments();
   },
+
+  /*created() {
+      //console.log("start");
+      //console.log(officeService.getAllOffices());
+      if(this.id){
+          console.log("Inside AllEquipmentList id = " + id);
+      }
+      else{
+          console.log("Inside AllOffices id NOT found");
+      }
+      if(this.id){
+        console.log("ID found : " + this.id);  
+        equipmentService.getEquipmentsByOfficeId(this.id).then(result => {
+            this.equipments = result;
+            this.loading = false;
+        });
+      }  
+      else {
+        console.log("ID not found.");    
+        equipmentService.getAllEquipments().then(result => {
+            this.equipments = result;
+            this.loading = false;
+        });
+      }
+      //console.log(this.offices);
+      //console.log("end");
+  },*/
   methods: {
     equipment(id) {
-      console.log("equipment method called with OfficeId = " + id);
       this.$router.push({
-        name: "equipments",
+        name: "equipment",
         params: {
           id: id
         }
@@ -269,42 +217,61 @@ export default {
     checkIfAdmin() {
       return authService.checkAuthority("ROLE_ADMIN");
     },
-    editOffice(id) {
+    editEquipment(id) {
       this.$router.push({
-        name: "editOffice",
-        //path: "office/edit",
+        name: "editEquipment",
+        path: "/equipment/edit",
         params: {
           id: id
         }
       });
     },
-    async getOffices() {
+    equipmentDetail(id) {
+          this.$router.push({
+              name: "equipmentDetail",
+              params: {
+                  id: id
+         }})
+    },
+    async getEquipments() {
       //console.log("start");
       //console.log(officeService.getAllOffices());
-      const promise = officeService.getAllOffices();
-      //console.log(promise);
-      promise.then(result => {
-        this.offices = result;
-        this.loading = false;
-      });
+      if(this.id){
+        console.log("ID found : " + this.id);  
+        const promise = equipmentService.getEquipmentsByOfficeId(this.id);
+        console.log(promise);
+        promise.then(result => {
+            this.equipments = result;
+            this.loading = false;
+        });
+      }  
+      else {
+        console.log("ID not found.");    
+        const promise = equipmentService.getAllEquipments();
+        console.log(promise);
+        promise.then(result => {
+            this.equipments = result;
+            this.loading = false;
+        });
+      }
       //console.log(this.offices);
       //console.log("end");
     },
-    setDelete(office) {
+    setDelete(equipment) {
       //console.log(id);
-      this.deleteOffice = true;
-      this.idToDelete = office.officeId;
-      this.deleteOfficeName = office.officeName;
+      this.deleteEquipment = true;
+      this.idToDelete = equipment.equipmentId;
+      this.deleteEquipmentName = equipment.equipmentName;
     },
     clearDelete() {
-      this.deleteOffice = false;
+      this.deleteEquipment = false;
     },
     async confirmDelete() {
-      const promise = officeService.deleteOffice(this.idToDelete);
+      const promise = equipmentService.deleteEquipment(this.idToDelete);
       console.log(promise);
       promise.then(res => {
         this.clearDelete();
-        this.getOffices();
+        this.getEquipments();
       });
     },
     onFiltered(filteredItems) {
@@ -315,20 +282,20 @@ export default {
     }
   },
   computed: {
-    activeOffices() {
+    /*activeOffices() {
       let active = this.offices.filter(office => office.active);
       return active;
     },
     inactiveOffices() {
       let inactive = this.offices.filter(office => !office.active);
       return inactive;
-    },
+    },*/
     rows() {
-      return this.activeOffices.length;
+      return this.equipments.length;
     },
-    inactiveRows() {
+    /*inactiveRows() {
       return this.inactiveOffices.length;
-    }
+    }*/
   }
 };
 </script>
@@ -338,11 +305,11 @@ export default {
   background-color: darkgray;
 }
 
-.edit-office:hover {
+.edit-equipment:hover {
   cursor: pointer;
 }
 
-.edit-office {
+.edit-equipment {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   word-wrap: normal;
@@ -372,7 +339,7 @@ export default {
   opacity: 0;
 }
 
-.edit-office:hover .icon-tooltip {
+.edit-equipment:hover .icon-tooltip {
   opacity: 0.5;
 }
 
@@ -380,7 +347,7 @@ export default {
   opacity: 0.5;
 }
 
-.edit-office:hover .icon-button {
+.edit-equipment:hover .icon-button {
   opacity: 0;
 }
 </style>

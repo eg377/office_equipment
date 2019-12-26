@@ -66,6 +66,7 @@ const authService = {
             return false;
         }
     },
+
     logoutStub: async () => {
         console.log('logoutStub');  
         return 'logged out';   
