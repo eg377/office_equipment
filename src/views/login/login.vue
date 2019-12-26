@@ -86,6 +86,7 @@
                 } else {
                     console.log('token available',token);
                     sessionStorage.setItem('access_token', token );
+                    sessionStorage.setItem('userid', uname );
                     if (this.returnUrl) {
                         // this.router.navigateByUrl(this.returnUrl);
                         this.$router.push(this.returnUrl.fullPath);
