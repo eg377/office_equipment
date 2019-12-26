@@ -38,7 +38,6 @@
           :fields="fieldsSortable"
           id="my-table"
           :filter="filter"
-          :filterIncludedFields="filterOn"
           @filtered="onFiltered"
           :per-page="perPage"
           :current-page="currentPage"
@@ -87,7 +86,7 @@
         <h3>Inactive Offices</h3>
         <b-pagination
           v-model="inactiveCurrentPage"
-          :total-rows="inactiveRows"
+          :total-rows="inactiveTotalRows"
           :per-page="perPage"
           aria-controls="inactive-table"
         ></b-pagination>
@@ -98,7 +97,7 @@
           :items="inactiveOffices"
           :fields="adminFieldsSortable"
           id="inactive-table"
-          @filtered="onFiltered"
+          @filtered="onFilteredInactive"
           :filter="filter"
           :per-page="perPage"
           :current-page="inactiveCurrentPage"
@@ -132,6 +131,7 @@ export default {
       filter: null,
       perPage: 5,
       totalRows: 1,
+      inactiveTotalRows: 1,
       currentPage: 1,
       filterOn: [],
       inactiveCurrentPage: 1,
@@ -302,6 +302,16 @@ export default {
         console.log("total rows: " + this.totalRows);
       }
     },
+    onFilteredInactive(filteredItems){
+      console.log("inactive filter running")
+      if(this.filter == ""){
+        console.log("inactive filter empty")
+        this.inactiveTotalRows = this.inactiveOffices.length;
+      }else {
+        this.inactiveTotalRows = filteredItems.length;
+        this.inactiveCurrentPage = 1;      
+        }
+    }
   },
   computed: {
     activeOffices() {
@@ -311,6 +321,7 @@ export default {
     },
     inactiveOffices() {
       let inactive = this.offices.filter(office => !office.active);
+      this.inactiveTotalRows = inactive.length;
       return inactive;
     },
     // rows() {
