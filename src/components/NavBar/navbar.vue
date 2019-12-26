@@ -6,6 +6,7 @@
       <mdb-navbar-nav right>
         <!-- <mdb-nav-item href="/officeList" active id="drop">To Office</mdb-nav-item> -->
         <mdb-nav-item @click="goToOfficeList" active id="drop">To Office</mdb-nav-item>
+        <mdb-nav-item @click="goToEquipmentList" active id="drop">To Equipments</mdb-nav-item>
         <mdb-nav-item @click="goToUserList" active id="drop">To User</mdb-nav-item>
         <mdb-nav-item @click="goToReport" active id="drop">Reports</mdb-nav-item>
         <mdb-nav-item @click="logout" id="drop">Logout</mdb-nav-item>
@@ -66,6 +67,9 @@
       },
       goToOfficeList(){
         this.$router.push({name: "offices"})
+      },
+      goToEquipmentList(){
+      this.$router.push({name: "allEquipments"})
       },
       goToUserList(){
         this.$router.push({path: "users"})

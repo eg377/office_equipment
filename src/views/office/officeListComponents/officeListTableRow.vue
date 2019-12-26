@@ -17,6 +17,9 @@
         <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
       </span>
     </td>
+     <td @click="equipment" class="office-equipment text-center">
+      <i class="fas fa-briefcase" title="click to view equipments"></i>
+    </td>  
   </tr>
 </template>
 
@@ -40,6 +43,13 @@ export default {
                 id: this.office.officeId
               }})
         },
+         equipment() {
+          this.$router.push({
+            name: "equipment",
+             params: {
+                id: this.office.officeId
+            }})
+        }
     },
 }
 </script>

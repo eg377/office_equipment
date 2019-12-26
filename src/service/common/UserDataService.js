@@ -48,6 +48,7 @@ class UserDataService {
         console.log(res.data);
     }
 
+
     async updateUser(id, user) {
         console.log('Editing user')
         const res = await axios.put(`${USER_API_URL}/api/users/${id}`, user, { headers: { Authorization: AuthStr } });

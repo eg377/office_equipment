@@ -144,12 +144,12 @@ export default {
             username:m.username,
             firstName: m.firstName,
             lastName: m.lastName,
-            role: m.roles != null && m.roles.length > 0 ? m.roles[0].name.split("ROLE_")[1] : '',
+            role: m.role != null ? m.role.name : '',
             department: m.department
           }
           )
         );
-        this.users = userList;
+        this.users = userList.slice(4);
         this.loading = false;
       });
     },
