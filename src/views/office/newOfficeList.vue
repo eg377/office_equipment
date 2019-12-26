@@ -1,10 +1,9 @@
 <template>
   <div class="card card-default">
-    <!-- <div class="card-header">Sortable</div> -->
     <div class="card-body">
       <b-col lg="6" class="my-1">
         <b-form-group
-          label="Office(s) Search:"
+          label="Filter:"
           label-cols-sm="3"
           label-align-sm="right"
           label-size="sm"
@@ -19,7 +18,7 @@
               placeholder="Type to Search"
             ></b-form-input>
             <b-input-group-append>
-              <button :disabled="!filter" @click="filter = ''">Clear</button>
+              <button :disabled="!filter" @click="filter = '';">Clear</button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
@@ -27,7 +26,7 @@
       <div class="overflow-auto" v-if="checkIfAdmin()">
         <b-pagination
           v-model="currentPage"
-          :total-rows="rows"
+          :total-rows="totalRows"
           :per-page="perPage"
           aria-controls="my-table"
         ></b-pagination>
@@ -38,8 +37,9 @@
           :items="activeOffices"
           :fields="fieldsSortable"
           id="my-table"
-          @filtered="onFiltered"
           :filter="filter"
+          :filterIncludedFields="filterOn"
+          @filtered="onFiltered"
           :per-page="perPage"
           :current-page="currentPage"
         >
@@ -48,7 +48,6 @@
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>&nbsp;&nbsp;
-            <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
             <span class="fa-stack edit-office" @click="setDelete(row.item)">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
@@ -63,7 +62,7 @@
       <div class="overflow-auto" v-else>
         <b-pagination
           v-model="currentPage"
-          :total-rows="rows"
+          :total-rows="totalRows"
           :per-page="perPage"
           aria-controls="my-table"
         ></b-pagination>
@@ -80,7 +79,6 @@
           :current-page="currentPage"
         ></b-table>
       </div>
-      <!-- <button @click="getOffices()">Get Offices Button</button> -->
 
       <br />
       <br />
@@ -114,7 +112,6 @@
         </b-table>
       </div>
 
-      <!-- YOU ARE SIMPLY NOT VIEWING THE DELETED OFFICES BUT THEY ARE A SOFT DELETE. -->
       <div id="deleteMessage" class="text-center" v-show="deleteOffice">
         Are you sure you want to delete office: {{deleteOfficeName}}?
         <br />
@@ -134,7 +131,9 @@ export default {
     return {
       filter: null,
       perPage: 5,
+      totalRows: 1,
       currentPage: 1,
+      filterOn: [],
       inactiveCurrentPage: 1,
       loading: false,
       deleteOffice: false,
@@ -144,12 +143,6 @@ export default {
       watch: {
         route: "getOffices"
       },
-      transProps: {
-        // Transition name
-        name: "flip-list"
-      },
-      // Fields with Sortable definition
-      // Note 'isActive' is left out and will not appear in the rendered table
       activeNoneAdminSortable: {
         officeName: {
           label: "Office Name",
@@ -175,9 +168,6 @@ export default {
           label: "Country",
           sortable: true
         }
-        // actions: {
-        //   label: "Actions"
-        // }
       },
       fieldsSortable: {
         officeName: {
@@ -272,26 +262,19 @@ export default {
     editOffice(id) {
       this.$router.push({
         name: "editOffice",
-        //path: "office/edit",
         params: {
           id: id
         }
       });
     },
     async getOffices() {
-      //console.log("start");
-      //console.log(officeService.getAllOffices());
       const promise = officeService.getAllOffices();
-      //console.log(promise);
       promise.then(result => {
         this.offices = result;
         this.loading = false;
       });
-      //console.log(this.offices);
-      //console.log("end");
     },
     setDelete(office) {
-      //console.log(id);
       this.deleteOffice = true;
       this.idToDelete = office.officeId;
       this.deleteOfficeName = office.officeName;
@@ -308,24 +291,31 @@ export default {
       });
     },
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      console.log(filteredItems);
-      //this.inactiveOffices = filteredItems;
-      this.inactiveCurrentPage = 1;
-    }
+      //console.log("filtered Items: " + filteredItems);
+      if (this.filter == "") {
+        console.log("filter is empty")
+        this.totalRows = this.activeOffices.length;
+      } else {
+        this.totalRows = filteredItems.length;
+        this.inactiveCurrentPage = 1;
+        this.currentPage = 1;
+        console.log("total rows: " + this.totalRows);
+      }
+    },
   },
   computed: {
     activeOffices() {
       let active = this.offices.filter(office => office.active);
+      this.totalRows = active.length;
       return active;
     },
     inactiveOffices() {
       let inactive = this.offices.filter(office => !office.active);
       return inactive;
     },
-    rows() {
-      return this.activeOffices.length;
-    },
+    // rows() {
+    //   return this.activeOffices.length;
+    // },
     inactiveRows() {
       return this.inactiveOffices.length;
     }
