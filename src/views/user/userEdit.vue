@@ -26,21 +26,13 @@
         <div class="form-group">
           <label for="lastName">Last Name</label>
           <input type="text" class="form-control" id="lastname" v-model="user.lastName"/>
-        </div>
+        </div>        
         <div class="form-row">
-        </div>
-        <div class="form-group">
-          <label for="userId">User iD</label>
-          <input type="text" class="form-control" id="userId" v-model="user.userId"/>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="text" class="form-control" id="password" v-model="user.password"/>
-        </div>
-        <div class="form-group">
-          <label for="role" >Role</label>
-          <input type="text" class="form-control" id="role" v-model="user.role"/>
-        </div>
+        </div>        
         <div class="form-group">
           <label for="department">Department</label>
           <input type="text" class="form-control" id="department" v-model="user.department"/>
@@ -62,8 +54,7 @@ export default {
       user: {
         username: '',
         firstName: '',
-        lastName: '',
-        userId: '',
+        lastName: '',        
         password: '',
         role: '',
         department: '',
@@ -109,13 +100,7 @@ export default {
       }
       if (!this.user.lastName) {
         this.errors.push("Enter a last name");
-      }
-      if (!this.user.userId) {
-        this.errors.push("Enter a user id");
-      }
-      if (!this.user.role) {
-        this.errors.push("Enter a role");
-      }
+      }      
       if(!this.user.department){
         this.errors.push("Enter a department");
       }

@@ -28,7 +28,23 @@ class UserDataService {
     async createUser(user) {
         console.log("creating user");
         console.log(AuthStr);
-        const res = await axios.post(`${USER_API_URL}/api/users`, user, { headers: { Authorization: AuthStr } });
+        var userParam = {
+            "username": user.username,
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "email": user.username + "@cognizant.com",
+            "department": user.department,
+            "password": user.password,
+            "roles":[
+                {
+                    "id": 3,
+                    "name": "ROLE_DEVELOPER"
+                }
+            ]
+        }; 
+        var jsonUser = JSON.stringify(userParam);
+        console.log("jsonUser",jsonUser);
+        const res = await axios.post(`${USER_API_URL}/api/users`, jsonUser, { headers: { Authorization: AuthStr , "Content-Type": 'application/json', } });
         console.log(res.data);
     }
 
