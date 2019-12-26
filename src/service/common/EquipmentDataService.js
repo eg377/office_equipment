@@ -7,7 +7,7 @@ const AuthStr = `Bearer ${token}`
 class EquipmentDataService {
 
     getAllEquipments(){
-        return axios.get(EQUIPMENT_API_URL + '/api/equipments', {headers: { Authorization: AuthStr }})
+        return axios.get(EQUIPMENT_API_URL + '/api/equipment', {headers: { Authorization: AuthStr }})
             .then(response => {
                 console.log(response.data);
                 return response.data;
@@ -15,7 +15,7 @@ class EquipmentDataService {
     }
 
     getEquipmentById(equipmentId) {
-        return axios.get(`${EQUIPMENT_API_URL}/api/equipments/${equipmentId}`, {headers: { Authorization: AuthStr }})
+        return axios.get(`${EQUIPMENT_API_URL}/api/equipment/${equipmentId}`, {headers: { Authorization: AuthStr }})
             .then(response => {
                 console.log(response.data);
                 return response.data;
@@ -27,7 +27,7 @@ class EquipmentDataService {
     createEquipment(equipment) {
         console.log("creating equipment");
         console.log(equipment);
-        return axios.post(`${EQUIPMENT_API_URL}/api/equipments`, equipment, {headers: { Authorization: AuthStr }})
+        return axios.post(`${EQUIPMENT_API_URL}/api/equipment`, equipment, {headers: { Authorization: AuthStr }})
                     .then(res => {
                         console.log(res.data)
                     })
@@ -35,14 +35,14 @@ class EquipmentDataService {
 
     updateEquipment(id, equipment) {
         console.log('Editing Equipment')
-        return axios.put(`${EQUIPMENT_API_URL}/api/equipments/${id}`, equipment,{headers: { Authorization: AuthStr }})
+        return axios.put(`${EQUIPMENT_API_URL}/api/equipment/${id}`, equipment,{headers: { Authorization: AuthStr }})
             .then(res=>{
                 console.log(res.data)
             })
     }
 
     deleteEquipment(equipmentId) {
-        return axios.delete(`${EQUIPMENT_API_URL}/api/equipments/${equipmentId}`, {headers: { Authorization: AuthStr }})
+        return axios.delete(`${EQUIPMENT_API_URL}/api/equipment/${equipmentId}`, {headers: { Authorization: AuthStr }})
             .then(res => {
                 console.log("office deleted")
             })
@@ -50,6 +50,17 @@ class EquipmentDataService {
                 console.log(`Error: ${err}`)
             })
     }
+
+    getEquipmentsByOfficeId(officeId) {
+        return axios.get(`${EQUIPMENT_API_URL}/api/equipment/${officeId}`, {headers: { Authorization: AuthStr }})
+            .then(response => {
+                console.log("getEquipmentsByOfficeId called -> " + response.data);
+                return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
+            })
+    }
+
 }
 
 export default new EquipmentDataService()

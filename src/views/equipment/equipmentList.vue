@@ -4,83 +4,64 @@
 
       <div class="container">
         <div class="text-center">
+          <!--<div v-if="id">ID Found {{id}}</div>-->
+          
+          <!--<button v-if="checkIfAdmin()" class="btn btn-primary text-center add-btn" @click="addEquipment">Add equipment</button>-->
           <button class="btn btn-primary text-center add-btn" @click="addEquipment">Add equipment</button>
         </div>
-
-        <label for="officeName" id="officeDetails">Office: {{office.officeId}} - {{office.officeName}}</label>
-
-        <div class="form-group">
-          <input type="hidden" class="form-control" id="officeId" v-model="office.officeId" />
-        </div>
-
-        <equipment-table />
-    
-
-      </div>
-    
+    <!-- <equipment-table /> -->
+    <allEquipmentList /> 
   </div>
+</div>
 </template>
-<script>
 
+<script>
 import ContentWrapper from "../../components/Layout/ContentWrapper";
-import equipmentListTableVue from "./equipmentListComponents/equipmentListTable.vue";
+//import equipmentListTableVue from "./equipmentListComponents/equipmentListTable.vue";
 import NavBar from "../../../src/components/NavBar/navbar.vue";
-import OfficeDataService from "../../service/common/OfficeDataService";
+import allEquipmentList from "./allEquipmentList";
+//import authService from '../../service/common/CommonCall'
 
 
 export default {
+  data() {
+    return {
+         id: this.$route.params.id 
+    }
+    console.log("Inside equipmentList.vue id = " + id); 
+
+  },       
   components: {
-    "equipment-table": equipmentListTableVue,
+    //"equipment-table": equipmentListTableVue,
     ContentWrapper: ContentWrapper,
-    NavBar
+    NavBar,
+    allEquipmentList
   },
   methods: {
+    // checkIfAdmin(){
+    //   return authService.checkAuthority("ROLE_ADMIN");
+    // },
     addEquipment() {
-      //this.$router.push({name: "addEquipment"})
-        this.$router.push({
-              name: "addEquipment",
-              params: {
-                officeId: this.office.officeId
-              }})
-        }
-  },
-  name: "office",
-    data() {
-        return {
-        office: {
-            officeName: '',
-            streetAddress: '',
-            city: '',
-            zip: '',
-            active: true
-        },
-        id:this.$route.params.id,
-        errors: []
-        };
-    },
-    created() {
-        if(this.id){
-        OfficeDataService.getOfficeById(this.id).then( result => {
-            this.office = result;
-            console.log(result);
-        });
+      this.$router.push({ name: "addEquipment" });
     }
-     }
+  },
+  computed: {
+    // userPermissions() {
+    //   const token = sessionStorage.getItem("access_token")
+
+    //   try {
+    //     const parsed = JSON.parse(atob(token.split('.')[1]))
+    //     return parsed.authorities;
+    //   } catch (e) {
+    //     return e;
+    //   }
+    // },
+  },
 };
 </script>
 
 <style scoped>
-  .add-btn {
-    width: 50%;
-  }
-
-#officeDetails{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14pt;
-    border: 1px;
-    /*background-color:darkgray;*/
-    text-align: left;
-    color:darkolivegreen;
+.add-btn {
+  width: 50%;
 }
-
 </style>
