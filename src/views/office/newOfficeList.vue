@@ -18,12 +18,12 @@
               placeholder="Type to Search"
             ></b-form-input>
             <b-input-group-append>
-              <button :disabled="!filter" @click="filter = '';">Clear</button>
+              <button :disabled="!filter" @click="filter = ''">Clear</button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
       </b-col>
-      <div class="overflow-auto" v-if="checkIfAdmin()">
+      <div class="overflow-auto">
           <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -44,18 +44,18 @@
           :current-page="currentPage"
         >
           <template slot="actions" scope="row">
-            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)">
+            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)" v-if="checkIfAdmin()">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
-            </span>&nbsp;&nbsp;
-            <span class="fa-stack edit-office" @click="setDelete(row.item)">
+            </span>
+            <span class="fa-stack edit-office" @click="setDelete(row.item)" v-if="checkIfAdmin()">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
-            </span>&nbsp;&nbsp;
+            </span>
             <span class="fa-stack edit-office" @click="openMap(row.item)">
               <i class="fas fa-map-marker-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Map</span>
-            </span>&nbsp;&nbsp;
+            </span>
             <span class="fa-stack edit-office" @click="equipment(row.item.officeId)">
               <i class="fas fa-briefcase fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Equipments</span>
@@ -64,26 +64,26 @@
           </template>
         </b-table>
       </div>
-      <div class="overflow-auto" v-else>
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          aria-controls="my-table"
-        ></b-pagination>
-        <b-table
-          responsive
-          striped
-          hover
-          :items="activeOffices"
-          :fields="activeNoneAdminSortable"
-          id="my-table"
-          @filtered="onFiltered"
-          :filter="filter"
-          :per-page="perPage"
-          :current-page="currentPage"
-        ></b-table>
-      </div>
+<!--      <div class="overflow-auto" v-else>-->
+<!--        <b-pagination-->
+<!--          v-model="currentPage"-->
+<!--          :total-rows="totalRows"-->
+<!--          :per-page="perPage"-->
+<!--          aria-controls="my-table"-->
+<!--        ></b-pagination>-->
+<!--        <b-table-->
+<!--          responsive-->
+<!--          striped-->
+<!--          hover-->
+<!--          :items="activeOffices"-->
+<!--          :fields="activeNoneAdminSortable"-->
+<!--          id="my-table"-->
+<!--          @filtered="onFiltered"-->
+<!--          :filter="filter"-->
+<!--          :per-page="perPage"-->
+<!--          :current-page="currentPage"-->
+<!--        ></b-table>-->
+<!--      </div>-->
 
       <br />
       <br />
@@ -149,32 +149,32 @@ export default {
       watch: {
         route: "getOffices"
       },
-      activeNoneAdminSortable: {
-        officeName: {
-          label: "Office Name",
-          sortable: true
-        },
-        streetAddress: {
-          label: "Address",
-          sortable: true
-        },
-        city: {
-          label: "City",
-          sortable: true
-        },
-        zip: {
-          label: "Zip Code",
-          sortable: true
-        },
-        state: {
-          label: "State",
-          sortable: true
-        },
-        country: {
-          label: "Country",
-          sortable: true
-        }
-      },
+      // activeNoneAdminSortable: {
+      //   officeName: {
+      //     label: "Office Name",
+      //     sortable: true
+      //   },
+      //   streetAddress: {
+      //     label: "Address",
+      //     sortable: true
+      //   },
+      //   city: {
+      //     label: "City",
+      //     sortable: true
+      //   },
+      //   zip: {
+      //     label: "Zip Code",
+      //     sortable: true
+      //   },
+      //   state: {
+      //     label: "State",
+      //     sortable: true
+      //   },
+      //   country: {
+      //     label: "Country",
+      //     sortable: true
+      //   }
+      // },
       fieldsSortable: {
         officeName: {
           label: "Office Name",
@@ -254,7 +254,7 @@ export default {
   },
   methods: {
     openMap(office) {
-      const url = `https://www.google.com/maps/search/${office.streetAddress} ${office.city} ${office.state} ${office.zip}`
+      const url = `https://www.google.com/maps/search/${office.officeName} ${office.streetAddress} ${office.city} ${office.state} ${office.zip}`;
       window.open(url, '_blank')
     },
     equipment(id) {
@@ -295,14 +295,14 @@ export default {
     async confirmDelete() {
       const promise = officeService.deleteOffice(this.idToDelete);
       console.log(promise);
-      promise.then(res => {
+      promise.then(() => {
         this.clearDelete();
         this.getOffices();
       });
     },
     onFiltered(filteredItems) {
       //console.log("filtered Items: " + filteredItems);
-      if (this.filter == "") {
+      if (this.filter === "") {
         console.log("filter is empty");
         this.totalRows = this.activeOffices.length;
       } else {
@@ -314,7 +314,7 @@ export default {
     },
     onFilteredInactive(filteredItems) {
       console.log("inactive filter running");
-      if (this.filter == "") {
+      if (this.filter === "") {
         console.log("inactive filter empty");
         this.inactiveTotalRows = this.inactiveOffices.length;
       } else {
@@ -363,7 +363,7 @@ export default {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   word-wrap: normal;
-  color: inherited;
+  color: inherit;
 }
 
 #deleteMessage {
