@@ -1,8 +1,8 @@
 <template>
-    <ContentWrapper>
-        <div class="content-heading">
-            <div>Dashboard
-            </div>
+    <div>
+        <div class="content-heading mb3">
+            <div> &nbsp;
+            </div>            
         </div>
         <!-- START cards box-->
         <div class="row">
@@ -30,19 +30,19 @@
                         <div class="text-uppercase">Users</div>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <!-- START card-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
-                        <em class="fas fa-toolbox fa-3x"></em>
+                        <em class="fas fa-toolbox fa-3x"></em>                        
                     </div>
                     <div class="col-8 py-3 bg-green rounded-right">
                         <div class="h2 mt-0">{{equipmentCount.length}}</div>
                         <div class="text-uppercase">Equipments</div>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <!-- START date widget-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
@@ -64,6 +64,7 @@
                 <!-- END date widget-->
             </div>
         </div>
+        <!--
         <div class="row">
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <div class="card flex-row align-items-center align-items-stretch border-0">
@@ -87,7 +88,7 @@
                         <div class="text-uppercase">Europe</div>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
@@ -100,96 +101,33 @@
                 </div>
             </div>
         </div>
-        <!-- END cards box-->
+        -->
+    <!-- END cards box-->
         <div class="row">
             <!-- START dashboard main content-->
+            <!-- START bar chart-->
             <div class="col-xl-9">
-                <!-- START chart-->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <!-- START card-->
-                        <div class="card card-default card-demo" id="cardChart9">
-                            <div class="card-header">
-                                <CardTool refresh :onRefresh="onRefresh"/>
-                                <div class="card-title">Inbound visitor statistics</div>
-                            </div>
-                            <div class="card-body">
-                                <FlotChart :data="flotData" :options="flotOptions" height="250px" />
-                            </div>
-                        </div>
-                        <!-- END card-->
+            <div class="card" id="cardChart3">
+                <div class="card-header">                    
+                    <div class="card-title">Equipment Status</div>
+                </div>
+                <div class="card-wrapper">
+                    <div class="card-body">
+                        <FlotChart :data="barStackedData" :options="barStackedOptions" height="250px" />                        
                     </div>
                 </div>
-                <!-- END chart-->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card border-0">
-                            <div class="row row-flush">
-                                <div class="col-lg-2 col-md-3 col-6 bg-info py-4 d-flex align-items-center justify-content-center rounded-left">
-                                    <em class="wi wi-day-sunny fa-4x"></em>
-                                </div>
-                                <div class="col-lg-2 col-md-3 col-6 py-2 br d-flex align-items-center justify-content-center">
-                                    <div>
-                                        <div class="h1 m-0 text-bold">32&deg;</div>
-                                        <div class="text-uppercase">Clear</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
-                                    <div class="text-info text-sm">10 AM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-cloudy"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">20%</span>
-                                    </div>
-                                    <div class="text-muted">27&deg;</div>
-                                </div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
-                                    <div class="text-info text-sm">11 AM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-cloudy"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">30%</span>
-                                    </div>
-                                    <div class="text-muted">28&deg;</div>
-                                </div>
-                                <div class="col-lg-2 py-2 text-center br d-none d-lg-block">
-                                    <div class="text-info text-sm">12 PM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-cloudy"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">20%</span>
-                                    </div>
-                                    <div class="text-muted">30&deg;</div>
-                                </div>
-                                <div class="col-lg-2 py-2 text-center d-none d-lg-block">
-                                    <div class="text-info text-sm">1 PM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-sunny-overcast"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">0%</span>
-                                    </div>
-                                    <div class="text-muted">30&deg;</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-            <!-- END dashboard main content-->
+            <!-- END bar chart-->
+            </div>
             <!-- START dashboard sidebar-->
-            <aside class="col-xl-3">
+            <div class="col-xl-3">
                 <!-- START loader widget-->
                 <div class="card card-default">
                     <div class="card-body">
                         <a class="text-muted float-right" href="#">
-                   <em class="fa fa-arrow-right"></em>
+                    <em class="fa fa-arrow-right"></em>
                 </a>
-                        <div class="text-info">Average Monthly Uploads</div>
+                        <div class="text-info">Average Monthly Assgined Equipment</div>
                         <div class="text-center py-4">
                             <div ref="easypie" class="easypie-chart easypie-chart-lg" data-percent="70">
                                 <span>70%</span>
@@ -208,16 +146,77 @@
                         <p class="text-muted">
                             <em class="fa fa-upload fa-fw"></em>
                             <span>This Month</span>
-                            <span class="text-dark">1000 Gb</span>
+                            <span class="text-dark">62/100</span>
                         </p>
                     </div>
                 </div>
                 <!-- END loader widget-->
-
-            </aside>
+            </div>
             <!-- END dashboard sidebar-->
+            
         </div>
-    </ContentWrapper>
+        <!-- END chart-->
+        <!--
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card border-0">
+                    <div class="row row-flush">
+                        <div class="col-lg-2 col-md-3 col-6 bg-info py-4 d-flex align-items-center justify-content-center rounded-left">
+                            <em class="wi wi-day-sunny fa-4x"></em>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-6 py-2 br d-flex align-items-center justify-content-center">
+                            <div>
+                                <div class="h1 m-0 text-bold">32&deg;</div>
+                                <div class="text-uppercase">Clear</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
+                            <div class="text-info text-sm">10 AM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-cloudy"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">20%</span>
+                            </div>
+                            <div class="text-muted">27&deg;</div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
+                            <div class="text-info text-sm">11 AM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-cloudy"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">30%</span>
+                            </div>
+                            <div class="text-muted">28&deg;</div>
+                        </div>
+                        <div class="col-lg-2 py-2 text-center br d-none d-lg-block">
+                            <div class="text-info text-sm">12 PM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-cloudy"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">20%</span>
+                            </div>
+                            <div class="text-muted">30&deg;</div>
+                        </div>
+                        <div class="col-lg-2 py-2 text-center d-none d-lg-block">
+                            <div class="text-info text-sm">1 PM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-sunny-overcast"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">0%</span>
+                            </div>
+                            <div class="text-muted">30&deg;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+        <!-- END dashboard main content-->
+    </div>
 </template>
 
 <script>
@@ -234,6 +233,7 @@
     import Users from '../../service/common/UserDataService'
     import Equipments from '../../service/common/EquipmentDataService'
 
+
     export default {
         name: 'DashboardV1',
         components: {
@@ -245,39 +245,98 @@
         },
         data() {
             return {
+                officeLegend: [],
                 officeCount: [],
                 userCount: [],
+                stackedData:[],                
+                assignedArray: [],
+                unassignedArray: [],                
                 equipmentCount: [],
                 americaUserCount: 950,
                 europeUserCount: 1300,
-                asiaUserCount: 1200,
-                flotData: [{
-                    "label": "Uniques",
-                    "color": "#768294",
-                    "data": [
-                        ["Mar", 70],["Apr", 85],["May", 59],["Jun", 93],["Jul", 66],["Aug", 86],["Sep", 60]
+                asiaUserCount: 1200,                
+                // barStackedData: 
+                // //[],
+                // [{
+                //     "label": "Assigned",
+                //     "color": "#7266ba",
+                //     "data": 
+                //     [                        
+                //         ["US1", 20],                  
+                //     ]
+                // }, {
+                //     "label": "Unassigned",
+                //     "color": "#564aa3",
+                //     "data": 
+                //     [
+                //         ["US1", 30],                        
+                //     ]
+                // }],
+                barStackedData: [{
+                    "label": "Total",
+                    "color": "#9289ca",
+                    "data": [                        
+                        ["Jan", 136],
+                        ["Feb", 97],
+                        ["Mar", 110],
+                        ["Apr", 62],
+                        ["May", 85],
+                        ["Jun", 115],
+                        ["Jul", 78],
+                        ["Aug", 104],
+                        ["Sep", 82],
+                        ["Oct", 97],
+                        ["Nov", 110],
+                        ["Dec", 100]
                     ]
                 }, {
-                    "label": "Recurrent",
-                    "color": "#1f92fe",
-                    "data": [
-                        ["Mar", 21],["Apr", 12],["May", 27],["Jun", 24],["Jul", 16],["Aug", 39],["Sep", 15]
+                    "label": "Assigned",
+                    "color": "#7266ba",
+                    "data": [                        
+                        ["Jan", 81],
+                        ["Feb", 47],
+                        ["Mar", 44],
+                        ["Apr", 100],
+                        ["May", 49],
+                        ["Jun", 94],
+                        ["Jul", 44],
+                        ["Aug", 52],
+                        ["Sep", 17],
+                        ["Oct", 47],
+                        ["Nov", 44],
+                        ["Dec", 62]
                     ]
-                }],
-                flotOptions: {
+                }
+                // , {
+                //     "label": "Unassgined",
+                //     "color": "#564aa3",
+                //     "data": [
+                //         ["Jan", 29],
+                //         ["Feb", 56],
+                //         ["Mar", 14],
+                //         ["Apr", 21],
+                //         ["May", 5],
+                //         ["Jun", 24],
+                //         ["Jul", 37],
+                //         ["Aug", 22],
+                //         ["Sep", 28],
+                //         ["Oct", 9],
+                //         ["Nov", 14],
+                //         ["Dec", 21],                        
+                //     ]
+                // }
+                ],
+
+                
+                barStackedOptions: {
                     series: {
-                        lines: {
-                            show: false
-                        },
-                        points: {
+                        stack: true,
+                        bars: {
+                            align: 'center',
+                            lineWidth: 0,
                             show: true,
-                            radius: 4
-                        },
-                        splines: {
-                            show: true,
-                            tension: 0.4,
-                            lineWidth: 1,
-                            fill: 0.5
+                            barWidth: 0.6,
+                            fill: 0.9
                         }
                     },
                     grid: {
@@ -295,11 +354,8 @@
                         mode: 'categories'
                     },
                     yaxis: {
-                        min: 0,
-                        max: 150, // optional: use it for a clear represetation
-                        tickColor: '#eee',
-                        //position: 'right' or 'left',
-                        tickFormatter: v => v /* + ' visitors'*/
+                        // position: 'right' or 'left'
+                        tickColor: '#eee'
                     },
                     shadowSize: 0
                 },
@@ -328,34 +384,87 @@
             onRefresh (_,done) {
                 setTimeout(done, 2000)
             },
-            async getUsers(){
-                console.log("getUsers");
+            async getUsers(){                
                 const promise = Users.getAllUsers();
                 promise.then(result => {
                 this.userCount = result;
-                });
-                console.log("getUsers end");
+                });                
             },
             async getOffices(){
                 const promise = Offices.getAllOffices();
                 promise.then(result => {
-                this.officeCount = result;
+                this.officeCount = result;                
                 });
             },
             async getEquipment(){
                 const promise = Equipments.getAllEquipments();
                 promise.then(result => {
-                this.equipmentCount = result;
+                this.equipmentCount = result;                
                 });
+            },
+            async getChartData(){
+                const officeList = await Offices.getAllOffices();
+                const equipmentList = await Equipments.getAllEquipments();
+
+                var equipementList = [];
+                const result = equipmentList.map((m, eindex) => {
+                    var equipment = {
+                        'country': officeList.find(function(element) { return element.officeId == m.officeId; }).country                                        
+                        ,'assigned' : m.userId != null && m.userId != undefined && m.userId > 0 ? 1 : 0
+                        ,'type': m.equipementType
+                    };
+                    equipementList.push(equipment);
+                });                
+                var assignedArray = [];
+                var unassignedArray = [];
+                equipementList.map( (eq, i) => {                                            
+                    if(eq.assigned == 1) {
+                        var idx = assignedArray.findIndex( el => {return el[0] == eq.country});
+                        console.log("idx", idx, eq)
+                        if(idx >= 0) {
+                          //  console.log(i, idx, assignedArray);
+                            assignedArray[idx][1] = assignedArray[idx][1] + 1;
+                        } else {
+                            //console.log(i, idx, assignedArray);
+                            assignedArray.push([eq.country, 1]);
+                        }
+                    } else {                        
+                        var idx = unassignedArray.findIndex( el => {return el[0] == eq.country});
+                        console.log("idx", idx, eq)
+                        if(idx >= 0) {
+                          //  console.log(i, idx, assignedArray);
+                            unassignedArray[idx][1] = unassignedArray[idx][1] + 1;
+                        } else {
+                            //console.log(i, idx, assignedArray);
+                            unassignedArray.push([eq.country, 1]);
+                        }                   
+                    }
+                });
+
+                const tData =  [{
+                    "label": "Assigned",
+                    "color": "#7266ba",
+                    "data": assignedArray
+                }, {
+                    "label": "Unassigned",
+                    "color": "#564aa3",
+                    "data": unassignedArray
+                }];
+
+                //this.barStackedData = tData;
+
+                console.log(this.barStackedData, tData);
+
             }
         },
         computed: {
-        },
+        },    
         created() {
             this.getUsers();
             this.getOffices();
             this.getEquipment();
-        }
+            this.getChartData();
+        },        
     }
 
 </script>
