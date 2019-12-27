@@ -104,7 +104,7 @@
     data() {
 
       return {
-        // id: this.$route.params.id   ,
+        id: this.$route.params.id,
         filter: null,
         perPage: 5,
         currentPage: 1,
@@ -238,24 +238,24 @@
           }})
       },
       async getEquipments() {
-        // //console.log("start");
-        // //console.log(officeService.getAllOffices());
-        // if(this.id){
-        //   console.log("ID found : " + this.id);
-        //   const promise = equipmentService.getEquipmentsByOfficeId(this.id);
-        //   console.log(promise);
-        //   promise.then(result => {
-        //     this.equipments = result;
-        //     this.loading = false;
-        //   });
-        // }
-        // else {
-        //   console.log("ID not found.");
+        //console.log("start");
+        //console.log(officeService.getAllOffices());
+        if (this.id) {
+          console.log("ID found : " + this.id);
+          const promise = equipmentService.getEquipmentsByOfficeId(this.id);
+          console.log(promise);
+          promise.then(result => {
+            this.equipments = result;
+            this.loading = false;
+          });
+        } else {
+          console.log("ID not found.");
           const promise = equipmentService.getAllEquipments();
           promise.then(result => {
             this.equipments = result;
             this.loading = false;
           });
+        }
       },
       setDelete(equipment) {
         //console.log(id);
