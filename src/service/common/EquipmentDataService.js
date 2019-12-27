@@ -8,7 +8,7 @@ class EquipmentDataService {
         return sessionStorage.getItem('access_token');
     }
 
-    getAllEquipments(){
+    async getAllEquipments(){
         return axios.get(EQUIPMENT_API_URL + '/api/equipment', {headers: { Authorization: `Bearer ${this.getToken()}` }})
             .then(response => {
                 console.log("All equipment fetched:");

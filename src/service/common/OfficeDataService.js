@@ -8,7 +8,7 @@ class OfficeDataService {
         return sessionStorage.getItem('access_token');
     }
 
-    getAllOffices(){
+    async getAllOffices(){
         return axios.get(OFFICE_API_URL + '/api/offices', {headers: { Authorization: `Bearer ${this.getToken()}` }})
             .then(response => {
                 console.log("All offices fetched:");
