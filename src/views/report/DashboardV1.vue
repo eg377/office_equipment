@@ -1,5 +1,5 @@
 <template>
-    <ContentWrapper>
+    <div>
         <div class="content-heading">
             <div>Dashboard               
             </div>            
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <!-- END cards box-->
+    <!-- END cards box-->
         <div class="row">
             <!-- START dashboard main content-->
             <div class="col-xl-9">
@@ -120,74 +120,14 @@
                         <!-- END card-->
                     </div>
                 </div>
-                <!-- END chart-->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card border-0">
-                            <div class="row row-flush">
-                                <div class="col-lg-2 col-md-3 col-6 bg-info py-4 d-flex align-items-center justify-content-center rounded-left">
-                                    <em class="wi wi-day-sunny fa-4x"></em>
-                                </div>
-                                <div class="col-lg-2 col-md-3 col-6 py-2 br d-flex align-items-center justify-content-center">
-                                    <div>
-                                        <div class="h1 m-0 text-bold">32&deg;</div>
-                                        <div class="text-uppercase">Clear</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
-                                    <div class="text-info text-sm">10 AM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-cloudy"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">20%</span>
-                                    </div>
-                                    <div class="text-muted">27&deg;</div>
-                                </div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
-                                    <div class="text-info text-sm">11 AM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-cloudy"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">30%</span>
-                                    </div>
-                                    <div class="text-muted">28&deg;</div>
-                                </div>
-                                <div class="col-lg-2 py-2 text-center br d-none d-lg-block">
-                                    <div class="text-info text-sm">12 PM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-cloudy"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">20%</span>
-                                    </div>
-                                    <div class="text-muted">30&deg;</div>
-                                </div>
-                                <div class="col-lg-2 py-2 text-center d-none d-lg-block">
-                                    <div class="text-info text-sm">1 PM</div>
-                                    <div class="text-muted text-md">
-                                        <em class="wi wi-day-sunny-overcast"></em>
-                                    </div>
-                                    <div class="text-info">
-                                        <span class="text-muted">0%</span>
-                                    </div>
-                                    <div class="text-muted">30&deg;</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
-            <!-- END dashboard main content-->
             <!-- START dashboard sidebar-->
-            <aside class="col-xl-3">
+            <div class="col-xl-3">
                 <!-- START loader widget-->
                 <div class="card card-default">
                     <div class="card-body">
                         <a class="text-muted float-right" href="#">
-                   <em class="fa fa-arrow-right"></em>
+                    <em class="fa fa-arrow-right"></em>
                 </a>
                         <div class="text-info">Average Monthly Uploads</div>
                         <div class="text-center py-4">
@@ -213,11 +153,70 @@
                     </div>
                 </div>
                 <!-- END loader widget-->
-               
-            </aside>
+            </div>
             <!-- END dashboard sidebar-->
+            
         </div>
-    </ContentWrapper>
+        <!-- END chart-->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card border-0">
+                    <div class="row row-flush">
+                        <div class="col-lg-2 col-md-3 col-6 bg-info py-4 d-flex align-items-center justify-content-center rounded-left">
+                            <em class="wi wi-day-sunny fa-4x"></em>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-6 py-2 br d-flex align-items-center justify-content-center">
+                            <div>
+                                <div class="h1 m-0 text-bold">32&deg;</div>
+                                <div class="text-uppercase">Clear</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
+                            <div class="text-info text-sm">10 AM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-cloudy"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">20%</span>
+                            </div>
+                            <div class="text-muted">27&deg;</div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 d-none d-md-block py-2 text-center br">
+                            <div class="text-info text-sm">11 AM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-cloudy"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">30%</span>
+                            </div>
+                            <div class="text-muted">28&deg;</div>
+                        </div>
+                        <div class="col-lg-2 py-2 text-center br d-none d-lg-block">
+                            <div class="text-info text-sm">12 PM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-cloudy"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">20%</span>
+                            </div>
+                            <div class="text-muted">30&deg;</div>
+                        </div>
+                        <div class="col-lg-2 py-2 text-center d-none d-lg-block">
+                            <div class="text-info text-sm">1 PM</div>
+                            <div class="text-muted text-md">
+                                <em class="wi wi-day-sunny-overcast"></em>
+                            </div>
+                            <div class="text-info">
+                                <span class="text-muted">0%</span>
+                            </div>
+                            <div class="text-muted">30&deg;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END dashboard main content-->
+    </div>
 </template>
 
 <script>
@@ -233,6 +232,7 @@
     import Offices from '../../service/common/OfficeDataService'
     import Users from '../../service/common/UserDataService'
     import Equipments from '../../service/common/EquipmentDataService'
+
 
     export default {
         name: 'DashboardV1',
@@ -347,7 +347,7 @@
                 promise.then(result => {
                 this.equipmentCount = result;
                 });
-            }
+            },           
         },
         computed: {
         },
