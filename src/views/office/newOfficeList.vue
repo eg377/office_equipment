@@ -24,12 +24,13 @@
         </b-form-group>
       </b-col>
       <div class="overflow-auto" v-if="checkIfAdmin()">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          aria-controls="my-table"
-        ></b-pagination>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            aria-controls="my-table"
+          ></b-pagination>
+
         <b-table
           responsive
           striped
@@ -38,7 +39,6 @@
           :fields="fieldsSortable"
           id="my-table"
           :filter="filter"
-          :filterIncludedFields="filterOn"
           @filtered="onFiltered"
           :per-page="perPage"
           :current-page="currentPage"
@@ -51,11 +51,16 @@
             <span class="fa-stack edit-office" @click="setDelete(row.item)">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
-            </span>
+            </span>&nbsp;&nbsp;
+            <span class="fa-stack edit-office" @click="openMap(row.item)">
+              <i class="fas fa-map-marker-alt fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">Map</span>
+            </span>&nbsp;&nbsp;
             <span class="fa-stack edit-office" @click="equipment(row.item.officeId)">
               <i class="fas fa-briefcase fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Equipments</span>
             </span>
+
           </template>
         </b-table>
       </div>
@@ -87,7 +92,7 @@
         <h3>Inactive Offices</h3>
         <b-pagination
           v-model="inactiveCurrentPage"
-          :total-rows="inactiveRows"
+          :total-rows="inactiveTotalRows"
           :per-page="perPage"
           aria-controls="inactive-table"
         ></b-pagination>
@@ -98,7 +103,7 @@
           :items="inactiveOffices"
           :fields="adminFieldsSortable"
           id="inactive-table"
-          @filtered="onFiltered"
+          @filtered="onFilteredInactive"
           :filter="filter"
           :per-page="perPage"
           :current-page="inactiveCurrentPage"
@@ -132,6 +137,7 @@ export default {
       filter: null,
       perPage: 5,
       totalRows: 1,
+      inactiveTotalRows: 1,
       currentPage: 1,
       filterOn: [],
       inactiveCurrentPage: 1,
@@ -247,6 +253,10 @@ export default {
     this.getOffices();
   },
   methods: {
+    openMap(office) {
+      const url = `https://www.google.com/maps/search/${office.streetAddress} ${office.city} ${office.state} ${office.zip}`
+      window.open(url, '_blank')
+    },
     equipment(id) {
       console.log("equipment method called with OfficeId = " + id);
       this.$router.push({
@@ -293,7 +303,7 @@ export default {
     onFiltered(filteredItems) {
       //console.log("filtered Items: " + filteredItems);
       if (this.filter == "") {
-        console.log("filter is empty")
+        console.log("filter is empty");
         this.totalRows = this.activeOffices.length;
       } else {
         this.totalRows = filteredItems.length;
@@ -302,6 +312,16 @@ export default {
         console.log("total rows: " + this.totalRows);
       }
     },
+    onFilteredInactive(filteredItems) {
+      console.log("inactive filter running");
+      if (this.filter == "") {
+        console.log("inactive filter empty");
+        this.inactiveTotalRows = this.inactiveOffices.length;
+      } else {
+        this.inactiveTotalRows = filteredItems.length;
+        this.inactiveCurrentPage = 1;
+      }
+    }
   },
   computed: {
     activeOffices() {
@@ -311,6 +331,7 @@ export default {
     },
     inactiveOffices() {
       let inactive = this.offices.filter(office => !office.active);
+      this.inactiveTotalRows = inactive.length;
       return inactive;
     },
     // rows() {
@@ -322,6 +343,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.pagination .page-item .page-link:focus {
+  background-color: #4285f4 !important;
+}
+</style>
 
 <style scoped>
 .inactive {

@@ -77,10 +77,14 @@
       goToReport(){
         this.$router.push({path: "report"})
       },
+      
       logout() {
-        sessionStorage.clear();
-        this.$router.push({name: "login"});
-      }
+      this.$store.dispatch('login/logout')
+           .then((response) => {
+             console.log("Got logout response " + response);
+             this.$router.push({name: "login"})
+       })
+      } 
 
     }
   };
