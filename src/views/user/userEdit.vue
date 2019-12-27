@@ -16,43 +16,54 @@
           </button>
         </div>
         <div class="form-group">
-          <label for="userName">Name</label>
-          <input type="text" class="form-control" id="userName" v-model="user.userName" />
+          <label for="username" >Username</label>
+          <input type="text" class="form-control" id="username" v-model="user.username"/>
+        </div>
+        <div class="form-group" v-if="!this.id">
+          <label for="password">Password</label>
+          <input type="text" class="form-control" id="password" v-model="user.password"/>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" v-model="user.firstName" />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" v-model="user.lastName"/>
+        </div>        
+        <div class="form-row">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" v-model="user.email"/>
+        </div>
+        <div class="form-group">
+
         </div>
 
-        <div class="form-group">
-          <label for="inputAddress">Address</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAddress"
-            v-model="user.streetAddress"
-            placeholder="1234 Main St"
-          />
-        </div>
-        <div class="form-group">
-          <label for="inputAddress2">Address 2</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputAddress2"
-            v-model="user.address2"
-            placeholder="Apartment, studio, or floor"
-          />
-        </div>
+
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" v-model="user.city" />
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <input id="inputState" class="form-control" />
+            <label for="department">Department</label>
+            <input type="text" class="form-control" id="department" v-model="user.department"/>
           </div>
           <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" v-model="user.zip" />
+            <label for="managerId">Manager ID</label>
+            <input type="number" class="form-control" id="managerId" v-model="user.managerId"/>
           </div>
+          <div class="form-group col-md-4">
+            <label for="role">Role</label>
+            <select class="custom-select" id="role"  v-model="roleId" >
+              <option value="1">Developer</option>
+              <option value="2">Manager</option>
+              <option value="3">Admin</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+
         </div>
         <div class="form-group text-center">
           <button @click="validateAndSubmit" class="btn btn-lg btn-primary">Save</button>
@@ -63,78 +74,99 @@
 </template>
 
 <script>
-import OfficeDataService from "../../service/common/UserDataService";
+import userDataService from "../../service/common/UserDataService";
 export default {
   name: "user",
   data() {
     return {
+      roleId: undefined,
       user: {
-        userName: '',
-        streetAddress: '',
-        city: '',
-        zip: '',
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        managerId: '',
+        email: '',
+        department: '',
+        role: '',
         active: true
       },
-      id: this.$route.query.id,
+      id: this.$route.params.id,
       errors: []
     };
   },
+  watch: {
+    roleId: function() {
+      switch (this.roleId) {
+        case '1':
+          this.user.role = {
+            "id": 3,
+            "name": "DEVELOPER"
+          };
+          break;
+        case '2':
+          this.user.role = {
+            "id": 2,
+            "name": "MANAGER"
+          };
+          break;
+        case '3':
+          this.user.role = {
+            "id": 1,
+            "name": "ADMIN"
+          };
+          break;
+      }
+    }
+  },
   created() {
-    console.log("Form Created");
-    console.log('params: ' + this.$router.query.id);
     if(this.id){
-      UserDataService.getUserById(this.id).then( result => {
+      userDataService.getUserByUsername(this.id).then(result => {
         this.user = result;
       });
     }
   },
-  computed: {
-    // id() {
-    //   return this.$route.query.id;
-    // }
-  },
   methods: {
-
       cancelForm: function(event){
         event.preventDefault();
-        this.$router.push("/userList");
+        this.$router.push({name: "users"});
       },
 
       redirect: function (event) {
-       this.$router.push("/userList");
+       this.$router.push({name: "users"});
       },
     //this code checks the validity of the fields
 
     validateAndSubmit(e) {
       e.preventDefault();
       this.errors = [];
-      if (!this.user.userName) {
-        this.errors.push("Enter valid values");
+      if (!this.user.firstName) {
+        this.errors.push("Enter a first name");
       }
-      if (!this.user.streetAddress) {
-        this.errors.push("Enter valid values");
+      if (!this.user.lastName) {
+        this.errors.push("Enter a last name");
+      }      
+      if(!this.user.department){
+        this.errors.push("Enter a department");
       }
-      if (!this.user.city) {
-        this.errors.push("Enter valid values");
-      }
-      if (!this.user.zip) {
-        this.errors.push("Enter valid values");
+      if(!this.user.username){
+        this.errors.push("Enter a username");
       }
 
       //When the user input is valid, if there is no id in the path
       //then the user is saved to the database and the app is routed to officeList
       if (this.errors.length === 0) {
         if (!this.id) {
-        //   userDataService.createUser(this.user).then(() => {
-            // this.$router.push("/officeList");
-        //   });
+          userDataService.createUser(this.user).then(() => {
+            this.$router.push({name: "users"});
+          });
         }
 
         //When the user input is valid, if there is id in the path
         //then the office is updated in the database and the app is routed to officeList
         else {
-          OfficeDataService.updateOffice(this.id, this.office).then(() => {
-            this.$router.push("/userList");
+          userDataService.updateUser(this.id, this.user).then(() => {
+            this.$router.push({name: "users"});
           });
         }
       }

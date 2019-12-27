@@ -1,17 +1,7 @@
-<template>
-  <div>
-    <!-- <NavBar /> -->
-    
-      <div class="container">
-        <div class="text-center">
-          <button class="btn btn-primary text-center add-btn" @click="addUser">Add User</button>
-        </div>
-        <user-table />
-
-
-      </div>
-    
-  </div>
+<template>      
+  <div class="container mt-3">        
+    <user-table />
+  </div>  
 </template>
 
 <script>
@@ -27,6 +17,7 @@ export default {
   },
   methods: {
     addUser() {
+      console.log('token',sessionStorage.getItem('access_token'));
       this.$router.push({path: "users/new"})
     }
   }

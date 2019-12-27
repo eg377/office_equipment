@@ -1,23 +1,39 @@
 import axios from 'axios';
 
-
-const USER_API_URL = 'https://sunshine-fe-ms.cfapps.io'
-const token = sessionStorage.getItem('access_token');
-const AuthStr = `Bearer ${token}`
+const USER_API_URL = 'https://sunshine-fe-ms.cfapps.io';
 
 class UserDataService {
 
+    getToken(){
+        return sessionStorage.getItem('access_token');
+    }
+
     getAllUsers(){
-        return axios.get(USER_API_URL + '/api/users', {headers: { Authorization: AuthStr }})
+        return axios.get(USER_API_URL + '/api/users', {headers: { Authorization: `Bearer ${this.getToken()}` }})
             .then(response => {
+                console.log("All users fetched:");
                 console.log(response.data);
                 return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
             })
     }
 
-    getUserById(userId) {
-        return axios.get(`${user_API_URL}/api/users/${userId}`, {headers: { Authorization: AuthStr }})
+    getUserByUsername(username) {
+        return axios.get(USER_API_URL + '/api/users/' + username, {headers: { Authorization: `Bearer ${this.getToken()}` }})
             .then(response => {
+                console.log(`User [${username}] fetched:`);
+                console.log(response.data);
+                return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
+            })
+    }
+
+    getUsersByManagerId(managerId) {
+        return axios.get(USER_API_URL + '/api/users/manager/' + managerId, {headers: { Authorization: `Bearer ${this.getToken()}` }})
+            .then(response => {
+                console.log(`Users fetched for manager ${managerId}:`);
                 console.log(response.data);
                 return response.data;
             }).catch( error => {
@@ -26,28 +42,47 @@ class UserDataService {
     }
 
     createUser(user) {
-        console.log("creating user");
-        return axios.post(`${user_API_URL}/api/users`, user, {headers: { Authorization: AuthStr }})
-                    .then(res => {
-                        console.log(res.data)
-                    })
-    }
-
-    updateUser(id, user) {
-        console.log('Editing user')
-        return axios.put(`${user_API_URL}/api/users/${id}`, user,{headers: { Authorization: AuthStr }})
-            .then(res=>{
-                console.log(res.data)
+        return axios.post(`${USER_API_URL}/api/users`, user, {headers: { Authorization: `Bearer ${this.getToken()}` }})
+            .then(response => {
+                console.log(`User [${user.username}] added:`);
+                console.log(response.data);
+                return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
             })
     }
 
-    deleteUser(userId) {
-        return axios.delete(`${user_API_URL}/api/users/${userId}`, {headers: { Authorization: AuthStr }})
-            .then(res => {
-                console.log("user deleted")
+    registerUser(user) {
+        return axios.post(`${USER_API_URL}/api/users/register`, user)
+            .then(response => {
+                console.log(`User [${user.username}] registered:`);
+                console.log(response.data);
+                return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
             })
-            .catch(err => {
-                console.log(`Error: ${err}`)
+    }
+
+
+    updateUser(username, user) {
+        console.log(user);
+        return axios.put(`${USER_API_URL}/api/users/${username}`, user, {headers: { Authorization: `Bearer ${this.getToken()}` }})
+            .then(response => {
+                console.log(`User [${username}] edited:`);
+                console.log(response.data);
+                return response.data;
+            }).catch( error => {
+                console.log(`Error: ${error}`)
+            })
+    }
+
+    deleteUser(username) {
+        return axios.delete(`${USER_API_URL}/api/users/${username}`, {headers: { Authorization: `Bearer ${this.getToken()}` }})
+            .then(response => {
+                console.log(response.data);
+                return response.data;
+            }).catch(error => {
+                console.log(`Error: ${error}`)
             })
     }
 }

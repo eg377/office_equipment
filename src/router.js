@@ -12,8 +12,13 @@ const maingView = () => import ('@/views/landing/main.vue')
 const loginView = () => import ('@/views/login/login.vue')
 const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
+const equipmentByOfficeList = () => import ('@/views/equipment/equipmentListByOffice.vue')
+const equipmentEditView = () => import ('@/views/equipment/equipmentEdit.vue')
+const equipmentDetailView = () => import ('@/views/equipment/equipmentDetail.vue')
+const equipmentList = () => import ('@/views/equipment/equipmentList.vue')
 const userListView = () => import ('@/views/user/userList.vue')
 const userEditView = () => import ('@/views/user/userEdit.vue')
+const dashboard1 = () => import ('@/views/report/DashboardV1.vue')
 
 Vue.use(Router)
 
@@ -63,7 +68,33 @@ export default new Router({
             }
         },
         {
-            path: '/userList',
+            path: '/equipments/:id',
+            name: 'equipments',
+            component: equipmentList
+            
+        },
+        {
+            path: '/equipments',
+            name: 'allEquipments',
+            component: equipmentList
+        },
+        {
+            path: '/equipment/new',
+            name: 'addEquipment',
+            component: equipmentEditView
+        },
+        {
+            path: '/equipment/edit/:officeId',
+            name: 'editEquipment',
+            component: equipmentEditView
+        },
+        {
+            path: '/equipment/details/:id',
+            name: 'equipmentDetail',
+            component: equipmentDetailView
+        },
+        {
+            path: '/users',
             name: 'users',
             component: userListView,
             beforeEnter(to, from, next){
@@ -84,8 +115,13 @@ export default new Router({
             component: userEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.canActivate(to));
-            }
-        },     
+            }   
+        },           
+        {
+            path: '/report',
+            name: 'report',
+            component: dashboard1
+        },
         {
             path: '*',
             redirect: '/'
