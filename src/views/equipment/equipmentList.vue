@@ -8,7 +8,7 @@
         <!--<div v-if="id">ID Found {{id}}</div>-->
 
         <!--<button v-if="checkIfAdmin()" class="btn btn-primary text-center add-btn" @click="addEquipment">Add equipment</button>-->
-        <button class="btn btn-primary text-center add-btn" @click="addEquipment">Add equipment</button>
+        <button class="btn btn-primary text-center add-btn" @click="addEquipment" v-if="checkIfAdmin()">Add equipment</button>
       </div>
       <!-- <equipment-table /> -->
       <allEquipmentList />
@@ -22,13 +22,12 @@
   //import equipmentListTableVue from "./equipmentListComponents/equipmentListTable.vue";
   import NavBar from "../../../src/components/NavBar/navbar.vue";
   import allEquipmentList from "./allEquipmentList";
-  //import authService from '../../service/common/CommonCall'
+  import authService from '../../service/common/CommonCall'
   export default {
     data() {
       return {
         id: this.$route.params.id
-      }
-      console.log("Inside equipmentList.vue id = " + id);
+      };
     },
     components: {
       //"equipment-table": equipmentListTableVue,
@@ -42,6 +41,9 @@
       // },
       addEquipment() {
         this.$router.push({ name: "addEquipment" });
+      },
+      checkIfAdmin() {
+        return authService.checkAuthority("ROLE_ADMIN");
       }
     },
     computed: {

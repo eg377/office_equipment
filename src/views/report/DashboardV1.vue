@@ -1,8 +1,8 @@
 <template>
     <ContentWrapper>
         <div class="content-heading">
-            <div>Dashboard               
-            </div>            
+            <div>Dashboard
+            </div>
         </div>
         <!-- START cards box-->
         <div class="row">
@@ -30,19 +30,19 @@
                         <div class="text-uppercase">Users</div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <!-- START card-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
-                        <em class="fas fa-toolbox fa-3x"></em>                        
+                        <em class="fas fa-toolbox fa-3x"></em>
                     </div>
                     <div class="col-8 py-3 bg-green rounded-right">
                         <div class="h2 mt-0">{{equipmentCount.length}}</div>
                         <div class="text-uppercase">Equipments</div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <!-- START date widget-->
                 <div class="card flex-row align-items-center align-items-stretch border-0">
@@ -87,7 +87,7 @@
                         <div class="text-uppercase">Europe</div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="col-xl-3 col-lg-6 col-md-12">
                 <div class="card flex-row align-items-center align-items-stretch border-0">
                     <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <!-- END dashboard main content-->
             <!-- START dashboard sidebar-->
@@ -213,7 +213,7 @@
                     </div>
                 </div>
                 <!-- END loader widget-->
-               
+
             </aside>
             <!-- END dashboard sidebar-->
         </div>

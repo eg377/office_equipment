@@ -24,7 +24,7 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <div class="overflow-auto" v-if="checkIfAdmin()">
+      <div class="overflow-auto">
         <b-pagination
                 v-model="currentPage"
                 :total-rows="rows"
@@ -44,12 +44,12 @@
                 :current-page="currentPage"
         >
           <template slot="actions" scope="row">
-            <span class="fa-stack edit-equipment" @click="editEquipment(row.item.equipmentId)">
+            <span class="fa-stack edit-equipment" @click="editEquipment(row.item.equipmentId)" v-if="checkIfAdmin()">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>&nbsp;&nbsp;
             <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
-            <span class="fa-stack edit-equipment" @click="setDelete(row.item)">
+            <span class="fa-stack edit-equipment" @click="setDelete(row.item)" v-if="checkIfAdmin()">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
             </span>
@@ -60,27 +60,27 @@
           </template>
         </b-table>
       </div>
-      <div class="overflow-auto" v-else>
-        <b-pagination
-                v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="my-table"
-        ></b-pagination>
-        <b-table
-                responsive
-                striped
-                hover
-                :items="equipments"
-                :fields="activeNoneAdminSortable"
-                id="my-table"
-                @filtered="onFiltered"
-                :filter="filter"
-                :per-page="perPage"
-                :current-page="currentPage"
-        ></b-table>
-      </div>
-      <!-- <button @click="getOffices()">Get Offices Button</button> -->
+<!--      <div class="overflow-auto" v-else>-->
+<!--        <b-pagination-->
+<!--                v-model="currentPage"-->
+<!--                :total-rows="rows"-->
+<!--                :per-page="perPage"-->
+<!--                aria-controls="my-table"-->
+<!--        ></b-pagination>-->
+<!--        <b-table-->
+<!--                responsive-->
+<!--                striped-->
+<!--                hover-->
+<!--                :items="equipments"-->
+<!--                :fields="activeNoneAdminSortable"-->
+<!--                id="my-table"-->
+<!--                @filtered="onFiltered"-->
+<!--                :filter="filter"-->
+<!--                :per-page="perPage"-->
+<!--                :current-page="currentPage"-->
+<!--        ></b-table>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; <button @click="getOffices()">Get Offices Button</button> &ndash;&gt;-->
 
       <br />
       <br />
@@ -97,14 +97,14 @@
 </template>
 
 <script>
-  // import officeService from "../../service/common/OfficeDataService.js";
+
   import equipmentService from "../../service/common/EquipmentDataService.js";
   import authService from "../../service/common/CommonCall";
   export default {
     data() {
 
       return {
-        id: this.$route.params.id   ,
+        id: this.$route.params.id,
         filter: null,
         perPage: 5,
         currentPage: 1,
@@ -123,19 +123,19 @@
         },
         // Fields with Sortable definition
         // Note 'isActive' is left out and will not appear in the rendered table
-        activeNoneAdminSortable: {
-          equipmentType: {
-            label: "Equipment Type",
-            sortable: true
-          },
-          assigned: {
-            label: "Assigned",
-            sortable: true
-          },
-          actions: {
-            label: "Actions"
-          }
-        },
+        // activeNoneAdminSortable: {
+        //   equipmentType: {
+        //     label: "Equipment Type",
+        //     sortable: true
+        //   },
+        //   assigned: {
+        //     label: "Assigned",
+        //     sortable: true
+        //   },
+        //   actions: {
+        //     label: "Actions"
+        //   }
+        // },
         fieldsSortable: {
           equipmentType: {
             label: "Equipment Type",
@@ -176,7 +176,7 @@
     },
     watch: {
       '$route' (to, from) {
-        this.id = this.$route.params.id
+        this.id = this.$route.params.id;
         this.getEquipments()
       }
     },
@@ -240,7 +240,7 @@
       async getEquipments() {
         //console.log("start");
         //console.log(officeService.getAllOffices());
-        if(this.id){
+        if (this.id) {
           console.log("ID found : " + this.id);
           const promise = equipmentService.getEquipmentsByOfficeId(this.id);
           console.log(promise);
@@ -248,18 +248,14 @@
             this.equipments = result;
             this.loading = false;
           });
-        }
-        else {
+        } else {
           console.log("ID not found.");
           const promise = equipmentService.getAllEquipments();
-          console.log(promise);
           promise.then(result => {
             this.equipments = result;
             this.loading = false;
           });
         }
-        //console.log(this.offices);
-        //console.log("end");
       },
       setDelete(equipment) {
         //console.log(id);
@@ -273,7 +269,7 @@
       async confirmDelete() {
         const promise = equipmentService.deleteEquipment(this.idToDelete);
         console.log(promise);
-        promise.then(res => {
+        promise.then(() => {
           this.clearDelete();
           this.getEquipments();
         });
