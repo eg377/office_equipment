@@ -30,9 +30,11 @@
         </div>  
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="userId" class="lblTitle">Status: </label>&nbsp;&nbsp;
-            <input type="radio" name="Assigned" value="Assigned" v-if="equipment.assigned = 'true'" checked="checked" >Assigned &nbsp;
-            <input type="radio" name="Assigned" value="Unassigned" v-if="equipment.assigned = 'false'" checked="checked" >Unassigned
+            <label for="userId" class="lblTitle">Status: </label>
+            <label class="actualData" v-if="equipment.assigned">Assigned</label>
+            <label class="actualData" v-else>Unassigned</label>
+<!--            <input type="radio" name="Assigned" value="Assigned" v-if="equipment.assigned = 'true'" checked="checked" > &nbsp;-->
+<!--            <input type="radio" name="Assigned" value="Unassigned" v-if="equipment.assigned = 'false'" checked="checked" >-->
           </div>
         </div>  
         <div class="form-row">
@@ -71,18 +73,11 @@ export default {
     };
   },
   created() {
-    console.log('params: ' + this.id);
     if(this.id){
       EquipmentDataService.getEquipmentById(this.id).then( result => {
         this.equipment = result;
-        console.log("Equipment result = " + result);
       });
     }
-  },
-  computed: {
-    // id() {
-    //   return this.$route.query.id;
-    // }
   },
   methods: {
 
