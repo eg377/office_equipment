@@ -36,11 +36,16 @@ export default new Router({
             component: loginView,
         },
         {
+            path: '/users/register',
+            name: 'registerUser',
+            component: userEditView,
+        },
+        {
             path: '/main',
             name: 'main',      
             component: maingView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isAuthenticated(to));
             }
         },
         {
@@ -48,7 +53,7 @@ export default new Router({
             name: 'offices',      
             component: officeListView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isAuthenticated(to));
             }
         },
         {
@@ -56,7 +61,7 @@ export default new Router({
             name: 'addOffice',      
             component: officeEditView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isManager(to));
             }
         },
         {
@@ -64,41 +69,56 @@ export default new Router({
             name: 'editOffice',
             component: officeEditView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isManager(to));
+            }
+        },
+        {
+            path: '/equipments',
+            name: 'allEquipments',
+            component: equipmentList,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isAuthenticated(to));
             }
         },
         {
             path: '/equipments/:id',
             name: 'equipments',
-            component: equipmentList
+            component: equipmentList,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isAuthenticated(to));
+            }
             
-        },
-        {
-            path: '/equipments',
-            name: 'allEquipments',
-            component: equipmentList
         },
         {
             path: '/equipment/new',
             name: 'addEquipment',
-            component: equipmentEditView
+            component: equipmentEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isManager(to));
+            }
         },
         {
             path: '/equipment/edit/:officeId',
             name: 'editEquipment',
-            component: equipmentEditView
+            component: equipmentEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isManager(to));
+            }
         },
         {
             path: '/equipment/details/:id',
             name: 'equipmentDetail',
-            component: equipmentDetailView
+            component: equipmentDetailView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isAuthenticated(to));
+            }
         },
         {
             path: '/users',
             name: 'users',
             component: userListView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isAuthenticated(to));
             }
         },
         {
@@ -106,7 +126,7 @@ export default new Router({
             name: 'addUser',
             component: userEditView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isManager(to));
             }
         },
         {
@@ -114,13 +134,16 @@ export default new Router({
             name: 'editUser',
             component: userEditView,
             beforeEnter(to, from, next){
-                next(AuthGuard.canActivate(to));
+                next(AuthGuard.isManager(to));
             }   
         },           
         {
             path: '/report',
             name: 'report',
-            component: dashboard1
+            component: dashboard1,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isAuthenticated(to));
+            }
         },
         {
             path: '*',

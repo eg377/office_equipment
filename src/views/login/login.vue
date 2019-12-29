@@ -24,12 +24,18 @@
         <div class="inputGroup inputGroup3">
             <button @click="submitForm">Submit</button>
         </div>
+        <div v-if="this.$route.params.msg === 'registered'">
+            <div class="alert alert-success" role="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                Registered successfully, please login!
+            </div>
+        </div>
         <div class="alert alert-danger" v-if="loginError">
             <span class="closebtn" onclick="this.parentElement.style.display='none';" @click="loginError=false">&times;</span>
             <strong>Error!</strong> Login was not successful.
         </div>
         <div class="register">
-            Not registered? <a @click="registerUser">Create an account</a>
+            Not registered? <router-link :to="{ name: 'registerUser'}">Create an account</router-link>
         </div>
     </form>
 </template>
@@ -110,9 +116,6 @@
                 if(!this.password.length){
                     this.passwordError = "Enter Password.";
                 }
-            },
-            registerUser(){
-                alert("Work in progress")
             }
         }
     };
