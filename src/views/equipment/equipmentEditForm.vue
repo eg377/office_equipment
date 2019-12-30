@@ -7,7 +7,6 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="equipmentType">Type</label>&nbsp;&nbsp;
-                <!--<input type="text" class="form-control" id="inputType" v-model="equipment.equipmentType" />-->
                 <select id="equipmentType" class="custom-select" v-model="equipment.equipmentType" >
                     <option value="Windows Laptop">Windows Laptop</option>
                     <option value="Apple Mac">Apple Mac</option>
@@ -98,19 +97,7 @@ export default {
             errors: []
             };
     },
-    /*async getOffices() {
-      //console.log("start");
-      //console.log(officeService.getAllOffices());
-      const promise = OfficeDataService.getAllOffices();
-      console.log(promise);
-      promise.then(result => {
-        this.offices = result;
-        this.loading = false;
-      });
-      //console.log(this.offices);
-      //console.log("end");
-    },
-    */
+    
   created() {
     OfficeDataService.getAllOffices().then( result => {
       this.offices = result;
@@ -121,13 +108,7 @@ export default {
           });
       }
     }
-
-    )
-    // if(this.id){
-    //   EquipmentDataService.getEquipmentById(this.id).then( result => {
-    //     this.equipment = result;
-    //   });
-    // }
+    )  
   },
   methods: {
       cancelForm: function(event){
@@ -138,8 +119,8 @@ export default {
       redirect: function (event) {
        this.$router.push({name: "equipments"});
       },
-    //this code checks the validity of the fields
 
+    //this code checks the validity of the fields
     validateAndSubmit(e) {
       console.log("validateAndSubmit function called.");
       e.preventDefault();
@@ -149,7 +130,7 @@ export default {
       }
       console.log("Errors Length: " + this.errors.length);
       //When the user input is valid, if there is no id in the path
-      //then the office is saved to the database and the app is routed to officeList
+      //then the equipment is saved to the database and the app is routed to equipmentList
       if (this.errors.length === 0) {
         if (!this.id) {
           EquipmentDataService.createEquipment(this.equipment).then(() => {
@@ -158,7 +139,7 @@ export default {
         }
 
         //When the user input is valid, if there is id in the path
-        //then the office is updated in the database and the app is routed to officeList
+        //then the equipment is updated in the database and the app is routed to equipmentList
         else {
           EquipmentDataService.updateEquipment(this.id, this.equipment).then(() => {
             this.$router.push({name: "allEquipments"});
