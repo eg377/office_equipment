@@ -12,10 +12,10 @@ const maingView = () => import ('@/views/landing/main.vue')
 const loginView = () => import ('@/views/login/login.vue')
 const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
-const equipmentByOfficeList = () => import ('@/views/equipment/equipmentListByOffice.vue')
+const officeDetailView = () => import ('@/views/office/officeDetail.vue')
+const equipmentList = () => import ('@/views/equipment/equipmentList.vue')
 const equipmentEditView = () => import ('@/views/equipment/equipmentEdit.vue')
 const equipmentDetailView = () => import ('@/views/equipment/equipmentDetail.vue')
-const equipmentList = () => import ('@/views/equipment/equipmentList.vue')
 const userListView = () => import ('@/views/user/userList.vue')
 const userEditView = () => import ('@/views/user/userEdit.vue')
 const dashboard1 = () => import ('@/views/report/DashboardV1.vue')
@@ -70,6 +70,14 @@ export default new Router({
             component: officeEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.isManager(to));
+            }
+        },
+        {
+            path: '/office/details/:id',
+            name: 'officeDetail',
+            component: officeDetailView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isAuthenticated(to));
             }
         },
         {

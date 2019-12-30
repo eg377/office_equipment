@@ -18,7 +18,6 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="officeId" class="lblTitle">Office Id:  </label>&nbsp;&nbsp;
-            <!--<input type="text" class="form-control" id="inputType" v-model="equipment.equipmentType" />-->
              <label for="officeId" id="officeId" class="actualData">{{equipment.officeId}}</label>
           </div>
         </div>  
@@ -33,8 +32,6 @@
             <label for="userId" class="lblTitle">Status: </label>
             <label class="actualData" v-if="equipment.assigned">Assigned</label>
             <label class="actualData" v-else>Unassigned</label>
-<!--            <input type="radio" name="Assigned" value="Assigned" v-if="equipment.assigned = 'true'" checked="checked" > &nbsp;-->
-<!--            <input type="radio" name="Assigned" value="Unassigned" v-if="equipment.assigned = 'false'" checked="checked" >-->
           </div>
         </div>  
         <div class="form-row">
@@ -106,6 +103,6 @@ export default {
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 18pt;
   font-weight: 200;
-  color:red;
+  color:black;
 }
 </style>

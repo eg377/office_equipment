@@ -1,10 +1,9 @@
 <template>
   <div class="card card-default">
-    <!-- <div class="card-header">Sortable</div> -->
     <div class="card-body">
       <b-col lg="6" class="my-1">
         <b-form-group
-                label="Equipment(s) Search:"
+                label="Filter:"
                 label-cols-sm="3"
                 label-align-sm="right"
                 label-size="sm"
@@ -48,7 +47,6 @@
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>&nbsp;&nbsp;
-            <!-- <i class="far fa-trash-alt fa-2x" @click="$emit('delete-office', office.officeId)"></i> -->
             <span class="fa-stack edit-equipment" @click="setDelete(row.item)" v-if="checkIfAdmin()">
               <i class="far fa-trash-alt fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Delete</span>
@@ -60,32 +58,11 @@
           </template>
         </b-table>
       </div>
-<!--      <div class="overflow-auto" v-else>-->
-<!--        <b-pagination-->
-<!--                v-model="currentPage"-->
-<!--                :total-rows="rows"-->
-<!--                :per-page="perPage"-->
-<!--                aria-controls="my-table"-->
-<!--        ></b-pagination>-->
-<!--        <b-table-->
-<!--                responsive-->
-<!--                striped-->
-<!--                hover-->
-<!--                :items="equipments"-->
-<!--                :fields="activeNoneAdminSortable"-->
-<!--                id="my-table"-->
-<!--                @filtered="onFiltered"-->
-<!--                :filter="filter"-->
-<!--                :per-page="perPage"-->
-<!--                :current-page="currentPage"-->
-<!--        ></b-table>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; <button @click="getOffices()">Get Offices Button</button> &ndash;&gt;-->
 
       <br />
       <br />
       <br />
-      <!-- YOU ARE SIMPLY NOT VIEWING THE DELETED OFFICES BUT THEY ARE A SOFT DELETE. -->
+  
       <div id="deleteMessage" class="text-center" v-show="deleteEquipment">
         Are you sure you want to delete equipment: {{deleteEquipmentName}}?
         <br />
@@ -121,21 +98,7 @@
           // Transition name
           name: "flip-list"
         },
-        // Fields with Sortable definition
-        // Note 'isActive' is left out and will not appear in the rendered table
-        // activeNoneAdminSortable: {
-        //   equipmentType: {
-        //     label: "Equipment Type",
-        //     sortable: true
-        //   },
-        //   assigned: {
-        //     label: "Assigned",
-        //     sortable: true
-        //   },
-        //   actions: {
-        //     label: "Actions"
-        //   }
-        // },
+        
         fieldsSortable: {
           equipmentType: {
             label: "Equipment Type",
@@ -183,32 +146,7 @@
     async created() {
       this.getEquipments();
     },
-    /*created() {
-        //console.log("start");
-        //console.log(officeService.getAllOffices());
-        if(this.id){
-            console.log("Inside AllEquipmentList id = " + id);
-        }
-        else{
-            console.log("Inside AllOffices id NOT found");
-        }
-        if(this.id){
-          console.log("ID found : " + this.id);
-          equipmentService.getEquipmentsByOfficeId(this.id).then(result => {
-              this.equipments = result;
-              this.loading = false;
-          });
-        }
-        else {
-          console.log("ID not found.");
-          equipmentService.getAllEquipments().then(result => {
-              this.equipments = result;
-              this.loading = false;
-          });
-        }
-        //console.log(this.offices);
-        //console.log("end");
-    },*/
+    
     methods: {
       equipment(id) {
         this.$router.push({
@@ -238,8 +176,6 @@
           }})
       },
       async getEquipments() {
-        //console.log("start");
-        //console.log(officeService.getAllOffices());
         if (this.id) {
           console.log("ID found : " + this.id);
           const promise = equipmentService.getEquipmentsByOfficeId(this.id);
@@ -258,7 +194,6 @@
         }
       },
       setDelete(equipment) {
-        //console.log(id);
         this.deleteEquipment = true;
         this.idToDelete = equipment.equipmentId;
         this.deleteEquipmentName = equipment.equipmentName;
@@ -275,27 +210,13 @@
         });
       },
       onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        console.log(filteredItems);
-        //this.inactiveOffices = filteredItems;
         this.inactiveCurrentPage = 1;
       }
     },
     computed: {
-      /*activeOffices() {
-        let active = this.offices.filter(office => office.active);
-        return active;
-      },
-      inactiveOffices() {
-        let inactive = this.offices.filter(office => !office.active);
-        return inactive;
-      },*/
       rows() {
         return this.equipments.length;
-      },
-      /*inactiveRows() {
-        return this.inactiveOffices.length;
-      }*/
+      },  
     }
   };
 </script>

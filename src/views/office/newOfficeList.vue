@@ -60,6 +60,12 @@
               <i class="fas fa-briefcase fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Equipments</span>
             </span>
+            <span class="fa-stack edit-office" @click="officeDetail(row.item.officeId)">
+              <i class="fas fa-eye fa-2x icon-button"></i>
+              <span class="icon-tooltip fa-stack-1x font-weight-bold">View Office Details</span>
+            </span>
+
+
 
           </template>
         </b-table>
@@ -256,6 +262,14 @@ export default {
     openMap(office) {
       const url = `https://www.google.com/maps/search/${office.officeName} ${office.streetAddress} ${office.city} ${office.state} ${office.zip}`;
       window.open(url, '_blank')
+    },
+    officeDetail(id){
+      this.$router.push({
+        name: "officeDetail",
+        params: {
+          id: id
+        }
+      });
     },
     equipment(id) {
       console.log("equipment method called with OfficeId = " + id);
