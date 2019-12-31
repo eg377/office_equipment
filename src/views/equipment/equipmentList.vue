@@ -17,7 +17,8 @@
   import ContentWrapper from "../../components/Layout/ContentWrapper";
   import NavBar from "../../../src/components/NavBar/navbar.vue";
   import allEquipmentList from "./allEquipmentList";
-  import authService from '../../service/common/CommonCall'
+  import authService from '../../service/common/CommonCall';
+  
   export default {
     data() {
       return {
