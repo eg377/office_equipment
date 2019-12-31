@@ -22,9 +22,14 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="officeId" id="officeDetails">Select Office</label>
-                <select class="custom-select" name="officeId" id="officeId" v-model="equipment.officeId">
+                <select v-if="!officeId" class="custom-select" name="officeId" id="officeId" v-model="equipment.officeId">
                     <option v-for="officeRow in offices" v-bind:key="officeRow.officeId" :value="officeRow.officeId" >
                         {{ officeRow.officeName }}
+                    </option>
+                </select>
+                <select v-if="officeId" class="custom-select" name="officeId" id="officeId" v-model="equipment.officeId">
+                    <option  v-bind:key="offices.officeId" :value="offices.officeId" >
+                        {{ offices.officeName }}
                     </option>
                 </select>
             </div>
@@ -62,23 +67,6 @@ import OfficeDataService from "../../service/common/OfficeDataService";
 import EquipmentDataService from "../../service/common/EquipmentDataService";
 import authService from "../../service/common/CommonCall";
 export default {
-    // props: {
-    //     office:{
-    //         type: Object,
-    //         default() {
-    //           return {
-    //             office: {
-    //                 officeId: '',
-    //                 officeName: '',
-    //                 streetAddress: '',
-    //                 city: '',
-    //                 zip: '',
-    //                 active: true
-    //             }
-    //           }
-    //         }
-    //     }
-    // },
 
     name: "equipment",
     data() {
@@ -94,22 +82,29 @@ export default {
               comment: ""
             },
             id: this.$route.params.id,
+            officeId: this.$route.params.officeId,
             errors: []
             };
     },
     
   created() {
-    OfficeDataService.getAllOffices().then( result => {
-      this.offices = result;
-      console.log("office = " + result);
+    if (this.officeId) {
+      OfficeDataService.getOfficeById(this.officeId).then(result => {
+        this.offices = result;
+      });
+    }else{
+      OfficeDataService.getAllOffices().then(result => {
+        this.offices = result;
+      })
+    }
       if (this.id) {
           EquipmentDataService.getEquipmentById(this.id).then(result => {
               this.equipment = result;
           });
       }
     }
-    )  
-  },
+    
+  ,
   methods: {
       cancelForm: function(event){
         event.preventDefault();

@@ -1,5 +1,10 @@
 <template>
   <div class="card card-default">
+    <!-- extra add button -->
+     <div class="text-center">
+        <button class="btn btn-primary text-center add-btn" @click="addEquipment()" v-if="checkIfAdmin()">Add equipment</button>
+      </div>
+      <!-- extra add button -->
     <div class="card-body">
       <b-col lg="6" class="my-1">
         <b-form-group
@@ -43,6 +48,7 @@
                 :current-page="currentPage"
         >
           <template slot="actions" scope="row">
+           
             <span class="fa-stack edit-equipment" @click="editEquipment(row.item.equipmentId)" v-if="checkIfAdmin()">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
@@ -148,6 +154,9 @@
     },
     
     methods: {
+      addEquipment() {
+        this.$router.push({ name: "addEquipment" });
+      },
       equipment(id) {
         this.$router.push({
           name: "equipment",
