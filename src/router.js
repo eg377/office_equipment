@@ -13,7 +13,8 @@ const loginView = () => import ('@/views/login/login.vue')
 const officeListView = () => import ('@/views/office/officeList.vue')
 const officeEditView = () => import ('@/views/office/officeEdit.vue')
 const officeDetailView = () => import ('@/views/office/officeDetail.vue')
-const equipmentList = () => import ('@/views/equipment/equipmentList.vue')
+const equipmentList = () => import ('@/views/equipment/equipments.vue')
+const equipmentByOffice = () => import ('@/views/equipment/equipmentByOffice.vue')
 const equipmentEditView = () => import ('@/views/equipment/equipmentEdit.vue')
 const equipmentDetailView = () => import ('@/views/equipment/equipmentDetail.vue')
 const userListView = () => import ('@/views/user/userList.vue')
@@ -91,7 +92,7 @@ export default new Router({
         {
             path: '/equipments/:id',
             name: 'equipments',
-            component: equipmentList,
+            component: equipmentByOffice,
             beforeEnter(to, from, next){
                 next(AuthGuard.isAuthenticated(to));
             }
@@ -100,6 +101,14 @@ export default new Router({
         {
             path: '/equipment/new',
             name: 'addEquipment',
+            component: equipmentEditView,
+            beforeEnter(to, from, next){
+                next(AuthGuard.isManager(to));
+            }
+        },
+        {
+            path: '/equipment/new/:officeId',
+            name: 'addEquipmentInOffice',
             component: equipmentEditView,
             beforeEnter(to, from, next){
                 next(AuthGuard.isManager(to));
