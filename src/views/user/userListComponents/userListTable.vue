@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="card card-default">
-      <div class="text-center" v-if="checkIfAdmin()">
+      <div class="text-center" v-if="checkIfAdmin() || checkIfManager()">
           <button class="btn btn-primary text-center add-btn" @click="addUser">Add User</button>
       </div>
       <div class="card-body">
       <b-table responsive striped hover :items="activeUsers" :fields="userFields">
           <template slot="actions" scope="row">
-            <span class="fa-stack edit-office" @click="editUser(row.item.username)" v-if="checkIfAdmin()">
+            <span class="fa-stack edit-office" @click="editUser(row.item.username)" v-if="checkIfAdmin() || checkIfManager()">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>  
@@ -142,6 +142,9 @@ export default {
     },
     checkIfAdmin() {
       return authService.checkAuthority("ROLE_ADMIN");
+    },
+    checkIfManager(){
+      return authService.checkAuthority("ROLE_MANAGER");
     }
   },
   watch: {

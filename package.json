@@ -34,6 +34,7 @@
     "datatables.net-responsive-bs": "2.2.3",
     "easy-pie-chart": "2.1.7",
     "flot": "themicon/flot",
+    "geolocation": "^0.2.0",
     "i18next": "12.0.0",
     "i18next-browser-languagedetector": "2.2.4",
     "i18next-xhr-backend": "1.5.1",

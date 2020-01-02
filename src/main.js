@@ -24,7 +24,7 @@ import router from './router'
 import i18next from './i18n.js';
 import * as VueGoogleMaps from "vue2-google-maps";
 import Geocoder from "@pderas/vue2-geocoder";
-import authService from './service/common/CommonCall'
+//import authService from './service/common/CommonCall'
 //import axios from 'axios'
 //import VueAxios from 'vue-axios'
 

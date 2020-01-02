@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="text-center">
-        <button v-if="checkIfAdmin()" class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
+        <button v-if="checkIfAdmin() || checkIfManager()" class="btn btn-primary text-center add-btn" @click="addOffice">Add Office</button>
       </div>
       <!-- <office-table /> -->
       <newOfficeList />
@@ -29,6 +29,9 @@ export default {
   methods: {
     checkIfAdmin(){
       return authService.checkAuthority("ROLE_ADMIN");
+    },
+    checkIfManager(){
+      return authService.checkAuthority("ROLE_MANAGER");
     },
     addOffice() {
       this.$router.push({ name: "addOffice" });

@@ -44,7 +44,7 @@
           :current-page="currentPage"
         >
           <template slot="actions" scope="row">
-            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)" v-if="checkIfAdmin()">
+            <span class="fa-stack edit-office" @click="editOffice(row.item.officeId)" v-if="checkIfAdmin() || checkIfManager()">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>
@@ -94,7 +94,7 @@
       <br />
       <br />
       <br />
-      <div v-if="checkIfAdmin()">
+      <div v-if="checkIfAdmin() || checkIfManager()">
         <h3>Inactive Offices</h3>
         <b-pagination
           v-model="inactiveCurrentPage"
@@ -282,6 +282,9 @@ export default {
     },
     checkIfAdmin() {
       return authService.checkAuthority("ROLE_ADMIN");
+    },
+    checkIfManager() {
+      return authService.checkAuthority("ROLE_MANAGER");
     },
     editOffice(id) {
       this.$router.push({

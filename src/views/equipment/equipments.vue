@@ -2,7 +2,7 @@
   <div class="card card-default">
     <!-- extra add button -->
      <div class="text-center">
-        <button class="btn btn-primary text-center add-btn" @click="addEquipment()" v-if="checkIfAdmin()">Add equipment</button>
+        <button class="btn btn-primary text-center add-btn" @click="addEquipment()" v-if="checkIfAdmin() || checkIfManager()">Add equipment</button>
       </div>
       <!-- extra add button -->
     <div class="card-body">
@@ -49,7 +49,7 @@
         >
           <template slot="actions" scope="row">
            
-            <span class="fa-stack edit-equipment" @click="editEquipment(row.item.equipmentId)" v-if="checkIfAdmin()">
+            <span class="fa-stack edit-equipment" @click="editEquipment(row.item.equipmentId)" v-if="checkIfAdmin() || checkIfManager()">
               <i class="fas fa-edit fa-2x icon-button"></i>
               <span class="icon-tooltip fa-stack-1x font-weight-bold">Edit</span>
             </span>&nbsp;&nbsp;
@@ -167,6 +167,9 @@
       },
       checkIfAdmin() {
         return authService.checkAuthority("ROLE_ADMIN");
+      },
+      checkIfManager(){
+        return authService.checkAuthority("ROLE_MANAGER");
       },
       editEquipment(id) {
         this.$router.push({
